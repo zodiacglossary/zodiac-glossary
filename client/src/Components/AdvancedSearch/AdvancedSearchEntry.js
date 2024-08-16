@@ -19,17 +19,17 @@ const AdvancedSearchEntry = props => {
           className={styles.input} 
           name="search_field" 
           id="search_field" 
-          value={props.field} 
+          value={props.table + '|' + props.field} 
           onChange={e => props.onFieldChange(e, props.termNumber)}
         >
           {searchFieldTypes.map(option => {
             // Create an empty default for new data
-            if (!option.value)
+            if (!option.field)
               return (
-                <option disabled key={option.id} value={option.value}>{option.label}</option>
+                <option disabled key={option.id} value={option.table + '|' + option.field}>{option.label}</option>
               );
             return (
-              <option key={option.id} value={option.value}>{option.label}</option>
+              <option key={option.id} value={option.table + '|' + option.field}>{option.label}</option>
             );
           })}
         </select>
@@ -38,6 +38,7 @@ const AdvancedSearchEntry = props => {
         <AdvancedSearchTermInput
           termNumber={props.termNumber}
           placeholder="search term"
+          table={props.table}
           field={props.field}
           term={props.term}
           onTermChange={props.onTermChange}

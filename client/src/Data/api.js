@@ -202,3 +202,24 @@ export function getRecentsListPromise(token = '') {
     .catch(error => reject(error));
   });
 }
+
+// Change token default to null after adding authentication
+export function runAdvancedSearchDB(searchTerms, setSearchResults, token = '') {
+  let url = '/api/advanced_search';
+  const params = new URLSearchParams({token});
+  url += '?' + params.toString();
+  console.log('/about to fetch')
+  fetch(url)
+  .then(response => {
+    console.log(response);
+    return response.json();
+  })
+  .then(data => {
+    setSearchResults(data)
+    console.log(data)
+  })
+  .catch(data => console.error(data));
+
+  console.log('runAdvancedSearchDB()', searchTerms);
+  // setSearchResults(['test']);
+}

@@ -7,6 +7,7 @@ const AdvancedSearchResults = props => {
       <h2>Results</h2>
       <ol>
         <li>Results will go here...</li>
+        <li>{JSON.stringify(props.searchResults)}</li>
       </ol>
     </>
   )

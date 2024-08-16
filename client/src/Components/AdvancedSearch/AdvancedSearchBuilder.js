@@ -6,27 +6,47 @@ import AdvancedSearchEntry from "./AdvancedSearchEntry";
 
 import { IoIosAddCircle } from "react-icons/io";
 
+import { searchFieldTypes } from '../../Data/options';
+
 const searchTermsInitial = [
-  { termNumber: 1, field: 'editor',          term: '', inputType: 'text', },
-  { termNumber: 2, field: 'language_id',     term: '', inputType: 'dropdown', },
-  { termNumber: 3, field: 'partofspeech_id', term: '', inputType: 'dropdown', },
+  { termNumber: 1, table: 'lemmata',  field: 'language_id',  term: '7', inputType: 'dropdown', },
+  { termNumber: 2, table: 'meanings', field: 'value',        term: 'test', inputType: 'text', },
+  { termNumber: 3, table: 'meanings', field: 'category',     term: '', inputType: 'text', },
 ];
 
 const AdvancedSearchBuilder = props => {
 
   let [searchTerms, setSearchTerms] = React.useState(JSON.parse(JSON.stringify(searchTermsInitial)));
 
+  // Figure out what sort of input is needed based on the chosen search field
+  // Some fields have text inputs, some dropdowns
+  const getInputType = (searchTable, searchField) => {
+    try {
+      let inputType = searchFieldTypes.find(searchFieldType => {
+        return (searchFieldType.table === searchTable) && (searchFieldType.field === searchField);
+      }).inputType;
+      return inputType;
+    } catch (error) {
+      return 'text';
+    }
+  };
+
   const onFieldChange = (e, termNumber) => {
+    console.log(e.target.value)
     setSearchTerms(prevSearchTerms =>
       prevSearchTerms.map(searchTerm => {
         if (searchTerm.termNumber === termNumber) {
-          searchTerm.field = e.target.value;
+          let newTableField = e.target.value.split('|');  // Gotta put both table and field together to avoid collisions in field names
+          searchTerm.table = newTableField[0];
+          searchTerm.field = newTableField[1];
+          searchTerm.inputType = getInputType(newTableField[0], newTableField[1]);
           searchTerm.term = '';
-          return searchTerm
+          return searchTerm;
         }
         return searchTerm;
       })
     );
+    console.log('onFieldChange()', searchTerms);
   };
 
   const onTermChange = (termNumber, newTerm, newInputType) => {
@@ -34,12 +54,13 @@ const AdvancedSearchBuilder = props => {
       prevSearchTerms.map(searchTerm => {
         if (searchTerm.termNumber === termNumber) {
           searchTerm.term = newTerm;
-          searchTerm.inputType = newInputType;
+          // searchTerm.inputType = newInputType;        // Needed to override previous value in case of search field change. Probably should happen in onFieldChange() but easier to implement here
           return searchTerm;
         }
         return searchTerm;
       })
     );
+    console.log('onTermChange()', searchTerms);
   };
 
   const addNewSearchTerm = e => {
@@ -59,9 +80,8 @@ const AdvancedSearchBuilder = props => {
     })
   };
 
-  // UPDATE WEBSITE FIRST THING WEDNESDAY OR THURSDAY
   const runAdvancedSearch = e => {
-    console.log(searchTerms)
+    props.runAdvancedSearch(searchTerms);
   };
 
   const resetSearch = e => {
@@ -77,6 +97,7 @@ const AdvancedSearchBuilder = props => {
             <AdvancedSearchEntry
               key={term.termNumber}
               termNumber={term.termNumber}
+              table={term.table}
               field={term.field}
               term={term.term}
               onFieldChange={onFieldChange}

@@ -9,6 +9,7 @@ const users = require('./users');
 const ac = require('./autocomplete');
 const td = require('./todo');
 const recents = require('./queries/recents');
+const advancedSearch = require('./queries/advancedSearch');
 
 const auth = require('./middleware/auth');
 
@@ -62,6 +63,10 @@ app.post('/api/users/login', users.loginUser);
 app.get('/api/users/profile', auth, users.getUser);
 
 app.get('/api/contributors', auth, users.getContributions);
+
+// Advanced Search
+app.get('/api/advanced_search', auth, advancedSearch.runAdvancedSearch);
+
 
 app.get('*', (request, response) => {
   // console.log(request)

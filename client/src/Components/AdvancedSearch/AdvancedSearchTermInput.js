@@ -8,17 +8,21 @@ const AdvancedSearchTermInput = props => {
 
   // Figure out what sort of input is needed based on the chosen search field
   // Some fields have text inputs, some dropdowns
-  const getInputType = searchField => {
-    let inputType = searchFieldTypes.find(searchFieldType => {
-      return searchFieldType.value === searchField;
-    }).inputType;
-    return inputType;
+  const getInputType = (searchTable, searchField) => {
+    try {
+      let inputType = searchFieldTypes.find(searchFieldType => {
+        return (searchFieldType.table === searchTable) && (searchFieldType.field === searchField);
+      }).inputType;
+      return inputType;
+    } catch (error) {
+      return 'text';
+    }
   };
 
   // Get a list for the dropdown where needed
-  const getOptionsList = searchField => {
+  const getOptionsList = (searchTable, searchField) => {
     let objectName = searchFieldTypes.find(searchFieldType => {
-      return searchFieldType.value === searchField;
+      return (searchFieldType.table === searchTable) && (searchFieldType.field === searchField);
     }).objectName;
 
     let optionList = optionLists.find(optionList => {
@@ -31,7 +35,7 @@ const AdvancedSearchTermInput = props => {
   };
 
   // Use different UI components depending on text input or dropdown
-  if (getInputType(props.field) === 'text') {
+  if (getInputType(props.table, props.field) === 'text') {
     return (
       <input
         className={styles.inputWide}
@@ -52,7 +56,7 @@ const AdvancedSearchTermInput = props => {
         value={props.term}
         onChange={e => props.onTermChange(props.termNumber, e.target.value, 'dropdown')}
       >
-        {getOptionsList(props.field).map(option => {
+        {getOptionsList(props.table, props.field).map(option => {
           // Create an empty default for new data
           if (!option.value)
             return (
