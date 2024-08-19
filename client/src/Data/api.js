@@ -161,7 +161,7 @@ export function getEditHistory(lemmaId, token = '') {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token,
+        'Authorization': (token ? 'Bearer ' + token : ''),
       },
       method: "GET",
     })
@@ -204,22 +204,18 @@ export function getRecentsListPromise(token = '') {
 }
 
 // Change token default to null after adding authentication
-export function runAdvancedSearchDB(searchTerms, setSearchResults, token = '') {
+export function runAdvancedSearchDB(whereComponents, setSearchResults, token = '') {
   let url = '/api/advanced_search';
-  const params = new URLSearchParams({token});
-  url += '?' + params.toString();
-  console.log('/about to fetch')
-  fetch(url)
-  .then(response => {
-    console.log(response);
-    return response.json();
+  fetch(url, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token,
+    },
+    method: "POST",
+    body: JSON.stringify(whereComponents),
   })
-  .then(data => {
-    setSearchResults(data)
-    console.log(data)
-  })
+  .then(response => response.json())
+  .then(data => setSearchResults(data))
   .catch(data => console.error(data));
-
-  console.log('runAdvancedSearchDB()', searchTerms);
-  // setSearchResults(['test']);
 }

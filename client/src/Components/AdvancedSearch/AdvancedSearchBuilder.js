@@ -8,10 +8,18 @@ import { IoIosAddCircle } from "react-icons/io";
 
 import { searchFieldTypes } from '../../Data/options';
 
+// const searchTermsInitial = [
+//   { termNumber: 1, table: 'lemmata',  field: 'language_id',  term: '7', inputType: 'dropdown', },
+//   { termNumber: 2, table: 'lemmata',  field: 'language_id',  term: '3', inputType: 'dropdown', },
+//   { termNumber: 3, table: 'lemmata',  field: 'language_id',  term: '4', inputType: 'dropdown', },
+//   { termNumber: 4, table: 'meanings', field: 'value',        term: 'test', inputType: 'text', },
+//   { termNumber: 5, table: 'meanings', field: 'value',        term: 'a', inputType: 'text', },
+// ];
+
 const searchTermsInitial = [
-  { termNumber: 1, table: 'lemmata',  field: 'language_id',  term: '7', inputType: 'dropdown', },
-  { termNumber: 2, table: 'meanings', field: 'value',        term: 'test', inputType: 'text', },
-  { termNumber: 3, table: 'meanings', field: 'category',     term: '', inputType: 'text', },
+  { termNumber: 1, table: 'lemmata',  field: 'l.language_id',  term: '', inputType: 'dropdown', },
+  { termNumber: 2, table: 'meanings', field: 'm.value',        term: '', inputType: 'text', },
+  { termNumber: 3, table: 'meanings', field: 'm.category',     term: '', inputType: 'text', },
 ];
 
 const AdvancedSearchBuilder = props => {
@@ -67,17 +75,15 @@ const AdvancedSearchBuilder = props => {
     setSearchTerms(prevSearchTerms => {
       return [
         ...prevSearchTerms,
-        { termNumber: Math.max(...prevSearchTerms.map(term=>term.termNumber))+1, field: 'none', term: '' }
+        { termNumber: Math.max(...prevSearchTerms.map(term=>term.termNumber))+1, table: 'lemmata',  field: 'language_id',  term: '', inputType: 'dropdown', }
       ];
     })
   };
 
   const deleteSearchTerm = termNumber => {
-    console.log('Delete term: ' + termNumber)
-
     setSearchTerms(prevSearchTerms => {
       return prevSearchTerms.filter(term => term.termNumber !== termNumber);
-    })
+    });
   };
 
   const runAdvancedSearch = e => {
@@ -86,6 +92,7 @@ const AdvancedSearchBuilder = props => {
 
   const resetSearch = e => {
     setSearchTerms(JSON.parse(JSON.stringify(searchTermsInitial)));
+    props.resetSearchResults();
   };
 
   return (

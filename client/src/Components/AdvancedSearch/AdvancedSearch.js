@@ -14,17 +14,52 @@ const AdvancedSearch = props => {
 
   let [searchResults, setSearchResults] = React.useState([]);
 
-  const runAdvancedSearch = searchTerms => {
-    console.log('runAdvancedSearch()', searchTerms);
+  // This function takes the list of search terms and organizes it into an object that easily
+  // becomes the WHERE clause of the SQL query
+  // In the SQL query, multiple different field conditions are joined with AND
+  // multiple conditions for the same field are joined with OR
+  const organizeSearchTerms = searchTerms => {
+    let whereComponents = [];
+  
+    searchTerms = searchTerms.map(term => {
+      term.fieldName = term.field;
+      term.uniqueTableField = term.table + '|' + term.field;
+      return term;
+    });
+  
+    for (let term of searchTerms) {
+      if (term.term) {
+        let matchedComp = whereComponents.find(comp => comp.uniqueTableField === term.uniqueTableField);
+        if (matchedComp) {
+          matchedComp.conditions.push(matchedComp.type === 'string' ? term.term : parseInt(term.term));
+        } else {
+          whereComponents.push({
+            uniqueTableField: term.uniqueTableField,
+            fieldName: term.fieldName,
+            type: (term.inputType === 'text' ? 'string' : 'integer'),
+            conditions: [ (term.inputType === 'text' ? term.term : parseInt(term.term)) ],
+          });
+        }
+      }
+    }
+  
+    return whereComponents;
+  };
 
-    runAdvancedSearchDB(searchTerms, setSearchResults, user.token);
+  const runAdvancedSearch = searchTerms => {
+    runAdvancedSearchDB(organizeSearchTerms(searchTerms), setSearchResults, user.token);
+  };
+
+  const resetSearchResults = () => {
+    // Search builder has already been reset to defaults in sub-component
+    setSearchResults([]);
   };
 
   return (
     <div className={styles.content}>
       <div className={styles.container}>
         <h1>Advanced Search</h1>
-        <AdvancedSearchBuilder runAdvancedSearch={runAdvancedSearch} />
+        <AdvancedSearchBuilder runAdvancedSearch={runAdvancedSearch} resetSearchResults={resetSearchResults} />
         <AdvancedSearchResults searchResults={searchResults} />
       </div>
     </div>

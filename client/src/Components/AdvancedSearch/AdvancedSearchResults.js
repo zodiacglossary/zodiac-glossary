@@ -1,13 +1,22 @@
 import React from 'react';
 
+import AdvancedSearchResult from "./AdvancedSearchResult.js";
+
 const AdvancedSearchResults = props => {
 
+  if (props.searchResults.length === 0) {
+    return <></>;
+  }
+  
   return (
     <>
       <h2>Results</h2>
       <ol>
-        <li>Results will go here...</li>
-        <li>{JSON.stringify(props.searchResults)}</li>
+        {(props.searchResults.length === 0 ? (<li>Results will appear here...</li>) :
+          props.searchResults.map((result, i) => (
+            <AdvancedSearchResult result={result} key={i} />
+          ))
+        )}
       </ol>
     </>
   )

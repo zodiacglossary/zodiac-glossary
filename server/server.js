@@ -65,7 +65,7 @@ app.get('/api/users/profile', auth, users.getUser);
 app.get('/api/contributors', auth, users.getContributions);
 
 // Advanced Search
-app.get('/api/advanced_search', auth, advancedSearch.runAdvancedSearch);
+app.post('/api/advanced_search', auth, advancedSearch.runAdvancedSearch);
 
 
 app.get('*', (request, response) => {
