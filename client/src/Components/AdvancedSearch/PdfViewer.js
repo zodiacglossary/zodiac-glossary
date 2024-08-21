@@ -1,0 +1,140 @@
+import React, { useState, useEffect } from 'react';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+
+import styles from './AdvancedSearch.module.css';
+
+const PdfViewer = () => {
+  const [pdfDataUrl, setPdfDataUrl] = useState(null);
+  
+  const createPdf = async () => {
+    const pdfDoc = await PDFDocument.create();
+
+    // Embed fonts
+    const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+    const timesBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
+
+    // Add a page
+    const page = pdfDoc.addPage([600, 800]);
+    const { width, height } = page.getSize();
+    
+    // Title
+    const titleFontSize = 30;
+    page.drawText('Glossary', {
+      x: 50,
+      y: height - 50,
+      size: titleFontSize,
+      font: timesBoldFont,
+      color: rgb(0, 0, 0),
+    });
+
+    // Glossary terms and definitions
+    const glossary = [
+      { term: 'Hieroglyphs', definition: 'A formal writing system used in ancient Egypt, composed of symbols. What\'s actually going to happen here if the line gets too long? What if I don\'t use the helper function?' },
+      { term: 'Papyrus', definition: 'A plant-based material ancient Egyptians used as a writing surface.' },
+      { term: 'Pharaoh', definition: 'The title used by the rulers of ancient Egypt.' },
+      { term: 'Mummification', definition: 'A process used by ancient Egyptians to preserve bodies for the afterlife.' },
+      { term: 'Sarcophagus', definition: 'A stone coffin, often adorned with inscriptions and used in ancient Egypt.' },
+    ];
+
+    const termFontSize = 14;
+    const definitionFontSize = 12;
+    const lineHeight = 20;
+    let yPosition = height - 100;
+
+    glossary.forEach(({ term, definition }) => {
+      if (yPosition < 100) {
+        // Add a new page if space runs out
+        page = pdfDoc.addPage([600, 800]);
+        yPosition = height - 50;
+      }
+
+      // Draw the term in bold
+      page.drawText(term, {
+        x: 50,
+        y: yPosition,
+        size: termFontSize,
+        font: timesBoldFont,
+        color: rgb(0, 0, 0),
+      });
+
+      // Draw the definition in regular font
+      const definitionLines = splitTextIntoLines(definition, 480, definitionFontSize, timesRomanFont);
+      definitionLines.forEach(line => {
+        yPosition -= lineHeight;
+        page.drawText(line, {
+          x: 60, // Indent for the definition
+          y: yPosition,
+          size: definitionFontSize,
+          font: timesRomanFont,
+          color: rgb(0, 0, 0),
+        });
+      });
+
+      yPosition -= lineHeight; // Add extra space between terms
+    });
+
+    const pdfBytes = await pdfDoc.save();
+
+    // Convert the PDF bytes to Base64
+    const base64String = btoa(
+      String.fromCharCode(...new Uint8Array(pdfBytes))
+    );
+
+    // Prepend the required Data URL scheme
+    const dataUrl = `data:application/pdf;base64,${base64String}`;
+
+    // Update state with the Data URL
+    setPdfDataUrl(dataUrl);
+  };
+
+  useEffect(() => {
+    createPdf();
+  }, []);
+
+  return (
+    <div>
+      <h1>PDF Viewer</h1>
+      {pdfDataUrl ? (
+        <>
+          <a href={pdfDataUrl} download="report.pdf">
+            Download PDF
+          </a>
+          <br />
+          <iframe
+            title="PDF Viewer"
+            src={pdfDataUrl}
+            className={styles.pdfViewer}
+            width="600"
+            height="400"
+          />
+        </>
+      ) : (
+        <p>Loading PDF...</p>
+      )}
+    </div>
+  );
+};
+
+const splitTextIntoLines = (text, maxWidth, fontSize, font) => {
+  const words = text.split(' ');
+  const lines = [];
+  let currentLine = '';
+
+  words.forEach(word => {
+    const width = font.widthOfTextAtSize(currentLine + word, fontSize);
+    if (width <= maxWidth) {
+      currentLine += (currentLine.length === 0 ? '' : ' ') + word;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  });
+
+  if (currentLine.length > 0) {
+    lines.push(currentLine);
+  }
+
+  return lines;
+};
+
+export default PdfViewer;

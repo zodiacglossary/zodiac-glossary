@@ -210,3 +210,8 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
+
+.pdfViewer {
+  width: 94vw;
+  height: 50vh;
+}
