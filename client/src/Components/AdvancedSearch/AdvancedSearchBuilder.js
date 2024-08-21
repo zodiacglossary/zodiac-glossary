@@ -75,7 +75,7 @@ const AdvancedSearchBuilder = props => {
     setSearchTerms(prevSearchTerms => {
       return [
         ...prevSearchTerms,
-        { termNumber: Math.max(...prevSearchTerms.map(term=>term.termNumber))+1, table: 'lemmata',  field: 'language_id',  term: '', inputType: 'dropdown', }
+        { termNumber: Math.max(...prevSearchTerms.map(term=>term.termNumber))+1, table: 'meanings',  field: 'm.category',  term: '', inputType: 'text', }
       ];
     })
   };
@@ -94,6 +94,21 @@ const AdvancedSearchBuilder = props => {
     setSearchTerms(JSON.parse(JSON.stringify(searchTermsInitial)));
     props.resetSearchResults();
   };
+
+  // Keyboard shortcuts
+  const handleKeyPress = e => {
+    if (e.key === 'Enter' || e.key === 'Return') {
+      e.preventDefault();
+      runAdvancedSearch(e);
+
+    }
+  };
+  React.useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   return (
     <>
@@ -118,8 +133,11 @@ const AdvancedSearchBuilder = props => {
         </td></tr>
       </tbody></table>
 
-      <button onClick={e => runAdvancedSearch(e)}>Search</button>
-      <button onClick={e => resetSearch(e)}>Reset</button>
+      <div className={styles.searchButtonContainer}>
+        <button className={styles.search} onClick={e => runAdvancedSearch(e)}>Search</button>
+        <button className={styles.search} onClick={e => resetSearch(e)}>Reset</button>
+      </div>
+      <br />
     </>
   )
 };

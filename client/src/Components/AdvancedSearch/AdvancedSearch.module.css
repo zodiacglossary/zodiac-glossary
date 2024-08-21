@@ -179,3 +179,34 @@ a {
 .delete:hover, .delete:focus, .add:hover {
   filter: drop-shadow(0 0 3px #ffe8);
 }
+
+
+.search {
+  font: 1.2vw symbola, book-antiqua, 'Book Antiqua', serif;
+  /* display: table-cell; */
+  width: 80vw;
+  color: #2D3B62;
+  background-color: #FFDD;
+  border: 0.1vw solid #FFDF;
+  border-radius: 0.5vw;
+  margin: 0.2vw;
+  padding: 0.2vw;
+  outline: none;
+  float: left;
+  height: 2vw;
+  /* margin-top: 5px;
+  margin-right: 5px; */
+  width: 16vw;
+}
+
+.search:hover {
+  filter: drop-shadow(0 0 3px #ffe8);
+  border: 0.1vw solid #2D3B6222;
+  background-color: #FFDF;
+}
+
+.searchButtonContainer {
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -28,7 +28,8 @@ const AdvancedSearch = props => {
     });
   
     for (let term of searchTerms) {
-      if (term.term) {
+      // Make sure that there's actually a search term there and that the default null value isn't selected in a dropdown
+      if (term.term && !(term.inputType === 'dropdown' && parseInt(term.term) === 0)) {
         let matchedComp = whereComponents.find(comp => comp.uniqueTableField === term.uniqueTableField);
         if (matchedComp) {
           matchedComp.conditions.push(matchedComp.type === 'string' ? term.term : parseInt(term.term));
@@ -42,7 +43,7 @@ const AdvancedSearch = props => {
         }
       }
     }
-  
+  console.log(whereComponents)
     return whereComponents;
   };
 

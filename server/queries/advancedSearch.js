@@ -36,8 +36,9 @@ const runAdvancedSearch = (request, response) => {
     return;
   }
 
+  // If no user is logged in, show only published lemmata
   const token = request.decoded;
-  // (token ? all : "published = TRUE")
+  whereClause += (token ? '' : " AND published = TRUE");
 
   try {
     const sql = `SELECT l.lemma_id, l.editor, l.published, l.language_id, l.partofspeech_id, l.translation, l.loan_language_id, 
@@ -49,6 +50,7 @@ const runAdvancedSearch = (request, response) => {
         WHERE ` + whereClause + `
         GROUP BY lemma_id;`;
     console.log(sql);
+    console.log(values)
 
     pool.query(sql, values, (error, results) => {
       if (error) throw error;

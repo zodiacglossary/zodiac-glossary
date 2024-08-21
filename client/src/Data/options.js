@@ -47,7 +47,7 @@ export const searchFieldTypes = [
   // { id: 5,  table: 'lemmata',   field: 'original',          label: 'Original Text',       inputType: 'text',                                      },
   { id: 6,  table: 'lemmata',     field: 'l.translation',       label: 'Literal Translation', inputType: 'text',                                      },
   // { id: 7,  table: 'lemmata',   field: 'primary_meaning',   label: 'Primary Meaning',     inputType: 'text',                                      },
-  { id: 8,  table: 'lemmata',     field: 'l.loan_language_id',  label: 'Source Language',     inputType: 'dropdown',  objectName: 'languageOptions',      },
+  // { id: 8,  table: 'lemmata',     field: 'l.loan_language_id',  label: 'Source Language',     inputType: 'dropdown',  objectName: 'languageOptions',      },
   // { id: 9,  table: 'lemmata',   field: 'loan_type',         label: 'Type of Loan',        inputType: 'dropdown',  objectName: 'loanTypes'             },
   { id: 10, table: 'meanings',    field: 'm.value',             label: 'Meaning',             inputType: 'text',                                      },
   { id: 11, table: 'meanings',    field: 'm.category',          label: 'Category',            inputType: 'text',                                      },
@@ -55,4 +55,5 @@ export const searchFieldTypes = [
   { id: 13, table: 'variants',    field: 'v.transliteration',   label: 'Transliteration',     inputType: 'text',                                      },
   { id: 14, table: 'quotations',  field: 'q.provenance',        label: 'Provenance',          inputType: 'text',                                      },
   { id: 15, table: 'quotations',  field: 'q.publication',       label: 'Publication',         inputType: 'text',                                      },
+  { id: 16, table: 'quotations',  field: 'q.source',            label: 'Source',              inputType: 'text',                                      },
 ];

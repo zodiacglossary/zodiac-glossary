@@ -5,9 +5,9 @@ import AdvancedSearchResult from "./AdvancedSearchResult.js";
 const AdvancedSearchResults = props => {
 
   if (props.searchResults.length === 0) {
-    return <></>;
+    return <><br /><br /><br /><br /></>;
   }
-  
+
   return (
     <>
       <h2>Results</h2>
