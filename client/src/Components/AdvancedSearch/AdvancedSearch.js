@@ -43,7 +43,6 @@ const AdvancedSearch = props => {
         }
       }
     }
-  console.log(whereComponents)
     return whereComponents;
   };
 

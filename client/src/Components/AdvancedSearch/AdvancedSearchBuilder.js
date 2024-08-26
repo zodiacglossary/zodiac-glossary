@@ -8,14 +8,6 @@ import { IoIosAddCircle } from "react-icons/io";
 
 import { searchFieldTypes } from '../../Data/options';
 
-// const searchTermsInitial = [
-//   { termNumber: 1, table: 'lemmata',  field: 'language_id',  term: '7', inputType: 'dropdown', },
-//   { termNumber: 2, table: 'lemmata',  field: 'language_id',  term: '3', inputType: 'dropdown', },
-//   { termNumber: 3, table: 'lemmata',  field: 'language_id',  term: '4', inputType: 'dropdown', },
-//   { termNumber: 4, table: 'meanings', field: 'value',        term: 'test', inputType: 'text', },
-//   { termNumber: 5, table: 'meanings', field: 'value',        term: 'a', inputType: 'text', },
-// ];
-
 const searchTermsInitial = [
   { termNumber: 1, table: 'lemmata',  field: 'l.language_id',  term: '', inputType: 'dropdown', },
   { termNumber: 2, table: 'meanings', field: 'm.value',        term: '', inputType: 'text', },
@@ -40,7 +32,6 @@ const AdvancedSearchBuilder = props => {
   };
 
   const onFieldChange = (e, termNumber) => {
-    console.log(e.target.value)
     setSearchTerms(prevSearchTerms =>
       prevSearchTerms.map(searchTerm => {
         if (searchTerm.termNumber === termNumber) {
@@ -54,7 +45,7 @@ const AdvancedSearchBuilder = props => {
         return searchTerm;
       })
     );
-    console.log('onFieldChange()', searchTerms);
+    // console.log('onFieldChange()', searchTerms);
   };
 
   const onTermChange = (termNumber, newTerm, newInputType) => {
@@ -68,7 +59,7 @@ const AdvancedSearchBuilder = props => {
         return searchTerm;
       })
     );
-    console.log('onTermChange()', searchTerms);
+    // console.log('onTermChange()', searchTerms);
   };
 
   const addNewSearchTerm = e => {
