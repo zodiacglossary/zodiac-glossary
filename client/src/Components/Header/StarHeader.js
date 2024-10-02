@@ -3,7 +3,7 @@ import ReactTooltip from 'react-tooltip';
 
 import { useNavigate, useLocation } from "react-router-dom";
 // import { IoIosPlay, IoIosPause, } from 'react-icons/io';
-import { IoIosHome, IoIosHelpCircle, IoIosLogIn, IoIosLogOut, IoIosList, IoIosPeople, } from 'react-icons/io';
+import { IoIosHome, IoIosHelpCircle, IoIosLogIn, IoIosLogOut, IoIosList, IoIosPeople, IoIosSearch } from 'react-icons/io';
 import { GiAlarmClock, } from 'react-icons/gi';
 
 import UserContext from '../../Contexts/UserContext';
@@ -60,6 +60,9 @@ const StarHeader = () => {
       <button className={styles.home} onClick={goHome}>
         <IoIosHome />
       </button>
+      <a className={styles.home} href="/advanced-search" target={location.pathname === '/advanced-search' ? '' : "_blank"} rel="noopener noreferrer">
+        <IoIosSearch />
+      </a>
       <a className={styles.home} href="/help" target={location.pathname === '/help' ? '' : "_blank"} rel="noopener noreferrer">
         <IoIosHelpCircle />
       </a>
