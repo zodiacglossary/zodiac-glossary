@@ -456,9 +456,13 @@ const saveLemma = async (pool, lemma, username = '') => {
       Date.now(),
     ];
 
-    pool.query(sqlEditHistoryInsert, values, (error, results) => {
-      if (error) throw error;
-    });
+    if (lemma.lemmaId) {
+      pool.query(sqlEditHistoryInsert, values, (error, results) => {
+        if (error) throw error;
+      });
+    } else {
+      console.log('Null lemma_id in edit history', values);
+    }
 
   } catch (error) {
     console.log('Error adding record in edit history', error);
