@@ -49,8 +49,6 @@ const runAdvancedSearch = (request, response) => {
         LEFT JOIN quotations as q USING (lemma_id)
         WHERE ` + whereClause + `
         GROUP BY lemma_id;`;
-    console.log(sql);
-    console.log(values)
 
     pool.query(sql, values, (error, results) => {
       if (error) throw error;
