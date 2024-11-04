@@ -48,7 +48,8 @@ const runAdvancedSearch = (request, response) => {
         LEFT JOIN variants as v USING (lemma_id)
         LEFT JOIN quotations as q USING (lemma_id)
         WHERE ` + whereClause + `
-        GROUP BY lemma_id;`;
+        GROUP BY lemma_id
+        ORDER BY disp_transliteration;`;
 
     pool.query(sql, values, (error, results) => {
       if (error) throw error;

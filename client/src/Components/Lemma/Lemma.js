@@ -1,9 +1,10 @@
 import React from "react";
 import { useParams, useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import DocumentMeta from "react-document-meta";
 
 // import { deleteLemmaFromDB } from "../../Data/sample-data";
-import { getLemmaFromDB, saveLemmaToDB, deleteLemmaFromDB } from "../../Data/api";
+import { getLemmaFromDB, saveLemmaToDB, deleteLemmaFromDB, getEditHistory } from "../../Data/api";
 
 import BasicInfo from './BasicInfo';
 import Meanings from './Meanings';
@@ -25,6 +26,8 @@ const Lemma = props => {
 
   let params = useParams();
   let [lemma, setLemma] = React.useState();
+  const [edits, setEdits] = React.useState([]);
+  let [metadata, setMetadata] = React.useState({});
   
   // Really stupid cludge that forces the sidebar to update when the user saves a new lemma
   // It's either this or raise all of the lemma state and redo the routing just for that one edge case
@@ -61,18 +64,39 @@ const Lemma = props => {
     window.addEventListener('popstate', function (event){
         window.history.pushState(null, document.title,  window.location.href);
     });
-
   }, [params.lemmaId, user]);
 
   // Set the page title to give information about the current lemma if available
+  // Update metadata for Zotero citations, other uses
   React.useEffect(() => {
+    
     if (lemma) {
+      getEditHistory(lemma.lemmaId, user.token)
+      .then(edits => setEdits(edits))
+      .catch(error => console.error(error));
+
       let titleString = '';
       titleString = lemma.translation || titleString;
       titleString = lemma.transliteration || titleString;
       titleString = lemma.original || titleString;
-      document.title = titleString || 'The Zodiac Glossary';
+      titleString = titleString + ' – Lemma ' + lemma.lemmaId;
+
+      setMetadata({
+        title: titleString,
+        canonical: 'https://zodiac.fly.dev/' + lemma.lemmaId,
+        meta: {
+            charset: 'utf-8',
+            name: {
+              citation_title: titleString,
+              citation_journal_title: 'The Zodiac Glossary: A cross-cultural glossary of ancient astral science',
+              citation_public_url: 'https://zodiac.fly.dev/' + lemma.lemmaId,
+              citation_abstract: '',
+              citation_type: 'webpage',
+            }
+        }});
     }
+
+
   }, [lemma]);
 
   // Warn if unsaved changes on refresh
@@ -517,6 +541,7 @@ const Lemma = props => {
   
   // Full lemma display
   return (
+    <DocumentMeta {...metadata} extend>
     <main className={styles.lemma} id="lemma-component">
       <h1>
         {changed ? <i>Lemma (unsaved)</i> : 'Lemma'}
@@ -572,12 +597,13 @@ const Lemma = props => {
           deleteExternalLink={deleteExternalLink}
         />
 
-        {user.token && <EditHistory lemma={lemma} />}
+        <EditHistory lemma={lemma} edits={edits} />
         
         <DeleteLemma lemma={lemma} deleteLemma={deleteLemma} />
       </fieldset>
       
     </main>
+    </DocumentMeta>
   );
 };
 

@@ -142,7 +142,7 @@ const checkLemma = (request, response) => {
 const getEditHistory = (request, response) => {
   try {
     const lemmaId = request.query.lemmaId;
-    const sql =  `SELECT * FROM edit_history WHERE lemma_id = $1 ORDER BY timestamp DESC;`;
+    const sql =  `SELECT username, edit_history.id AS id, lemma_id, timestamp, first_name, last_name FROM edit_history JOIN users USING (username) WHERE lemma_id = $1 ORDER BY timestamp DESC;`;
     pool.query(sql, [lemmaId], (error, results) => {
       if (error) {
         console.log(error);
