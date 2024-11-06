@@ -14,6 +14,7 @@ import CrossLinks from './CrossLinks';
 import ExternalLinks from './ExternalLinks';
 import DeleteLemma from './DeleteLemma';
 import EditHistory from './EditHistory';
+import Citation from './Citation';
 
 import UserContext from '../../Contexts/UserContext';
 
@@ -27,7 +28,8 @@ const Lemma = props => {
   let params = useParams();
   let [lemma, setLemma] = React.useState();
   const [edits, setEdits] = React.useState([]);
-  let [metadata, setMetadata] = React.useState({});
+  const [metadata, setMetadata] = React.useState({});
+  const [title, setTitle] = React.useState('');
   
   // Really stupid cludge that forces the sidebar to update when the user saves a new lemma
   // It's either this or raise all of the lemma state and redo the routing just for that one edge case
@@ -80,20 +82,12 @@ const Lemma = props => {
       titleString = lemma.transliteration || titleString;
       titleString = lemma.original || titleString;
       titleString = titleString + ' – Lemma ' + lemma.lemmaId;
+      setTitle(titleString);
 
       setMetadata({
         title: titleString,
         canonical: 'https://zodiac.fly.dev/' + lemma.lemmaId,
-        meta: {
-            charset: 'utf-8',
-            name: {
-              citation_title: titleString,
-              citation_journal_title: 'The Zodiac Glossary: A cross-cultural glossary of ancient astral science',
-              citation_public_url: 'https://zodiac.fly.dev/' + lemma.lemmaId,
-              citation_abstract: '',
-              citation_type: 'webpage',
-            }
-        }});
+      });
     }
 
 
@@ -509,7 +503,37 @@ const Lemma = props => {
     });
     setChanged(true);
   };
-  
+
+  // CITATIONS
+
+  // Returns a list of unique editors for the lemma with a count of the number of edits made
+  // Sorted in descending order by number of edits
+  const uniqueEditorList = edits => {
+    let editsUnique = [];
+    for (const edit of edits) {
+      const matchedEdit = editsUnique.find(editUnique => editUnique.username === edit.username);
+      if (matchedEdit) {
+        matchedEdit.count++;
+      }
+      else {
+        editsUnique.push({...edit, count: 1});
+      }
+    }
+    
+    editsUnique.sort((a, b) => b.count - a.count);
+    return editsUnique;
+  }
+
+  // Returns most recent edit date for citation purposes
+  const getMostRecentEditDate = edits => {
+    if (edits.length) {
+      const mostRecentEvent = edits.map(edit => edit.timestamp).reduce((mostRecent, currentEvent) => {
+        return new Date(currentEvent.date) > new Date(mostRecent.date) ? currentEvent : mostRecent;
+      });
+      return mostRecentEvent;
+    }
+    return new Date();
+  }
   
   // Default display when an invalid lemma id is in the URL params
   if (params.lemmaId && !lemma) {
@@ -597,7 +621,9 @@ const Lemma = props => {
           deleteExternalLink={deleteExternalLink}
         />
 
-        <EditHistory lemma={lemma} edits={edits} />
+        <Citation lemma={lemma} title={title} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} />
+
+        <EditHistory lemma={lemma} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} />
         
         <DeleteLemma lemma={lemma} deleteLemma={deleteLemma} />
       </fieldset>

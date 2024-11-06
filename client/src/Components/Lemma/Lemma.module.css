@@ -280,3 +280,21 @@
   color: #FFEF;
   filter: drop-shadow(0 0 2px #FFE6);
 }
+
+.citation {
+  text-indent: -1vw;
+  /* margin-left: 4vw; */
+  padding-left: 2vw;
+}
+
+.copy {  
+  color: #ffef;
+  background: #fff0;
+  border: none;
+  outline: none;
+  margin: 0vw 1vw 0vw -2vw;
+  float: left;
+}
+.copy:hover {  
+  filter: drop-shadow(0 0 3px #ffe8);
+}
