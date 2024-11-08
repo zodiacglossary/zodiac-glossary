@@ -150,6 +150,7 @@ const Citation = props => {
       "DC.format": "html",
       "DC.relation": 'https://zodiac.fly.dev/' + lemma.lemmaId,
       "DC.source": 'The Zodiac Glossary: A cross-cultural glossary of ancient astral science',
+      "DC.description": "----",
     },
   }
 
