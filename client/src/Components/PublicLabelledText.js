@@ -13,14 +13,10 @@ function PublicLabelledText(props) {
 	}
 
 	return (
-		<tr>
-			<td>
-				<div className={styles.label}>{props.label}</div>
-			</td>
-			<td>
-				<div className={styles.label} style={props.style}>{props.content}</div>
-			</td>
-		</tr>
+		<div className={styles.row}>
+			<div className={styles.label}>{props.label}</div>
+			<div className={styles.label} style={props.style}>{props.content}</div>
+		</div>
 	);
 }
 

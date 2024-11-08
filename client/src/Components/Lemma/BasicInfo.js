@@ -19,7 +19,7 @@ const BasicInfo = props => {
     return (
       <div className={styles.basicPublic}>
         <h3>Basic</h3>
-        <table><tbody>
+        {/* <table><tbody> */}
           <Dropdown
             name="language"
             label="Language"
@@ -62,7 +62,7 @@ const BasicInfo = props => {
             onChange={onChange} 
           />
           </>)}
-        </tbody></table>
+        {/* </tbody></table> */}
       </div>
     );
   }

@@ -1,15 +1,21 @@
 import React from "react";
 import ReactDOMServer from 'react-dom/server';
-import DocumentMeta from "react-document-meta";
 import { IoIosCopy } from "react-icons/io";
+
+import DynamicMetadata from '../DynamicMetadata';
 
 import styles from './Lemma.module.css';
 
 
 // Copy JSX object to clipboard as formatted text
+
+// MOVE THIS TO THE FUNCTIONS FILE SO OTHER THINGS CAN USE IT – CDC 06.11.2024
+
 const copyToClipboard = (e, citationJSX) => {
   const htmlContent = ReactDOMServer.renderToString(citationJSX);
-  console.log(htmlContent)
+
+  console.log(citationJSX)
+  
   function listener(e) {
     e.clipboardData.setData("text/html", htmlContent);
     e.clipboardData.setData("text/plain", htmlContent);
@@ -22,7 +28,7 @@ const copyToClipboard = (e, citationJSX) => {
 
 // Creates a formatted list of editors for Zotero, etc.
 const compileEditorListZotero = editorList => {
-  return editorList.map(editor => [editor.last_name, editor.first_name].join(', ')).join('; ');
+  return editorList.map(editor => [editor.last_name, editor.first_name].join(', '));
 };
 
 const compileEditorListAPA = editorList => {
@@ -96,7 +102,7 @@ const compileEditorListMLA = editorList => {
 
   let editorListOut = editorList[0].last_name + ', ' + editorList[0].first_name;
   if (editorList.length === 1)
-    return editorListOut;
+    return editorListOut + '.';
 
   if (editorList.length === 2)
     return editorListOut + `, and ${editorList.at(1).first_name} ${editorList.at(1).last_name}.`;
@@ -132,24 +138,24 @@ const Citation = props => {
   }
   
   // Get all the editors into the metadata for Zotero connector, etc.
+  const editorList = compileEditorListZotero(props.editorList);
   const metadata = {
+    title: props.title,
+    canonical: 'https://zodiac.fly.dev/' + lemma.lemmaId,
+    editors: editorList, // Needs to be in a separate object because each editor needs its own meta tag (see DynamicMetadata component)
     meta: {
-      charset: 'utf-8',
-      name: {
-        citation_title: props.title,
-        citation_journal_title: 'The Zodiac Glossary: A cross-cultural glossary of ancient astral science',
-        citation_public_url: 'https://zodiac.fly.dev/' + lemma.lemmaId,
-        citation_abstract: '',
-        citation_type: 'webpage',
-        citation_authors: compileEditorListZotero(props.editorList),
-        citation_date: props.mostRecentDate.toLocaleDateString("en-US"),
-      }
-    }
+      "DC.type": "Web Page",
+      "DC.title":  props.title,
+      "DC.date": props.mostRecentDate.toLocaleDateString("en-US"),
+      "DC.format": "html",
+      "DC.relation": 'https://zodiac.fly.dev/' + lemma.lemmaId,
+      "DC.source": 'The Zodiac Glossary: A cross-cultural glossary of ancient astral science',
+    },
   }
 
   return (
-    <DocumentMeta {...metadata} extend>
     <div className={styles.crossLinks}>
+      <DynamicMetadata metadata={metadata} />
       <h3>How to Cite</h3>
 
       <h4>APA</h4>
@@ -178,7 +184,6 @@ const Citation = props => {
       
 
     </div>
-    </DocumentMeta>
   );
 };
 

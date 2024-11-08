@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams, useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import DocumentMeta from "react-document-meta";
 
 // import { deleteLemmaFromDB } from "../../Data/sample-data";
 import { getLemmaFromDB, saveLemmaToDB, deleteLemmaFromDB, getEditHistory } from "../../Data/api";
@@ -28,7 +27,6 @@ const Lemma = props => {
   let params = useParams();
   let [lemma, setLemma] = React.useState();
   const [edits, setEdits] = React.useState([]);
-  const [metadata, setMetadata] = React.useState({});
   const [title, setTitle] = React.useState('');
   
   // Really stupid cludge that forces the sidebar to update when the user saves a new lemma
@@ -83,11 +81,6 @@ const Lemma = props => {
       titleString = lemma.original || titleString;
       titleString = titleString + ' – Lemma ' + lemma.lemmaId;
       setTitle(titleString);
-
-      setMetadata({
-        title: titleString,
-        canonical: 'https://zodiac.fly.dev/' + lemma.lemmaId,
-      });
     }
 
 
@@ -509,6 +502,9 @@ const Lemma = props => {
   // Returns a list of unique editors for the lemma with a count of the number of edits made
   // Sorted in descending order by number of edits
   const uniqueEditorList = edits => {
+    if (!edits.length)
+      return [];
+    
     let editsUnique = [];
     for (const edit of edits) {
       const matchedEdit = editsUnique.find(editUnique => editUnique.username === edit.username);
@@ -520,7 +516,11 @@ const Lemma = props => {
       }
     }
     
+    // Bump the first editor up slightly so that they get listed as first author even if someone else has the same number of edits
+    editsUnique.find(edit => edit.username === edits.at(-1).username).count += 0.5;
+    
     editsUnique.sort((a, b) => b.count - a.count);
+    
     return editsUnique;
   }
 
@@ -565,7 +565,6 @@ const Lemma = props => {
   
   // Full lemma display
   return (
-    <DocumentMeta {...metadata} extend>
     <main className={styles.lemma} id="lemma-component">
       <h1>
         {changed ? <i>Lemma (unsaved)</i> : 'Lemma'}
@@ -574,7 +573,7 @@ const Lemma = props => {
         ) : null}
       </h1>
       
-      <fieldset disabled={user.token===null} style={{border: 'none', margin: 0, padding: 0}}>
+      <fieldset style={{border: 'none', margin: 0, padding: 0}}>
 
         <BasicInfo lemma={lemma} onChange={onChange} />
         <Meanings
@@ -629,7 +628,6 @@ const Lemma = props => {
       </fieldset>
       
     </main>
-    </DocumentMeta>
   );
 };
 
