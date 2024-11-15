@@ -39,9 +39,6 @@ h4 {
   /* margin-top: 5px;
   margin-right: 5px; */
 }
-.inputComment {
-  height: 8vw;
-}
 .inputKeyboard {
   border-radius: 0.5vw 0 0 0.5vw;
   margin-right: 0;
@@ -82,6 +79,9 @@ h4 {
 }
 .inputMeaning {
   width: 22.5vw;
+}
+.inputComment {
+  height: auto;
 }
 .inputCategory {
   width: 20vw;

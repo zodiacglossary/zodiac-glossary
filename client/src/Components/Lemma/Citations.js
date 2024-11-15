@@ -147,15 +147,25 @@ const citeMLA = (editorList, date, title, lemmaId) => {
   )
 };
 
+const compileEditorListBibTeX = editorList => {
+  if (!editorList.length)
+    return '';
+
+  editorList = editorList.map((editor) => `${editor.last_name}, ${editor.first_name}`);
+  return editorList.join(' and ');
+};
+
 const citeBibTeX = (editorList, date, title, lemmaId) => {
+  
   // BibTeX format uses the same date format as the Harvard style
-  // and the same author format as APA style (with 'and' instead of '&')
+  
   return (
     <>
       {`@online{zodiac${date.getFullYear()}lemma${lemmaId},
-  author    = {${compileEditorListAPA(editorList).replace(/ & /g, ' and ')}},
-  title     = {The Zodiac Glossary—Lemma ${lemmaId}},
-  year      = {${date.getFullYear()}},
+  author    = {${compileEditorListBibTeX(editorList)}},
+  title     = {${title}},
+  journal   = {The Zodiac Glossary: A Cross-Cultural Glossary of Ancient Astral Science},
+  year      = {${compileDateHarvard(date)}},
   url       = {${"https://zodiac.fly.dev/" + lemmaId}},
   note      = {Accessed: ${compileDateHarvard(new Date())}}
 }

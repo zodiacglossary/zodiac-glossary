@@ -51,7 +51,10 @@ const Meaning = props => {
           onChange={e => props.updateMeaning('value', e.target.value, meaning.id)}
         />
         <textarea
-          style={{display: (user.token || meaning.comment ? 'inline' : 'none')}}
+          style={{
+            display: (user.token || meaning.comment ? 'inline' : 'none'),
+            height: `${Math.max(meaning.comment.length / 35, 2) * 1.2}vw`,
+          }}
           className={styles.inputMeaning}
           type="text"
           name={"comment_"+meaning.id}

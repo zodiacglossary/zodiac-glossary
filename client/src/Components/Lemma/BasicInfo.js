@@ -335,6 +335,9 @@ const BasicInfo = props => {
           </td>
           <td>
             <textarea
+              style={{
+                height: `${Math.max(Math.ceil(lemma.comment.length / 15), 2) * 1.2}vw`,
+              }}
               className={styles.inputComment}
               type="text"
               name="comment"

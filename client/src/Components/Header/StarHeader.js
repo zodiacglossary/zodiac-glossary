@@ -105,7 +105,8 @@ const StarHeader = () => {
 
       {(user && user.token) ? (
         <>
-          <a className={styles.home} href="/recents" target={location.pathname === '/recents' ? '' : "_blank"} rel="noopener noreferrer" data-tip="Recent Changes" data-for="recents-tooltip">
+          <a className={styles.home} href="/recents" data-tip="Recent Changes" data-for="recents-tooltip">
+          {/* <a className={styles.home} href="/recents" target={location.pathname === '/recents' ? '' : "_blank"} rel="noopener noreferrer" data-tip="Recent Changes" data-for="recents-tooltip"> */}
             <GiAlarmClock />
           </a>
           <Tooltip id="recents-tooltip" type="light" html={false} place="bottom-start" />

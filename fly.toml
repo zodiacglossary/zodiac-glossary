@@ -18,7 +18,6 @@ processes = []
 
 [env]
   PORT = "8080"
-  ALLOW_INSECURE_HEROKU_18_BUILDER = 1
 
 [experimental]
   allowed_public_ports = []
