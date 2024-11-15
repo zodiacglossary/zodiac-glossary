@@ -290,7 +290,7 @@ const Citation = props => {
   let fullCitation = props.citation;
   if (props.citationStyle === 'bibtex') {
     fullCitation = (
-      <pre><code>
+      <pre><code><br />
         {props.citation}
       </code></pre>
     );
