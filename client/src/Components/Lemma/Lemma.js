@@ -1,6 +1,8 @@
 import React from "react";
 import { useParams, useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { IoIosShareAlt, IoIosCopy } from "react-icons/io";
+
 
 // import { deleteLemmaFromDB } from "../../Data/sample-data";
 import { getLemmaFromDB, saveLemmaToDB, deleteLemmaFromDB, getEditHistory } from "../../Data/api";
@@ -13,11 +15,12 @@ import CrossLinks from './CrossLinks';
 import ExternalLinks from './ExternalLinks';
 import DeleteLemma from './DeleteLemma';
 import EditHistory from './EditHistory';
-import Citation from './Citation';
+import Citations from './Citations';
 
 import UserContext from '../../Contexts/UserContext';
 
 import styles from './Lemma.module.css';
+import { copyToClipboard } from "../../Functions/copyToClipboard";
 
 const Lemma = props => {
   let navigate = useNavigate();
@@ -571,9 +574,12 @@ const Lemma = props => {
         {(user && user.token) ? (
           <button className={styles.delete} onClick={() => saveLemma()}>SAVE</button>
         ) : null}
+        {/* <button className={styles.delete} style={{cursor: "pointer"}} onClick={e => copyToClipboard(e, 'https://zodiac.fly.dev/' + lemma.lemmaId)}>Share <IoIosCopy /></button> */}
       </h1>
       
       <fieldset style={{border: 'none', margin: 0, padding: 0}}>
+
+        {/* <Citations lemma={lemma} title={title} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} /> */}
 
         <BasicInfo lemma={lemma} onChange={onChange} />
         <Meanings
@@ -620,7 +626,7 @@ const Lemma = props => {
           deleteExternalLink={deleteExternalLink}
         />
 
-        <Citation lemma={lemma} title={title} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} />
+        <Citations lemma={lemma} title={title} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} />
 
         <EditHistory lemma={lemma} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} />
         
