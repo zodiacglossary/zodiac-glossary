@@ -1,6 +1,5 @@
 import React from "react";
-import ReactTooltip from 'react-tooltip';
-import Collapsible from "react-collapsible";
+// import ReactTooltip from 'react-tooltip';
 import {MdExpandMore, MdExpandLess} from 'react-icons/md';
 import { IoIosCopy, IoIosCheckmark } from "react-icons/io";
 import { FcCancel } from "react-icons/fc";
@@ -167,7 +166,8 @@ const citeBibTeX = (editorList, date, title, lemmaId) => {
   journal   = {The Zodiac Glossary: A Cross-Cultural Glossary of Ancient Astral Science},
   year      = {${compileDateHarvard(date)}},
   url       = {${"https://zodiac.fly.dev/" + lemmaId}},
-  note      = {Accessed: ${compileDateHarvard(new Date())}}
+  note      = {Accessed: ${compileDateHarvard(new Date())}},
+  urldate   = {${(new Date()).getFullYear()}-${String((new Date()).getMonth() + 1).padStart(2, '0')}-${String((new Date()).getDate()).padStart(2, '0')}}
 }
 `}
     </>
