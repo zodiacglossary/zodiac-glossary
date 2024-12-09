@@ -3,7 +3,7 @@ import Tooltip from 'react-tooltip';
 
 import { useNavigate, useLocation } from "react-router-dom";
 // import { IoIosPlay, IoIosPause, } from 'react-icons/io';
-import { IoIosHome, IoIosHelpCircle, IoIosLogIn, IoIosLogOut, IoIosList, IoIosPeople, IoIosSearch } from 'react-icons/io';
+import { IoIosColorFilter, IoIosHome, IoIosHelpCircle, IoIosLogIn, IoIosLogOut, IoIosList, IoIosPeople, IoIosSearch } from 'react-icons/io';
 import { GiAlarmClock, } from 'react-icons/gi';
 
 import UserContext from '../../Contexts/UserContext';
@@ -78,6 +78,29 @@ const StarHeader = () => {
         <IoIosSearch />
       </a>
       <Tooltip id="advanced-search-tooltip" type="light" html={false} place="bottom-start" />
+
+      <a 
+        className={styles.home} 
+        href="/graph/crosslinks" 
+        target={location.pathname === '/graph/crosslinks' ? '' : "_blank"} 
+        rel="noopener noreferrer"
+        data-tip="Cross links Graph"
+        data-for="crosslinks-tooltip"
+      >
+        <IoIosColorFilter />
+      </a>
+      <Tooltip id="crosslinks-tooltip" type="light" html={false} place="bottom-start" />
+      <a 
+        className={styles.home} 
+        href="/graph/categories" 
+        target={location.pathname === '/graph/categories' ? '' : "_blank"} 
+        rel="noopener noreferrer"
+        data-tip="Categories Graph"
+        data-for="categories-tooltip"
+      >
+        <IoIosColorFilter />
+      </a>
+      <Tooltip id="categories-tooltip" type="light" html={false} place="bottom-start" />
 
       <a 
         className={styles.home} 
