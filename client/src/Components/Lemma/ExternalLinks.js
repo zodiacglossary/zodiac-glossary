@@ -6,7 +6,7 @@ import UserContext from '../../Contexts/UserContext';
 
 import { unicodeGreek2BetaCode } from "../../Functions/unicodeGreek2BetaCode";
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const ExternalLinks = props => {
   const {user} = React.useContext(UserContext);
@@ -14,17 +14,17 @@ const ExternalLinks = props => {
   const original = props.lemma.original;
 
   unicodeGreek2BetaCode(original)
-  
+
   return (
     <div className={styles.crossLinks}>
       <h3>External Links</h3>
       {props.externalLinks.map((externalLink, i) => {
         return (
-          <ExternalLink 
-            key={externalLink.id} 
+          <ExternalLink
+            key={externalLink.id}
             externalLink={externalLink}
             lemma={props.lemma}
-            i={i} 
+            i={i}
             updateExternalLink={props.updateExternalLink}
             deleteExternalLink={props.deleteExternalLink}
           />

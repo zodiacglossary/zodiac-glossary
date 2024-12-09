@@ -16,7 +16,7 @@ import EditHistory from './EditHistory';
 
 import UserContext from '../../Contexts/UserContext';
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const Lemma = props => {
   let navigate = useNavigate();
@@ -25,11 +25,11 @@ const Lemma = props => {
 
   let params = useParams();
   let [lemma, setLemma] = React.useState();
-  
+
   // Really stupid cludge that forces the sidebar to update when the user saves a new lemma
   // It's either this or raise all of the lemma state and redo the routing just for that one edge case
-  let [updateLemmataList, changed, setChanged, setContentLemma, lemmataList, meaningsCategories] = useOutletContext(); 
-  
+  let [updateLemmataList, changed, setChanged, setContentLemma, lemmataList, meaningsCategories] = useOutletContext();
+
   React.useEffect(() => {
     // Scroll lemma to top on load
     const element = document.getElementById('lemma-component');
@@ -89,7 +89,7 @@ const Lemma = props => {
       window.removeEventListener("beforeunload", alertUser);
     };
   }, [changed]);
-  
+
   // Keyboard shortcuts
   const handleKeyPress = e => {
     // Meta keys
@@ -101,7 +101,7 @@ const Lemma = props => {
         saveLemma();
       }
     }
-    
+
     // Trying to prevent the stupid back button from erasing half-entered lemmata
     if (e.keyCode === 166 || e.keyCode === 167) {
       e.preventDefault();
@@ -140,20 +140,20 @@ const Lemma = props => {
     }
     setChanged(true);
   };
-  
+
   const saveLemma = () => {
     updateLemmataList();
     setChanged(false);
     saveLemmaToDB(setLemma, lemma, user.token);
     setContentLemma(lemma);
-    
+
     // Remind users to fill the editor field if it is blank
     if (!lemma || !lemma.editor) {
       alert('Please add your name to the editor field and save again.');
       setChanged(true);
     }
   };
-  
+
   const deleteLemma = () => {
     deleteLemmaFromDB(lemma.lemmaId, user.token);
     navigate('/' + location.search);
@@ -192,12 +192,12 @@ const Lemma = props => {
     });
     setChanged(true);
   };
-  
+
   //////////////////////////////////////////////////////////////////////////////
   // CATEGORIES
   const addNewMeaning = (e, newMeaningData = null) => {
     e.preventDefault();
-    
+
     const newMeaning = {
       id: uuidv4(),
       value: (newMeaningData ? newMeaningData.value : ''),
@@ -205,7 +205,7 @@ const Lemma = props => {
       comment: '',
       categories: [],
     };
-    
+
     setLemma(prevLemma => {
       return {
         ...prevLemma,
@@ -254,7 +254,7 @@ const Lemma = props => {
   };
 
   const addNewCategory = (meaningId, newCategoryData = null) => {
-    
+
     const newCategory = {
       category_id: uuidv4(),
       category: '',
@@ -309,14 +309,14 @@ const Lemma = props => {
 
   const addNewVariant = (e, newVariantData = null) => {
     e.preventDefault();
-    
+
     const newVariant = {
       id: uuidv4(),
       original: (newVariantData ? newVariantData.original : ''),
-      transliteration: (newVariantData ? newVariantData.transliteration : ''), 
+      transliteration: (newVariantData ? newVariantData.transliteration : ''),
       comment: '',
     };
-    
+
     setLemma(prevLemma => {
       return {
         ...prevLemma,
@@ -359,7 +359,7 @@ const Lemma = props => {
 
   const addNewQuotation = e => {
     e.preventDefault();
-    
+
     const newQuotation = {
       id: uuidv4(),
       original: '',
@@ -375,7 +375,7 @@ const Lemma = props => {
       page: '',
       meaning_id: 0,
     }
-    
+
     setLemma(prevLemma => {
       return {
         ...prevLemma,
@@ -387,7 +387,7 @@ const Lemma = props => {
     });
     setChanged(true);
   };
-  
+
   //////////////////////////////////////////////////////////////////////////////
   // EXTERNAL LINKS
   const updateExternalLink = (key, updatedexternalLink, id) => {
@@ -424,7 +424,7 @@ const Lemma = props => {
       url: '',
       display: lemma.original,
     }
-    
+
     setLemma(prevLemma => {
       return {
         ...prevLemma,
@@ -436,7 +436,7 @@ const Lemma = props => {
     });
     setChanged(true);
   };
-  
+
   //////////////////////////////////////////////////////////////////////////////
   // CROSS LINKS
   const updateCrossLink = (updatedCrossLink, id) => {
@@ -473,7 +473,7 @@ const Lemma = props => {
       link: '',
       lemmaId: lemma.lemmaId,
     }
-    
+
     setLemma(prevLemma => {
       return {
         ...prevLemma,
@@ -485,8 +485,8 @@ const Lemma = props => {
     });
     setChanged(true);
   };
-  
-  
+
+
   // Default display when an invalid lemma id is in the URL params
   if (params.lemmaId && !lemma) {
     return (
@@ -514,7 +514,7 @@ const Lemma = props => {
       </main>
     );
   }
-  
+
   // Full lemma display
   return (
     <main className={styles.lemma} id="lemma-component">
@@ -524,7 +524,7 @@ const Lemma = props => {
           <button className={styles.delete} onClick={() => saveLemma()}>SAVE</button>
         ) : null}
       </h1>
-      
+
       <fieldset disabled={user.token===null} style={{border: 'none', margin: 0, padding: 0}}>
 
         <BasicInfo lemma={lemma} onChange={onChange} />
@@ -538,14 +538,14 @@ const Lemma = props => {
           deleteCategory={deleteCategory}
           addNewCategory={addNewCategory}
         />
-        
+
         <Variants
           lemma={lemma}
           updateVariant={updateVariant}
           addNewVariant={addNewVariant}
           deleteVariant={deleteVariant}
         />
-        
+
         <Quotations
           quotations={lemma.quotations}
           language={lemma.language}
@@ -554,7 +554,7 @@ const Lemma = props => {
           addNewQuotation={addNewQuotation}
           deleteQuotation={deleteQuotation}
         />
-        
+
         <CrossLinks
           crossLinks={lemma.crossLinks}
           lemmataList={lemmataList}
@@ -563,7 +563,7 @@ const Lemma = props => {
           addNewCrossLink={addNewCrossLink}
           deleteCrossLink={deleteCrossLink}
         />
-        
+
         <ExternalLinks
           externalLinks={lemma.externalLinks}
           lemma={lemma}
@@ -573,10 +573,10 @@ const Lemma = props => {
         />
 
         {user.token && <EditHistory lemma={lemma} />}
-        
+
         <DeleteLemma lemma={lemma} deleteLemma={deleteLemma} />
       </fieldset>
-      
+
     </main>
   );
 };

@@ -2,13 +2,13 @@ import React from "react";
 
 import UserContext from '../../Contexts/UserContext';
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const DeleteLemma = props => {
   const [style, setStyle] = React.useState({display: 'none'});
   const [deleteInput, setDeleteInput] = React.useState('');
   const {user} = React.useContext(UserContext);
-  
+
   const startDeletionProcess = e => {
     e.preventDefault();
     setDeleteInput('');
@@ -16,14 +16,14 @@ const DeleteLemma = props => {
       props.deleteLemma(props.lemma.lemmaId);
     }
   };
-  
+
   const onChange = e => {
     setDeleteInput(e.target.value);
   }
-  
+
   return (
-    <div 
-      className={styles.deleteLemma} 
+    <div
+      className={styles.deleteLemma}
       onClick={e => {
         setStyle({display: 'block'});
       }}

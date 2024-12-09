@@ -7,7 +7,7 @@ import UserContext from '../../Contexts/UserContext';
 
 import { languageOptions, partOfSpeechOptions, loanTypes } from '../../Data/options';
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const BasicInfo = props => {
   let lemma = props.lemma;
@@ -25,14 +25,14 @@ const BasicInfo = props => {
             label="Language"
             value={lemma.language}
             options={languageOptions}
-            onChange={onChange} 
+            onChange={onChange}
           />
           <Dropdown
             name="partOfSpeech"
             label="Part of Speech"
             value={lemma.partOfSpeech}
             options={partOfSpeechOptions}
-            onChange={onChange} 
+            onChange={onChange}
           />
           <PublicLabelledText
             label={lemma.language === "akkadian" ? 'Normalized' : 'Transliteration'}
@@ -52,14 +52,14 @@ const BasicInfo = props => {
             label="Source Language"
             value={lemma.loan_language}
             options={languageOptions}
-            onChange={onChange} 
+            onChange={onChange}
           />
           <Dropdown
             name="loan_type"
             label="Type of Loan"
             value={lemma.loan_type}
             options={loanTypes}
-            onChange={onChange} 
+            onChange={onChange}
           />
           </>)}
         </tbody></table>
@@ -71,7 +71,7 @@ const BasicInfo = props => {
   if (!lemma.editor || !lemma.editor.trim()) {
     lemma.editor = (user.user ? user.user.username : '');
   }
-  
+
   // Editor view
   return (
     <div className={styles.basic}>
@@ -173,14 +173,14 @@ const BasicInfo = props => {
           label="Language"
           value={lemma.language}
           options={languageOptions}
-          onChange={onChange} 
+          onChange={onChange}
         />
         <Dropdown
           name="partOfSpeech"
           label="Part of Speech"
           value={lemma.partOfSpeech}
           options={partOfSpeechOptions}
-          onChange={onChange} 
+          onChange={onChange}
         />
         <tr>
           <td>
@@ -290,20 +290,20 @@ const BasicInfo = props => {
           label="Source Language"
           value={lemma.loan_language}
           options={languageOptions}
-          onChange={onChange} 
+          onChange={onChange}
         />
         <Dropdown
           name="loan_type"
           label="Type of Loan"
           value={lemma.loan_type}
           options={loanTypes}
-          onChange={onChange} 
+          onChange={onChange}
         />
         {/* Do we really need this? Ask about it in glossary meeting on 09.02.2024 */}
         {/* <tr>
           <td>
-            <label 
-              className={styles.label} 
+            <label
+              className={styles.label}
               htmlFor="dropdown_loan_type"
               data-tip="What sort of loan? Normal"
               data-for="type-of-loan-tooltip"

@@ -2,8 +2,6 @@ import React from 'react';
 import Collapsible from "react-collapsible";
 import {MdExpandMore, MdExpandLess} from 'react-icons/md';
 
-import styles from '../Content.module.css'
-
 import { getContributions } from "../../Data/contributors";
 
 import UserContext from '../../Contexts/UserContext';
@@ -27,8 +25,8 @@ const Contributors = props => {
   }, []);
 
   return (
-    <div className={styles.content}>
-      <div className={styles.container}>
+    <div class="content">
+      <div class="container">
         <h1>Contributors</h1>
         <ul>
           {contributors.map(contributor => (
@@ -47,7 +45,7 @@ const Contributions = props => {
         {props.contributor.first_name}&nbsp;
         {props.contributor.last_name}
       </a>
-      <Collapsible 
+      <Collapsible
         trigger={<MdExpandMore />}
         triggerWhenOpen={<MdExpandLess />}
         contentContainerTagName="span"
@@ -57,9 +55,9 @@ const Contributions = props => {
           {props.contributor.contributions.map(lemma => {
             return (
               <li key={lemma.lemma_id}>
-              <a 
-                href={"/"+lemma.lemma_id} 
-                target="_blank" 
+              <a
+                href={"/"+lemma.lemma_id}
+                target="_blank"
                 rel="noopener noreferrer"
               >
                 {lemma.published && (<span>{lemma.transliteration} | {lemma.original} | {lemma.primary_meaning}</span>)}

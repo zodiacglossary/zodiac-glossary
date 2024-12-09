@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styles from './Recents.module.css';
-
 import { getRecentsListPromise, checkLemma } from '../../Data/api';
 import UserContext from '../../Contexts/UserContext';
 
@@ -42,9 +40,9 @@ const LemmaCheck = props => {
         onChange={e => checkLemmaChange(lemma.lemmaId, e.target.checked)}
       />
       &nbsp;&nbsp;
-      <a 
-        href={"/"+lemma.lemmaId} 
-        target="_blank" 
+      <a
+        href={"/"+lemma.lemmaId}
+        target="_blank"
         rel="noopener noreferrer"
         // onClick={e => checkLemmaChange(lemma.lemmaId, true)}
       >
@@ -65,7 +63,7 @@ const Recents = props => {
 
     // Original method
     // l.sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1)); // sort by order created, desc
-    // l.sort((a, b) => (a.attention > b.attention ? -1 : 1)); // put ones that need attention at the top  
+    // l.sort((a, b) => (a.attention > b.attention ? -1 : 1)); // put ones that need attention at the top
     // l.sort((a, b) => (a.checked < b.checked ? -1 : 1)); // put checked ones at the bottom
 
     let l = lemmata.slice(0);
@@ -81,7 +79,7 @@ const Recents = props => {
       lemma.timevalue = timevalue;
       return lemma;
     })
-    
+
     // Function that mathematically converts checkbox combo into sortable integer
     // Needed to deal with Firefox's pathological handling of the sort function
     const sortFunction = a => (1 - a.attention) + a.checked * 2 + a.timevalue;
@@ -99,8 +97,8 @@ const Recents = props => {
 
 
   return (
-    <div className={styles.content}>
-      <div className={styles.container}>
+    <div class="content">
+      <div class="container">
       <h1>Recent Edits to Double Check</h1>
       {lemmata.map(lemma => (<LemmaCheck key={lemma.lemmaId} lemma={lemma} />))}
       </div>

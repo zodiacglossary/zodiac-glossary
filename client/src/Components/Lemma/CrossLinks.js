@@ -4,7 +4,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import CrossLink from './CrossLink';
 import UserContext from '../../Contexts/UserContext';
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const CrossLinks = props => {
   const {user} = React.useContext(UserContext);
@@ -15,8 +15,8 @@ const CrossLinks = props => {
       {props.crossLinks.map((crossLink, i) => {
         return (
           <CrossLink
-            key={crossLink.id} 
-            crossLink={crossLink.link} 
+            key={crossLink.id}
+            crossLink={crossLink.link}
             i={crossLink.id}
             lemmataList={props.lemmataList}
             currentLemma={props.currentLemma}
@@ -28,7 +28,7 @@ const CrossLinks = props => {
       <div style={{display: (user.token ? 'block' : 'none')}}>
         <button className={styles.add} onClick={props.addNewCrossLink}><IoIosAddCircle /></button>
       </div>
-      
+
     </div>
   );
 };

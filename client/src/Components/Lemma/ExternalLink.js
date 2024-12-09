@@ -6,16 +6,16 @@ import UserContext from '../../Contexts/UserContext';
 
 import { checkUrlForHttp } from "../../Functions/checkUrlForHttp";
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const ExternalLink = props => {
   const {user} = React.useContext(UserContext);
   // const [externalLink, setExternallink] = React.useState(props.externalLink);
   const i = props.i;
-  
+
   const [style, setStyle] = React.useState({display: 'none'});
-  
-  if (!user.token) {    
+
+  if (!user.token) {
     return (
       <a className={styles.label} target="_blank" rel="noopener noreferrer" href={props.externalLink.url}>
         {props.externalLink.display}
@@ -24,9 +24,9 @@ const ExternalLink = props => {
       </a>
     )
   }
-  
+
   return (
-    <div 
+    <div
       className={styles.crossLinksList}
       onMouseEnter={e => {
         setStyle({display: 'block'});
@@ -51,7 +51,7 @@ const ExternalLink = props => {
           id={"externalLink_URL_"+i}
           placeholder="URL to link to"
           value={props.externalLink.url}
-          onChange={e => props.updateExternalLink('url', checkUrlForHttp(e.target.value), props.externalLink.id)} 
+          onChange={e => props.updateExternalLink('url', checkUrlForHttp(e.target.value), props.externalLink.id)}
         />
       </div>
       <div className={styles.row}>
@@ -70,7 +70,7 @@ const ExternalLink = props => {
           id={"externalLink_display_"+i}
           placeholder="Text to show in link"
           value={props.externalLink.display}
-          onChange={e => props.updateExternalLink('display', e.target.value, props.externalLink.id)} 
+          onChange={e => props.updateExternalLink('display', e.target.value, props.externalLink.id)}
         />
       </div>
       <div className={styles.row}>
@@ -90,7 +90,7 @@ const ExternalLink = props => {
           name={"externalLink_sample_"+i}
           placeholder="URL"
           value={props.externalLink.display}
-          onChange={e => props.updateExternalLink('display', e.target.value, props.externalLink.id)} 
+          onChange={e => props.updateExternalLink('display', e.target.value, props.externalLink.id)}
         />*/}
       </div>
       <div className={styles.row}>

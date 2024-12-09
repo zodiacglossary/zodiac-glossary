@@ -6,7 +6,7 @@ import UserContext from '../../Contexts/UserContext';
 
 import { getMeaningCategories } from "../../Data/autocomplete";
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const Categories = props => {
   const {user} = React.useContext(UserContext);
@@ -27,7 +27,7 @@ const Categories = props => {
 		<div className={styles.row}>
 			<div>
 				<h3>Categories</h3>
-				
+
 			</div>
 			{props.categories.map(category => (
 				<Category
@@ -58,7 +58,7 @@ const Category = props => {
   React.useEffect(() => {
     getMeaningCategories(setMeaningsCategoriesFilter);
   }, []);
-	
+
 	// Middleman function to filter the results passed from the API before updating state variable
 	function setMeaningsCategoriesFilter(list) {
 
@@ -66,12 +66,12 @@ const Category = props => {
 		for (let cursorCategory of props.categories) {
 			list = list.filter(categoryName => categoryName !== cursorCategory.category);
 		}
-		
+
 		setMeaningsCategories(list);
 	}
 
 	return (
-		<div 
+		<div
 			onMouseEnter={e => {
 				setStyle({display: 'block'});
 			}}
@@ -81,7 +81,7 @@ const Category = props => {
 			key={category.category_id}
 		>
 			{/* <label className={styles.label} htmlFor={"meaning_category_" + category.category_id}>{i+1}</label> */}
-			<input 
+			<input
 				type="text"
 				name={"category_" + category.category_id}
 				id={"category_" + category.category_id}

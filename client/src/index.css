@@ -12,6 +12,15 @@
   src: url(./Fonts/symbola.woff);
 }
 
+:root {
+  --serif-font: symbola, book-antiqua, 'Book Antiqua', serif;
+  --sans-serif-font: dual, 'Dual', 'Futura', sans-serif;
+  --monospace-font: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  --color-bg: #2d3b62;
+  --color-fg: #ffd;
+  --color-fg-bright: #ffef;
+}
+
 * {
   margin: 0;
   box-sizing: border-box;
@@ -19,6 +28,220 @@
 }
 
 body {
-  background: #2D3B62;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--serif-font);
 }
 
+/* ---------------------------- */
+
+.content {
+  /* position: fixed; */
+  /* height: calc(100% - 25vw); */
+  top: 5rem;
+  overflow: scroll;
+  margin-bottom: 5rem;
+
+  padding: 0.5vw;
+
+  background-color: #0000;
+  text-shadow: 0 0 3px #FFD2;
+
+  opacity: 0;
+  -webkit-animation: fadeIn ease-in-out 1;
+  -moz-animation: fadeIn ease-in-out 1;
+  animation: fadeIn ease-in-out 1;
+
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
+
+  -webkit-animation-delay: 1s;
+  -moz-animation-delay: 1s;
+  animation-delay: 1s;
+
+  /* text-transform: uppercase; */
+  /* font-weight: bold; */
+}
+
+/* --------------- TYPOGRAPHY ---------------- */
+
+h1, h2, h3, h4 {
+  font-family: var(--sans-serif-font);
+
+  /* text-shadow: 0 0 3px #2D3B62FF; */
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+
+  margin: 20px 0 10px 0;
+}
+h1, .lemmaTitle {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.6em;
+}
+h3 {
+  font-size: 1.4em;
+}
+h3 {
+  font-size: 1.2em;
+}
+
+code {
+  font-family: var(--monospace-font);
+}
+
+/* --------------- ?? ---------------- */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  /* text-decoration: underline !important; */
+  filter: drop-shadow(0 0 3px #ffe8);
+}
+
+ul.stars li::before {
+  content: '🟊'; /* ★ */
+}
+ul.stars {
+  list-style: none; /* Remove list bullets */
+  padding: 0;
+  margin: 0;
+}
+ul.stars li {
+  padding-left: 16px;
+}
+
+.container {
+  height: calc(100% - 2vw);
+  width: 96vw;
+
+  overflow: scroll;
+  float: left;
+  margin: 1vw;
+
+  padding: 0 0.5vw;
+  background-color: #2D3B62CC;
+  border: 2px solid #FFDF;
+  box-shadow: 0 0 5px #2D3B62FF, 0 0 3px #2D3B62FF inset;
+  border-radius: 15px;
+}
+
+nav {
+  overflow: scroll;
+  max-height: 80vw;
+}
+
+nav ul, nav ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Fade in animation */
+@-webkit-keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@-moz-keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.form {
+  display: table;
+  margin: 0;
+}
+.row {
+  font-size: inherit;
+  display: table-row;
+  margin: 0;
+  margin-top: 5px;
+}
+.row label {
+  display: table-cell;
+  padding: 0.5vw 1vw 0 0;
+  vertical-align: top;
+}
+.row input {
+  display: table-cell;
+  width: 60vw;
+  background-color: #2D3B6288;
+  color: #FFDC;
+  border: 0.1vw solid #FFD8;
+  border-radius: 0.5vw;
+  margin: 0vw;
+  padding-left: 4px;
+  outline: none;
+  /* float: left; */
+  height: 2vw;
+  /* margin-top: 5px;
+  margin-right: 5px; */
+}
+
+.warning {
+  margin-top: 5px;
+  color: red;
+}
+
+.signUp {
+  color: #ffef;
+  background: #fff0;
+  border: 1px solid #FFDF;
+  border-radius: 0.5vw;
+  outline: none;
+  margin-top: 1vw;
+  padding: 0.5vw;
+  text-shadow: 0 0 3px #FFD2;
+}
+.signUp:hover {
+  filter: drop-shadow(0 0 3px #ffe6);
+}
+
+
+footer {
+	position: fixed;
+	top: calc(100% - 5vw);
+	height: 6vw;
+	background-color: #2D3B62EE;
+	padding: 0.5vw;
+  width: 100%;
+
+  /* fadeIn animation */
+  opacity: 0;
+	-webkit-animation: fadeIn ease-in-out 1;
+	-moz-animation: fadeIn ease-in-out 1;
+	animation: fadeIn ease-in-out 1;
+
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+
+	-webkit-animation-duration: 0.4s;
+	-moz-animation-duration: 0.4s;
+	animation-duration: 0.4s;
+
+  -webkit-animation-delay: 1.8s;
+  -moz-animation-delay: 1.8s;
+  animation-delay: 1.8s;
+}
+
+.logo-spread {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  justify-content: space-around;
+}
+
+.logo-item img {
+  height: 4vw;
+  display: block;
+}
+
+/* Fade in animation */
+@-webkit-keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@-moz-keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

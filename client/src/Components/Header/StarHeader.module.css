@@ -9,7 +9,7 @@
   overflow: hidden;
   overflow: visible;
   display: block;
-  
+
   /* fadeIn animation */
   opacity: 0;
   -webkit-animation: fadeIn ease-in-out 1;
@@ -27,7 +27,7 @@
   -webkit-animation-delay: 0.2s;
   -moz-animation-delay: 0.2s;
   animation-delay: 0.2s;
-  
+
   z-index: -2;
 }
 
@@ -42,7 +42,7 @@
   /* -webkit-animation: starSpin infinite 12000s linear;
   -moz-animation: starSpin infinite 12000s linear;
   animation: starSpin infinite 12000s linear; */
-  
+
 }
 
 .zodiacLogotype {
@@ -52,13 +52,13 @@
   margin-top: 4vw;
   margin-left: 0;
   padding-left: 0;
-  
-  font: 14vw dual, "Dual", "Futura", sans-serif;
+
+  font-family: var(--sans-serif-font);
+  font-size: 14em;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #FFD;
   text-shadow: 0 0 8px #2D3B62FF;
-  
+
   /* fadeIn animation */
   opacity: 0;
 	-webkit-animation: fadeIn ease-in-out 1;
@@ -72,14 +72,14 @@
 	-webkit-animation-duration: 1s;
 	-moz-animation-duration: 1s;
 	animation-duration: 1s;
-  
+
   -webkit-animation-delay: 0.6s;
   -moz-animation-delay: 0.6s;
   animation-delay: 0.6s;
 }
 
 .titleThe, .titleGlossary, .subtitle {
-  font: 2vw symbola, book-antiqua, 'Book Antiqua', serif;
+  font-size: 2em;
   font-style: italic;
   letter-spacing: 0.1em;
   color: #FFD;
@@ -98,7 +98,7 @@
 	-webkit-animation-duration: 0.4s;
 	-moz-animation-duration: 0.4s;
 	animation-duration: 0.4s;
-  
+
   -webkit-animation-delay: 1.8s;
   -moz-animation-delay: 1.8s;
   animation-delay: 1.8s;
@@ -119,7 +119,7 @@
 }
 
 .subtitle {
-  font-size: 1.6vw;
+  font-size: 1.6em;
   position: relative;
   width: 100vw;
   text-align: center;
@@ -147,7 +147,7 @@
   outline: none;
   margin-top: 0.5vw;
 }
-.playPause:hover, .home:hover {  
+.playPause:hover, .home:hover {
   filter: drop-shadow(0 0 3px #ffe8);
 }
 .home {
@@ -168,7 +168,7 @@
 }
 
 .headerBodyGradient, .bodyBackground {
-    
+
   /* fadeIn animation */
   opacity: 0;
 	-webkit-animation: fadeIn ease-in-out 1;
@@ -182,7 +182,7 @@
 	-webkit-animation-duration: 2s;
 	-moz-animation-duration: 2s;
 	animation-duration: 2s;
-  
+
   -webkit-animation-delay: 0.4s;
   -moz-animation-delay: 0.4s;
   animation-delay: 0.4s;
@@ -196,22 +196,21 @@
   left: 2vw;
   top: 2vw;
   overflow: none;
-  
+
   padding: 0.5vw;
-  
+
   background-color: #2D3B62F0;
   color: #FFD;
-  
-  font: 1.4vw symbola, book-antiqua, 'Book Antiqua', serif;
+
   text-shadow: 0 0 3px #FFD2;
-  
+
   padding: 0.5vw 0.5vw;
   border: 2px solid #FFDF;
   box-shadow: 0 0 5px #2D3B62FF, 0 0 3px #2D3B62FF inset;
   border-radius: 15px;
   z-index: 10;
-  
-  
+
+
   opacity: 0;
 	-webkit-animation: fadeIn ease-in-out 1;
 	-moz-animation: fadeIn ease-in-out 1;
@@ -227,12 +226,12 @@
 }
 
 h1, h2, h3, h4 {
-  font-family: dual, 'Dual', 'Futura', sans-serif;
-  
+  font-family: var(--sans-serif-font);
+
   /* text-shadow: 0 0 3px #2D3B62FF; */
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  
+
   margin: 10px 0 10px 0;
 }
 
@@ -243,7 +242,6 @@ h1, h2, h3, h4 {
 }
 
 .input {
-  font: 1.2vw symbola, book-antiqua, 'Book Antiqua', serif;
   display: table-cell;
   width: 14vw;
   background-color: #2D3B6288;
@@ -270,7 +268,7 @@ h1, h2, h3, h4 {
 
 .username {
   color: #ffdd;
-  font: 1.3vw symbola, book-antiqua, 'Book Antiqua', serif;
+  font-size: 1.3em;
   text-shadow: 0 0 3px #ffd2;
   float: left;
   margin-top: 0.2vw;
@@ -284,7 +282,6 @@ h1, h2, h3, h4 {
   outline: none;
   margin-top: 0.5vw;
   padding: 0.5vw;
-  font: 1.2vw symbola, book-antiqua, 'Book Antiqua', serif;
   text-shadow: 0 0 3px #FFD2;
 }
 .loginButton:hover, .signupButton:hover {

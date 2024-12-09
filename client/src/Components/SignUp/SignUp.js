@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styles from '../Content.module.css'
-
 // Things have changed on this branch!
 
 // eslint-disable-next-line
@@ -19,7 +17,7 @@ const SignUp = props => {
   const [username, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirm, setConfirm] = React.useState('');
-  
+
   const [validEmail, setValidEmail] = React.useState(false);
   const [validWebsite, setValidWebsite] = React.useState(false);
   const [validPassword, setValidPassword] = React.useState(false);
@@ -91,8 +89,8 @@ const SignUp = props => {
   }
 
   return (
-    <div className={styles.content}>
-      <div className={styles.container}>
+    <div class="content">
+      <div class="container">
         <h1>Sign Up</h1>
         <div>
           {/* <p>Note that this feature is currently only available to members of the <a href="https://www.geschkult.fu-berlin.de/en/e/zodiac/index.html" target="_blank" rel="noopener noreferrer">Zodiac Project</a>.</p> */}
@@ -101,10 +99,9 @@ const SignUp = props => {
         </div>
         <form style={{marginTop: '20px'}} onSubmit={handleSubmit}>
 
-          <div className={styles.row}>
-            <label className={styles.label} htmlFor="firstName">First Name</label>
+          <div class="row">
+            <label htmlFor="firstName">First Name</label>
             <input
-              className={styles.input}
               type="text"
               id="firstName"
               placeholder="first name"
@@ -114,10 +111,9 @@ const SignUp = props => {
             />
           </div>
 
-          <div className={styles.row}>
-            <label className={styles.label} htmlFor="lastName">Last Name</label>
+          <div class="row">
+            <label htmlFor="lastName">Last Name</label>
             <input
-              className={styles.input}
               type="text"
               id="lastName"
               placeholder="last name"
@@ -127,10 +123,9 @@ const SignUp = props => {
             />
           </div>
 
-          <div className={styles.row}>
-            <label className={styles.label} htmlFor="email">Email</label>
+          <div class="row">
+            <label htmlFor="email">Email</label>
             <input
-              className={styles.input}
               type="email"
               id="email"
               placeholder="email"
@@ -140,10 +135,9 @@ const SignUp = props => {
             />
           </div>
 
-          <div className={styles.row}>
-            <label className={styles.label} htmlFor="website">Website</label>
+          <div class="row">
+            <label htmlFor="website">Website</label>
             <input
-              className={styles.input}
               type="website"
               id="website"
               placeholder="website"
@@ -153,10 +147,9 @@ const SignUp = props => {
             />
           </div>
 
-          <div className={styles.row}>
-            <label className={styles.label} htmlFor="username">Username</label>
+          <div class="row">
+            <label htmlFor="username">Username</label>
             <input
-              className={styles.input}
               type="text"
               id="username"
               placeholder="username"
@@ -166,10 +159,9 @@ const SignUp = props => {
             />
           </div>
 
-          <div className={styles.row}>
-            <label className={styles.label} htmlFor="password">Password</label>
+          <div class="row">
+            <label htmlFor="password">Password</label>
             <input
-              className={styles.input}
               type="password"
               id="password"
               placeholder="password"
@@ -179,10 +171,9 @@ const SignUp = props => {
             />
           </div>
 
-          <div className={styles.row}>
-            <label className={styles.label} htmlFor="confirm">Confirm</label>
+          <div class="row">
+            <label htmlFor="confirm">Confirm</label>
             <input
-              className={styles.input}
               type="password"
               id="confirm"
               placeholder="confirm"
@@ -192,25 +183,25 @@ const SignUp = props => {
             />
           </div>
 
-          <p className={styles.warning} style={(!email || validEmail ? {display: 'none'} : null)}>
+          <p class="warning" style={(!email || validEmail ? {display: 'none'} : null)}>
             Invalid email address.
           </p>
-          <p className={styles.warning} style={(!website || validWebsite ? {display: 'none'} : null)}>
+          <p class="warning" style={(!website || validWebsite ? {display: 'none'} : null)}>
             Invalid website URL (must begin with http(s)://...).
           </p>
-          <p className={styles.warning} style={(!password || validPassword ? {display: 'none'} : null)}>
+          <p class="warning" style={(!password || validPassword ? {display: 'none'} : null)}>
             Passwords must contain at least twenty alphanumeric characters.<br />
             We recommend using the <a href="https://xkcd.com/936/" target="_blank" rel="noopener noreferrer">Correct Horse Battery Staple</a> method for generating a new password.
           </p>
-          <p className={styles.warning} style={(!confirm || validMatch ? {display: 'none'} : null)}>
+          <p class="warning" style={(!confirm || validMatch ? {display: 'none'} : null)}>
             Passwords do not match.
           </p>
-          <p className={styles.warning} style={(!message ? {display: 'none'} : null)}>
+          <p class="warning" style={(!message ? {display: 'none'} : null)}>
             {message}
           </p>
 
           <button
-            className={styles.signUp}
+            class="signUp"
             disabled={!enableSubmit}
           >
             Sign Up

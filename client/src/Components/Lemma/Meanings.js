@@ -4,12 +4,12 @@ import { IoIosAddCircle, IoIosDownload } from "react-icons/io";
 import Meaning from './Meaning';
 import UserContext from '../../Contexts/UserContext';
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const Meanings = props => {
   const {user} = React.useContext(UserContext);
   const [importable, setImportable] = React.useState(decideImportable());
-  
+
   // Helper function to decide whether the import button should be visible of not
   // If the list is empty, it should be obviously (shortcut)
   // Alternatively, if the list already contains the main variant, hide the button
@@ -19,7 +19,7 @@ const Meanings = props => {
       return true;
     if (!props.lemma.primary_meaning)
       return false;
-    if (props.lemma.meanings.some(meaning => 
+    if (props.lemma.meanings.some(meaning =>
       (meaning.value === props.lemma.primary_meaning)
     ))
       return false;

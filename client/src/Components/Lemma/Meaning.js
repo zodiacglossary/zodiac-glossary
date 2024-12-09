@@ -6,20 +6,20 @@ import PublicLabelledText from "../PublicLabelledText";
 
 import UserContext from '../../Contexts/UserContext';
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const Meaning = props => {
   const {user} = React.useContext(UserContext);
   const meaning = props.meaning;
   const i = props.i;
-  
+
   const [style, setStyle] = React.useState({display: 'none'});
-  
+
   if (user && !user.token) {
     return (
       <div className={styles.row}>
         <h4>{i+1}</h4>
-        
+
         <PublicLabelledText label={'Meaning'} content={meaning.value} />
         <PublicLabelledText label={'Comment'} content={meaning.comment} />
         {(meaning.categories && meaning.categories.length) ? <Categories categories={meaning.categories} /> : null}
@@ -29,7 +29,7 @@ const Meaning = props => {
 
   return (
     <>
-    <div 
+    <div
       onMouseEnter={e => {
         if (user.token)
           setStyle({display: 'block'});
@@ -81,7 +81,7 @@ const Meaning = props => {
           onChange={e => props.updateMeaning('comment', e.target.value, meaning.id)}
         />
         <Categories
-          categories={meaning.categories} 
+          categories={meaning.categories}
           meaning={meaning}
           updateCategory={props.updateCategory}
           deleteCategory={props.deleteCategory}

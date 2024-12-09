@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styles from './Help.module.css';
-
 import { getTodoList, addTodoListItem } from "../../Data/todo";
 
 import UserContext from '../../Contexts/UserContext';
@@ -29,14 +27,14 @@ const Todo = props => {
   };
 
   return (
-    <div className={styles.content}>
-      <div className={styles.container}>
+    <div className="content">
+      <div className="container">
         <h1>Todo</h1>
-        <ul className={styles.stars}>
+        <ul className="stars">
           {user.token && (
             <li key={"new"}>
-              <input 
-                className={styles.input}
+              <input
+                className="input"
                 type="text"
                 name="newTodoItem"
                 placeholder="New item (press return to add)"
@@ -48,9 +46,7 @@ const Todo = props => {
           )}
           {todoList.map(todo => (
             <li key={todo.id}>
-              <span className={(todo.complete ? styles.done : "false")}>
-                {todo.item}
-              </span>
+            {todo.complete ? <s>{todo.item}</s> : todo.item}
             </li>
           ))}
         </ul>

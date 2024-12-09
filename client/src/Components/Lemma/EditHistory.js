@@ -4,7 +4,7 @@ import { getEditHistory } from "../../Data/api";
 
 import UserContext from '../../Contexts/UserContext';
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const EditHistory = props => {
   const lemma = props.lemma;

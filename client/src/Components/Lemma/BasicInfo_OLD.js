@@ -6,7 +6,7 @@ import UserContext from '../../Contexts/UserContext';
 
 import { languageOptions, partOfSpeechOptions } from '../../Data/options';
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const BasicInfo = props => {
   let lemma = props.lemma;
@@ -17,7 +17,7 @@ const BasicInfo = props => {
   if (!lemma.editor || !lemma.editor.trim()) {
     lemma.editor = (user.user ? user.user.username : '');
   }
-  
+
   return (
     <div className={user.token ? styles.basic : styles.basicPublic}>
       <h3>Basic</h3>
@@ -125,14 +125,14 @@ const BasicInfo = props => {
           label="Language"
           value={lemma.language}
           options={languageOptions}
-          onChange={onChange} 
+          onChange={onChange}
         />
         <Dropdown
           name="partOfSpeech"
           label="Part of Speech"
           value={lemma.partOfSpeech}
           options={partOfSpeechOptions}
-          onChange={onChange} 
+          onChange={onChange}
         />
         <tr>
           <td>

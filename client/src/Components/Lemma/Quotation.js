@@ -10,7 +10,7 @@ import { checkUrlForHttp } from "../../Functions/checkUrlForHttp";
 import NewlineText from "../NewLineText";
 import PublicLabelledText from "../PublicLabelledText";
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const Quotation = props => {
   const quotationIndex = props.quotationIndex;
@@ -19,9 +19,9 @@ const Quotation = props => {
 
   let categoryList = ((meaning && meaning.categories && meaning.categories.length) ? ' (' + meaning.categories.map(category => category.category).join(', ') + ')' : '');
   const meaningString = meaning ? meaning.value + categoryList : '';
-  
+
   const {user} = React.useContext(UserContext);
-  
+
   const [style, setStyle] = React.useState({display: 'none'});
 
   const [quotationAutofill, setQuotationAutofill] = React.useState(props.quotation);
@@ -51,12 +51,12 @@ const Quotation = props => {
   };
 
   React.useEffect(() => {
-    
+
     // Stop this from running when the component loads
     // Otherwise it sets the changed state of the lemma to true, even though it isn't
     if (quotationAutofill === props.quotation)
       return;
-    
+
     if (quotationAutofill) {
       // Need to do it this way so that fields are only updated when they're empty
       const fields = [ 'genre', 'provenance', 'date', 'publication', 'link' ];
@@ -65,8 +65,8 @@ const Quotation = props => {
           props.updateQuotation(field, quotationAutofill[field], quotation.id);
     }
   }, [quotationAutofill]);
-  
-  
+
+
   if (!user.token) {
     return (
       <div className={styles.quotationsList}>
@@ -80,9 +80,9 @@ const Quotation = props => {
           label={(props.language === "akkadian" ? 'Transliteration' : 'Original')}
           content={<NewlineText text={quotation.original} />}
         />
-        <PublicLabelledText 
-          label={'Translation'} 
-          content={<NewlineText text={quotation.translation} />} 
+        <PublicLabelledText
+          label={'Translation'}
+          content={<NewlineText text={quotation.translation} />}
         />
         <PublicLabelledText label={'Meaning'} content={meaningString} />
         <PublicLabelledText label={'Source'} content={quotation.source} />
@@ -90,8 +90,8 @@ const Quotation = props => {
         <PublicLabelledText label={'Genre'} content={quotation.genre} />
         <PublicLabelledText label={'Provenance'} content={quotation.provenance} />
         <PublicLabelledText label={'Date'} content={quotation.date} />
-        <PublicLabelledText 
-          label={'Publication'} 
+        <PublicLabelledText
+          label={'Publication'}
           content={quotation.link ? (
               <a href={quotation.link} target="_blank" rel="noopener noreferrer">
                 {quotation.publication} <IoIosOpen />
@@ -105,7 +105,7 @@ const Quotation = props => {
   }
 
   return (
-    <div 
+    <div
       className={styles.quotationsList}
       onMouseEnter={e => {
         setStyle({display: 'block'});
@@ -115,7 +115,7 @@ const Quotation = props => {
       }}
     >
       <h4>{quotationIndex+1}</h4>
-      
+
       <div className={styles.row}>
         <label
           className={styles.label}
@@ -133,7 +133,7 @@ const Quotation = props => {
           id={"transliteration_"+quotation.id}
           placeholder={props.language === "akkadian" ? 'normalized' : 'transliteration'}
           value={quotation.transliteration}
-          onChange={e => props.updateQuotation("transliteration", e.target.value, quotation.id)} 
+          onChange={e => props.updateQuotation("transliteration", e.target.value, quotation.id)}
         />
       </div>
       <div className={styles.row}>
@@ -152,7 +152,7 @@ const Quotation = props => {
           id={"original_"+quotation.id}
           placeholder={props.language === "akkadian" ? 'transliteration' : 'original'}
           value={quotation.original}
-          onChange={e => props.updateQuotation("original", e.target.value, quotation.id)} 
+          onChange={e => props.updateQuotation("original", e.target.value, quotation.id)}
         />
       </div>
       <div className={styles.row}>
@@ -163,7 +163,7 @@ const Quotation = props => {
           id={"translation_"+quotation.id}
           placeholder="translation"
           value={quotation.translation}
-          onChange={e => props.updateQuotation("translation", e.target.value, quotation.id)} 
+          onChange={e => props.updateQuotation("translation", e.target.value, quotation.id)}
         />
       </div>
       <div className={styles.row}>
@@ -197,7 +197,7 @@ const Quotation = props => {
           id={"source_"+quotation.id}
           placeholder="source"
           value={quotation.source}
-          onChange={e => setSource(e)} 
+          onChange={e => setSource(e)}
           list="quotation_sources"
         />
         <datalist id="quotation_sources">
@@ -223,7 +223,7 @@ const Quotation = props => {
           id={"line_"+quotation.id}
           placeholder="line or column"
           value={quotation.line}
-          onChange={e => props.updateQuotation("line", e.target.value, quotation.id)} 
+          onChange={e => props.updateQuotation("line", e.target.value, quotation.id)}
         />
       </div>
       <div className={styles.row}>
@@ -253,7 +253,7 @@ const Quotation = props => {
           id={"provenance_"+quotation.id}
           placeholder="provenance"
           value={quotation.provenance}
-          onChange={e => props.updateQuotation("provenance", e.target.value, quotation.id)} 
+          onChange={e => props.updateQuotation("provenance", e.target.value, quotation.id)}
           list="quotation_provenance"
         />
         <datalist id="quotation_provenance">
@@ -271,7 +271,7 @@ const Quotation = props => {
           id={"date_"+quotation.id}
           placeholder="date"
           value={quotation.date}
-          onChange={e => props.updateQuotation("date", e.target.value, quotation.id)} 
+          onChange={e => props.updateQuotation("date", e.target.value, quotation.id)}
         />
       </div>
       <div className={styles.row}>
@@ -283,7 +283,7 @@ const Quotation = props => {
           id={"publication_"+quotation.id}
           placeholder="publication"
           value={quotation.publication}
-          onChange={e => props.updateQuotation("publication", e.target.value, quotation.id)} 
+          onChange={e => props.updateQuotation("publication", e.target.value, quotation.id)}
           list="quotation_publication"
         />
         <datalist id="quotation_publication">
@@ -303,7 +303,7 @@ const Quotation = props => {
           id={"page_"+quotation.id}
           placeholder="page number"
           value={quotation.page ? quotation.page : ''}
-          onChange={e => props.updateQuotation("page", e.target.value, quotation.id)} 
+          onChange={e => props.updateQuotation("page", e.target.value, quotation.id)}
         />
       </div>
       <div className={styles.row}>
@@ -318,7 +318,7 @@ const Quotation = props => {
           id={"link_"+quotation.id}
           placeholder="URL link to publication"
           value={quotation.link}
-          onChange={e => props.updateQuotation("link", checkUrlForHttp(e.target.value), quotation.id)} 
+          onChange={e => props.updateQuotation("link", checkUrlForHttp(e.target.value), quotation.id)}
         />
       </div>
       <div className={styles.row}>
@@ -336,7 +336,7 @@ const Quotation = props => {
           name={"comment_"+quotation.id}
           id={"comment_"+quotation.id}
           value={quotation.comment}
-          onChange={e => props.updateQuotation("comment", e.target.value, quotation.id)} 
+          onChange={e => props.updateQuotation("comment", e.target.value, quotation.id)}
         />
       </div>
       <div className={styles.row}>

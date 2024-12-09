@@ -4,7 +4,7 @@ import { IoIosAddCircle, IoIosDownload } from "react-icons/io";
 import Variant from './Variant';
 import UserContext from '../../Contexts/UserContext';
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 const Variants = props => {
   const {user} = React.useContext(UserContext);
@@ -19,8 +19,8 @@ const Variants = props => {
       return true;
     if (!props.lemma.original && !props.lemma.transliteration)
       return false;
-    if (props.lemma.variants.some(variant => 
-      (variant.original === props.lemma.original 
+    if (props.lemma.variants.some(variant =>
+      (variant.original === props.lemma.original
         && variant.transliteration === props.lemma.transliteration)
     ))
       return false;
@@ -31,7 +31,7 @@ const Variants = props => {
   React.useEffect(() => {
     setImportable(decideImportable());
   }, [props.lemma]);
-  
+
   return (
     <div className={user.token ? styles.variants : styles.variantsPublic}>
       <h3>Variants</h3>
@@ -47,7 +47,7 @@ const Variants = props => {
           />
         )
       })}
-      
+
       <div style={{display: (user.token ? 'block' : 'none')}}>
         {importable && (<button className={styles.add} onClick={e => props.addNewVariant(e, {original: props.lemma.original, transliteration: props.lemma.transliteration})}><IoIosDownload /></button>)}
         <button className={styles.add} onClick={props.addNewVariant}><IoIosAddCircle /></button>

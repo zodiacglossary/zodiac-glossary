@@ -5,7 +5,7 @@ import { IoIosTrash, IoIosOpen } from "react-icons/io";
 import QueryNavLink from '../QueryNavLink';
 import UserContext from '../../Contexts/UserContext';
 
-import styles from './Lemma.module.css';
+import styles from '../Lemma.module.css';
 
 
 
@@ -17,24 +17,24 @@ const CrossLink = props => {
 
   // Changed to a normal variable to ensure it updates before the component.
   // Before, things were taking to long to load, leaving sample links blank – CDC 2023-04-25
-  // const [lemma, setLemma] = React.useState(getLemmaById(lemmata, props.crossLink)); 
+  // const [lemma, setLemma] = React.useState(getLemmaById(lemmata, props.crossLink));
   //////////////
   // This did not fix it. Need to come back and try again after auth is done – CDC 2023-05-23
   let lemma = getLemmaById(lemmata, props.crossLink);
-  
+
   const [style, setStyle] = React.useState({display: 'none'});
 
   function getLemmaById(lemmataList, id) {
     return lemmataList.find(lemma => lemma.lemmaId === parseInt(id));
   }
-  
+
   // Needed to make sure the crossLinks update when the user follows a crossLink to a new lemma
   React.useEffect(() => {
     setCrossLink(props.crossLink);
     // setLemma(getLemmaById(lemmata, props.crossLink));
     lemma = getLemmaById(lemmata, props.crossLink);
   }, [props.crossLink, crossLink]);
-  
+
   function updateCrossLink(event, id) {
     const updatedCrossLink = parseInt(event.target.value);
     if (updatedCrossLink) {
@@ -49,7 +49,7 @@ const CrossLink = props => {
   if (!user.token) {
     if (!lemma || !lemma.published)
       return <></>;
-    
+
     return (
       <div className={styles.label}>
         <QueryNavLink to={'/'+crossLink}>
@@ -65,7 +65,7 @@ const CrossLink = props => {
   // Also filter out any Cross Links that have already been added
   lemmata = lemmata.filter(cursorLemma => cursorLemma.lemmaId !== props.currentLemma.lemmaId);
   for (let cursorCrossLink of props.currentLemma.crossLinks) {
-    lemmata = lemmata.filter(cursorLemma => 
+    lemmata = lemmata.filter(cursorLemma =>
       (
         cursorLemma.lemmaId !== cursorCrossLink.lemmaId
         &&
@@ -75,7 +75,7 @@ const CrossLink = props => {
   }
 
   return (
-    <div 
+    <div
       className={styles.crossLinksList}
       onMouseEnter={e => {
         setStyle({display: 'block'});
@@ -94,7 +94,7 @@ const CrossLink = props => {
           Linked ID
         </label>
         <ReactTooltip id={"crossLink_"+i+"-tooltip"} type="light" html={true} />
-        <input 
+        <input
           list={"lemmata_list" + i}
           className={styles.inputWide}
           name={"crossLink_"+i}
@@ -108,7 +108,7 @@ const CrossLink = props => {
               key={j}
               label={lemma.transliteration + ' | ' + lemma.original + ' | ' + lemma.primary_meaning}
               data-id={lemma.lemmaId}
-              value={lemma.lemmaId} 
+              value={lemma.lemmaId}
             />
           ))}
         </datalist>
@@ -119,13 +119,13 @@ const CrossLink = props => {
         >
           Sample Link
         </div>
-        {lemma ? 
+        {lemma ?
           <QueryNavLink className={styles.label} to={'/'+crossLink} target="_blank" rel="noopener noreferrer">
             <>&nbsp;{lemma.transliteration} | {lemma.original} | {lemma.primary_meaning} <IoIosOpen /></>
           </QueryNavLink>
         : <> | | </>}
       </div>
-      
+
       <div style={{display: (user.token ? 'inline' : 'none')}}>
         <button className={styles.add} style={style} onClick={() => props.deleteCrossLink(i)}><IoIosTrash /></button>
       </div>
