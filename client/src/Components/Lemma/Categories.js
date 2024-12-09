@@ -29,7 +29,7 @@ const Categories = props => {
 				<h3>Categories</h3>
 				
 			</div>
-			{props.categories.map(category => (
+			{props.categories && props.categories.map(category => (
 				<Category
 					key={category.category_id}
 					category={category}

@@ -3,6 +3,7 @@ import { IoIosTrash } from "react-icons/io";
 
 import Categories from "./Categories";
 import PublicLabelledText from "../PublicLabelledText";
+import ResizingTextarea from "../ResizingTextarea";
 
 import UserContext from '../../Contexts/UserContext';
 
@@ -50,13 +51,24 @@ const Meaning = props => {
           value={meaning.value}
           onChange={e => props.updateMeaning('value', e.target.value, meaning.id)}
         />
-        <textarea
+        {/* <textarea
           style={{
             display: (user.token || meaning.comment ? 'inline' : 'none'),
             height: `${Math.max(meaning.comment.length / 35, 2) * 1.2}vw`,
           }}
           className={styles.inputMeaning}
-          type="text"
+          name={"comment_"+meaning.id}
+          id={"comment_"+meaning.id}
+          placeholder={user.token ? "comment" : ''}
+          value={(meaning.comment ? meaning.comment : '')}
+          onChange={e => props.updateMeaning('comment', e.target.value, meaning.id)}
+        /> */}
+        <ResizingTextarea
+          style={{
+            display: (user.token || meaning.comment ? 'inline' : 'none'),
+          }}
+          characterWidth={35}
+          className={styles.inputMeaning}
           name={"comment_"+meaning.id}
           id={"comment_"+meaning.id}
           placeholder={user.token ? "comment" : ''}

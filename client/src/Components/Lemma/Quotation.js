@@ -9,6 +9,7 @@ import { checkUrlForHttp } from "../../Functions/checkUrlForHttp";
 
 import NewlineText from "../NewLineText";
 import PublicLabelledText from "../PublicLabelledText";
+import ResizingTextarea from "../ResizingTextarea";
 
 import styles from './Lemma.module.css';
 
@@ -126,10 +127,22 @@ const Quotation = props => {
           {props.language === "akkadian" ? 'Normalized' : 'Transliteration'}
         </label>
         <ReactTooltip id={"phonetic_"+quotation.id+"-tooltip"} type="light" html={true} />
-        <textarea
+        {/* <textarea
           style={{
             fontStyle: (props.language === "akkadian" || 'italic'),
             height: `${Math.max(Math.ceil(quotation.transliteration.length / 75), 2) * 1.4}vw`,
+          }}
+          className={styles.textareaWide}
+          name={"transliteration_"+quotation.id}
+          id={"transliteration_"+quotation.id}
+          placeholder={props.language === "akkadian" ? 'normalized' : 'transliteration'}
+          value={quotation.transliteration}
+          onChange={e => props.updateQuotation("transliteration", e.target.value, quotation.id)} 
+        /> */}
+        <ResizingTextarea
+          characterWidth={80}
+          style={{
+            fontStyle: (props.language === "akkadian" || 'italic'),
           }}
           className={styles.textareaWide}
           name={"transliteration_"+quotation.id}
@@ -149,10 +162,19 @@ const Quotation = props => {
           {props.language === "akkadian" ? 'Transliteration' : 'Original'}
         </label>
         <ReactTooltip id={"original_"+quotation.id+"-tooltip"} type="light" html={true} />
-        <textarea
+        {/* <textarea
           style={{
-            height: `${Math.max(Math.ceil(quotation.original.length / 75), 2) * 1.4}vw`,
+            height: `${Math.max(Math.ceil(quotation.original.length / 80), 2) * 1.4}vw`,
           }}
+          className={styles.textareaWide}
+          name={"original_"+quotation.id}
+          id={"original_"+quotation.id}
+          placeholder={props.language === "akkadian" ? 'transliteration' : 'original'}
+          value={quotation.original}
+          onChange={e => props.updateQuotation("original", e.target.value, quotation.id)} 
+        /> */}
+        <ResizingTextarea
+          characterWidth={80}
           className={styles.textareaWide}
           name={"original_"+quotation.id}
           id={"original_"+quotation.id}
@@ -163,10 +185,19 @@ const Quotation = props => {
       </div>
       <div className={styles.row}>
         <label className={styles.label} htmlFor={"translation_"+quotation.id}>Translation</label>
-        <textarea
+        {/* <textarea
           style={{
             height: `${Math.max(Math.ceil(quotation.translation.length / 75), 2) * 1.4}vw`,
           }}
+          className={styles.textareaWide}
+          name={"translation_"+quotation.id}
+          id={"translation_"+quotation.id}
+          placeholder="translation"
+          value={quotation.translation}
+          onChange={e => props.updateQuotation("translation", e.target.value, quotation.id)} 
+        /> */}
+        <ResizingTextarea
+          characterWidth={80}
           className={styles.textareaWide}
           name={"translation_"+quotation.id}
           id={"translation_"+quotation.id}

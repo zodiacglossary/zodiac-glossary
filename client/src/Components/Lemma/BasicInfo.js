@@ -3,6 +3,7 @@ import ReactTooltip from 'react-tooltip';
 
 import Dropdown from '../Dropdown';
 import PublicLabelledText from "../PublicLabelledText";
+import ResizingTextarea from "../ResizingTextarea";
 import UserContext from '../../Contexts/UserContext';
 
 import { languageOptions, partOfSpeechOptions, loanTypes } from '../../Data/options';
@@ -334,7 +335,7 @@ const BasicInfo = props => {
             </label>
           </td>
           <td>
-            <textarea
+            {/* <textarea
               style={{
                 height: `${Math.max(Math.ceil(lemma.comment.length / 15), 2) * 1.2}vw`,
               }}
@@ -345,7 +346,17 @@ const BasicInfo = props => {
               placeholder="comment"
               value={lemma.comment}
               onChange={onChange}
-            ></textarea>
+            ></textarea> */}
+            <ResizingTextarea
+              characterWidth={15}
+              className={styles.inputComment}
+              type="text"
+              name="comment"
+              id="comment"
+              placeholder="comment"
+              value={lemma.comment}
+              onChange={e => {e.target.name='comment'; onChange(e);}}
+            />
           </td>
         </tr>
       </tbody></table>

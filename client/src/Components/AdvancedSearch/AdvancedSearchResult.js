@@ -7,7 +7,6 @@ const AdvancedSearchResult = props => {
   const result = props.result;
   const publishedStyle = (result.published ? {} : {fontStyle: 'italic'});
 
-  // console.log(result)
   return (
     <li>
       <a 
