@@ -203,6 +203,13 @@ export function getRecentsListPromise(token = '') {
   });
 }
 
+export function getCrosslinks(setCrosslinks, token = '') {
+  let url = '/api/crosslinks/list';
+  fetch(url)
+  .then(response => response.json())
+  .then(data => setCrosslinks(data));
+}
+
 // Change token default to null after adding authentication
 export function runAdvancedSearchDB(whereComponents, setSearchResults, token = '') {
   let url = '/api/advanced_search';
