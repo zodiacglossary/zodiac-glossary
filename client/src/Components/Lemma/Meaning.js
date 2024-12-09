@@ -50,28 +50,11 @@ const Meaning = props => {
           value={meaning.value}
           onChange={e => props.updateMeaning('value', e.target.value, meaning.id)}
         />
-        {/* Commented out because of the new categories 1->n setup – CDC 2023-09-11 */}
-        {/* <input
-          style={{display: (user.token || meaning.category ? 'inline' : 'none')}}
-          className={styles.inputMeaning}
-          type="text"
-          name={"category_"+meaning.id}
-          id={"category_"+meaning.id}
-          placeholder="category"
-          value={meaning.category}
-          onChange={e => props.updateMeaning('category', e.target.value, meaning.id)}
-          list="meaning_categories"
-        />
-        <datalist id="meaning_categories">
-          {props.meaningsCategories.map((category, key) => (
-            <option
-              key={key}
-              value={category}
-            />
-          ))}
-        </datalist> */}
-        <input
-          style={{display: (user.token || meaning.comment ? 'inline' : 'none')}}
+        <textarea
+          style={{
+            display: (user.token || meaning.comment ? 'inline' : 'none'),
+            height: `${Math.max(meaning.comment.length / 35, 2) * 1.2}vw`,
+          }}
           className={styles.inputMeaning}
           type="text"
           name={"comment_"+meaning.id}

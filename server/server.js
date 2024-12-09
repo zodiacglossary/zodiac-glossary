@@ -9,8 +9,10 @@ const users = require('./users');
 const ac = require('./autocomplete');
 const td = require('./todo');
 const recents = require('./queries/recents');
+const advancedSearch = require('./queries/advancedSearch');
 
 const auth = require('./middleware/auth');
+const { getCrosslinks } = require('./queries/crossLinks');
 
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 app.use(express.json());
@@ -56,12 +58,19 @@ app.post('/api/todo/add', auth, td.addTodoListItem);
 // Recents List
 app.get('/api/recents/list', auth, recents.getLemmataList);
 
+// Crosslinks
+app.get('/api/crosslinks/list', getCrosslinks);
+
 // User authentication
 app.post('/api/users', users.createUser);
 app.post('/api/users/login', users.loginUser);
 app.get('/api/users/profile', auth, users.getUser);
 
 app.get('/api/contributors', auth, users.getContributions);
+
+// Advanced Search
+app.post('/api/advanced_search', auth, advancedSearch.runAdvancedSearch);
+
 
 app.get('*', (request, response) => {
   // console.log(request)

@@ -11,16 +11,12 @@ const Dropdown = ({ name, label, value, options, onChange }) => {
   // As the label itself is not passed to the component, it must be found from the options list using the value
   if (!user.token) {
     return (
-      <tr>
-        <td>
+      <div className={styles.row}>
           <div className={styles.label} htmlFor={"dropdown_"+label}>{label}</div>
-        </td>
-        <td>
           <div className={styles.label}>
             <div id={"dropdown_"+label}>{options.filter(option => option.value === value)[0].label}</div>
           </div>
-        </td>
-      </tr>
+      </div>
     );
   }
   

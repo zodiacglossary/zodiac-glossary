@@ -44,8 +44,8 @@ const LemmaCheck = props => {
       &nbsp;&nbsp;
       <a 
         href={"/"+lemma.lemmaId} 
-        target="_blank" 
-        rel="noopener noreferrer"
+        // target="_blank" 
+        // rel="noopener noreferrer"
         // onClick={e => checkLemmaChange(lemma.lemmaId, true)}
       >
         — {lemma.timestamp.toLocaleDateString("de", dateFormat)} | {lemma.editor} | {lemma.transliteration} | {lemma.original} | {lemma.primary_meaning}

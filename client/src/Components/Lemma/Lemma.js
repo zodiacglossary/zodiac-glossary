@@ -1,9 +1,11 @@
 import React from "react";
 import { useParams, useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { IoIosShareAlt, IoIosCopy } from "react-icons/io";
+
 
 // import { deleteLemmaFromDB } from "../../Data/sample-data";
-import { getLemmaFromDB, saveLemmaToDB, deleteLemmaFromDB } from "../../Data/api";
+import { getLemmaFromDB, saveLemmaToDB, deleteLemmaFromDB, getEditHistory } from "../../Data/api";
 
 import BasicInfo from './BasicInfo';
 import Meanings from './Meanings';
@@ -13,10 +15,12 @@ import CrossLinks from './CrossLinks';
 import ExternalLinks from './ExternalLinks';
 import DeleteLemma from './DeleteLemma';
 import EditHistory from './EditHistory';
+import Citations from './Citations';
 
 import UserContext from '../../Contexts/UserContext';
 
 import styles from './Lemma.module.css';
+import { copyToClipboard } from "../../Functions/copyToClipboard";
 
 const Lemma = props => {
   let navigate = useNavigate();
@@ -25,6 +29,8 @@ const Lemma = props => {
 
   let params = useParams();
   let [lemma, setLemma] = React.useState();
+  const [edits, setEdits] = React.useState([]);
+  const [title, setTitle] = React.useState('');
   
   // Really stupid cludge that forces the sidebar to update when the user saves a new lemma
   // It's either this or raise all of the lemma state and redo the routing just for that one edge case
@@ -61,18 +67,26 @@ const Lemma = props => {
     window.addEventListener('popstate', function (event){
         window.history.pushState(null, document.title,  window.location.href);
     });
-
   }, [params.lemmaId, user]);
 
   // Set the page title to give information about the current lemma if available
+  // Update metadata for Zotero citations, other uses
   React.useEffect(() => {
+    
     if (lemma) {
+      getEditHistory(lemma.lemmaId, user.token)
+      .then(edits => setEdits(edits))
+      .catch(error => console.error(error));
+
       let titleString = '';
       titleString = lemma.translation || titleString;
       titleString = lemma.transliteration || titleString;
       titleString = lemma.original || titleString;
-      document.title = titleString || 'The Zodiac Glossary';
+      titleString = titleString + ' – Lemma ' + lemma.lemmaId;
+      setTitle(titleString);
     }
+
+
   }, [lemma]);
 
   // Warn if unsaved changes on refresh
@@ -485,7 +499,44 @@ const Lemma = props => {
     });
     setChanged(true);
   };
-  
+
+  // CITATIONS
+
+  // Returns a list of unique editors for the lemma with a count of the number of edits made
+  // Sorted in descending order by number of edits
+  const uniqueEditorList = edits => {
+    if (!edits.length)
+      return [];
+    
+    let editsUnique = [];
+    for (const edit of edits) {
+      const matchedEdit = editsUnique.find(editUnique => editUnique.username === edit.username);
+      if (matchedEdit) {
+        matchedEdit.count++;
+      }
+      else {
+        editsUnique.push({...edit, count: 1});
+      }
+    }
+    
+    // Bump the first editor up slightly so that they get listed as first author even if someone else has the same number of edits
+    editsUnique.find(edit => edit.username === edits.at(-1).username).count += 0.5;
+    
+    editsUnique.sort((a, b) => b.count - a.count);
+    
+    return editsUnique;
+  }
+
+  // Returns most recent edit date for citation purposes
+  const getMostRecentEditDate = edits => {
+    if (edits.length) {
+      const mostRecentEvent = edits.map(edit => edit.timestamp).reduce((mostRecent, currentEvent) => {
+        return new Date(currentEvent.date) > new Date(mostRecent.date) ? currentEvent : mostRecent;
+      });
+      return mostRecentEvent;
+    }
+    return new Date();
+  }
   
   // Default display when an invalid lemma id is in the URL params
   if (params.lemmaId && !lemma) {
@@ -523,9 +574,12 @@ const Lemma = props => {
         {(user && user.token) ? (
           <button className={styles.delete} onClick={() => saveLemma()}>SAVE</button>
         ) : null}
+        {/* <button className={styles.delete} style={{cursor: "pointer"}} onClick={e => copyToClipboard(e, 'https://zodiac.fly.dev/' + lemma.lemmaId)}>Share <IoIosCopy /></button> */}
       </h1>
       
-      <fieldset disabled={user.token===null} style={{border: 'none', margin: 0, padding: 0}}>
+      <fieldset style={{border: 'none', margin: 0, padding: 0}}>
+
+        {/* <Citations lemma={lemma} title={title} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} /> */}
 
         <BasicInfo lemma={lemma} onChange={onChange} />
         <Meanings
@@ -572,7 +626,9 @@ const Lemma = props => {
           deleteExternalLink={deleteExternalLink}
         />
 
-        {user.token && <EditHistory lemma={lemma} />}
+        <Citations lemma={lemma} title={title} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} />
+
+        <EditHistory lemma={lemma} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} />
         
         <DeleteLemma lemma={lemma} deleteLemma={deleteLemma} />
       </fieldset>

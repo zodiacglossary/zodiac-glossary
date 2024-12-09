@@ -51,19 +51,19 @@ const SignUp = props => {
       lastName &&
       username &&
       validEmail &&
-      validWebsite &&
       validPassword &&
       validMatch
     );
-    // console.log(flag);
+    
     setEnableSubmit(flag);
+    
   }, [firstName, lastName, username, validEmail, validWebsite, validPassword, validMatch]);
 
   function handleSubmit(event) {
     event.preventDefault();
 
     let url = '/api/users';
-    fetch(url, {
+    let payload = {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -77,15 +77,17 @@ const SignUp = props => {
         username: username.trim(),
         password: password.trim(),
       }),
-    })
+    };
+
+    fetch(url, payload)
     .then(response => response.json())
     .then(data => {
-      console.log(data)
       setMessage(`User ${data.username} created successfully. You will receive an email when your account is approved.`);
-      // setEnableSubmit(false);
+      setEnableSubmit(false);
     })
     .catch(data => {
       setMessage(`There was an error creating your account. Please check your account information, or contact the administrator for help.`);
+      console.error(data)
       setEnableSubmit(false);
     });
   }
@@ -149,7 +151,6 @@ const SignUp = props => {
               placeholder="website"
               value={website}
               onChange={e => {setWebsite(e.target.value.trim())}}
-              required
             />
           </div>
 

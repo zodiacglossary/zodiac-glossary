@@ -5,9 +5,16 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
+# [build]
+#   builder = "paketobuildpacks/builder:base"
+#   buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
 [build]
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
+  builder = "heroku/builder:22"
+
+[build.args]
+  key = "NODE_VERSION"
+  value = "12.x"
+
 
 [env]
   PORT = "8080"

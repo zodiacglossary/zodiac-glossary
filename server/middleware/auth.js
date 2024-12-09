@@ -6,12 +6,8 @@ const auth = async (request, response, next) => {
 		
 		request.token = '';
 		request.decoded = '';
-
-		// if (!token) {
-		// 	// throw new Error('Invalid token');
-		// }
 		
-		if (token) {
+		if (token && token !== 'null') {
 			const decoded = jwt.verify(token, 'animalitos');
 
 			request.token = token;
@@ -21,7 +17,7 @@ const auth = async (request, response, next) => {
 		next();
 
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 		console.log('\n\nERROR IN auth()\n\n');
 		response.status(401).send({ error: 'User not authenticated' });
 	}

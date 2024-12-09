@@ -161,7 +161,7 @@ export function getEditHistory(lemmaId, token = '') {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token,
+        'Authorization': (token ? 'Bearer ' + token : ''),
       },
       method: "GET",
     })
@@ -201,4 +201,28 @@ export function getRecentsListPromise(token = '') {
     .then(data => resolve(data))
     .catch(error => reject(error));
   });
+}
+
+export function getCrosslinks(setCrosslinks, token = '') {
+  let url = '/api/crosslinks/list';
+  fetch(url)
+  .then(response => response.json())
+  .then(data => setCrosslinks(data));
+}
+
+// Change token default to null after adding authentication
+export function runAdvancedSearchDB(whereComponents, setSearchResults, token = '') {
+  let url = '/api/advanced_search';
+  fetch(url, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token,
+    },
+    method: "POST",
+    body: JSON.stringify(whereComponents),
+  })
+  .then(response => response.json())
+  .then(data => setSearchResults(data))
+  .catch(data => console.error(data));
 }

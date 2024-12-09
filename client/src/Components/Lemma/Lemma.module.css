@@ -2,6 +2,11 @@
   font-size: 1.2vw;
 }
 
+h4 {
+  font-size: 1.0vw;
+  margin: 2px 0 4px 0 !important;
+}
+
 .form {
   display: table;
   margin: 0;
@@ -33,9 +38,6 @@
   height: 2vw;
   /* margin-top: 5px;
   margin-right: 5px; */
-}
-.inputComment {
-  height: 8vw;
 }
 .inputKeyboard {
   border-radius: 0.5vw 0 0 0.5vw;
@@ -77,6 +79,9 @@
 }
 .inputMeaning {
   width: 22.5vw;
+}
+.inputComment {
+  height: auto;
 }
 .inputCategory {
   width: 20vw;
@@ -279,4 +284,46 @@
 .lemmaListEntryActive {
   color: #FFEF;
   filter: drop-shadow(0 0 2px #FFE6);
+}
+
+.citation {
+  text-indent: -1vw;
+  /* margin-left: 4vw; */
+  padding-left: 2vw;
+}
+
+.copy {  
+  color: #ffef;
+  background: #fff0;
+  border: none;
+  outline: none;
+  /* margin: 0vw 1vw 0vw -2vw; */
+  /* float: left; */
+  cursor: pointer;
+  margin-right: 0.1vw;
+  padding: 0;
+}
+.copy:hover {
+  filter: drop-shadow(0 0 3px #ffe8);
+}
+.copy:active {
+  color: #ffe8;
+  background: #fff0;
+  border: none;
+  outline: none;
+}
+
+
+.bibliographicEntry {
+  display: flex;            /* Make the container a flexbox */
+  align-items: flex-start;  /* Align items to the top of the container */
+  margin-bottom: 15px;      /* Space between entries */
+}
+
+.citationText {
+  display: block;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-indent: -1vw;
+  padding-left: 2vw;
 }

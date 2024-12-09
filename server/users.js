@@ -36,7 +36,8 @@ const createUser = async (request, response) => {
     // Make sure the username doesn't exist already
     const userTest = await pool.query('SELECT * FROM users WHERE username=$1;', [username]);
     if (userTest.rows.length) {
-      throw new Error();
+      console.log(userTest.rows)
+      throw new Error('Username already in use');
     }
 
     await pool.query(
@@ -47,6 +48,7 @@ const createUser = async (request, response) => {
         response.status(201).send(results.rows[0]);
     });
   } catch (error) {
+    console.error(error);
     response.status(400).send();
   }
 };

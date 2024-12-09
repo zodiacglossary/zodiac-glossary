@@ -19,7 +19,7 @@ const BasicInfo = props => {
     return (
       <div className={styles.basicPublic}>
         <h3>Basic</h3>
-        <table><tbody>
+        {/* <table><tbody> */}
           <Dropdown
             name="language"
             label="Language"
@@ -62,7 +62,7 @@ const BasicInfo = props => {
             onChange={onChange} 
           />
           </>)}
-        </tbody></table>
+        {/* </tbody></table> */}
       </div>
     );
   }
@@ -335,6 +335,9 @@ const BasicInfo = props => {
           </td>
           <td>
             <textarea
+              style={{
+                height: `${Math.max(Math.ceil(lemma.comment.length / 15), 2) * 1.2}vw`,
+              }}
               className={styles.inputComment}
               type="text"
               name="comment"
