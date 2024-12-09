@@ -1,11 +1,9 @@
 import React from 'react';
 
-import styles from './Help.module.css';
-
 const Help = props => {
   return (
-    <div className={styles.content}>
-      <div className={styles.container}>
+    <div class="content">
+      <div class="container">
         <About />
 
         <br /><br />
@@ -44,7 +42,7 @@ function About(props) {
       <p>For inquiries, collaborative opportunities, or contributions to our ongoing research, kindly reach out to us at <a href="mailto:christian.casey@fu-berlin.de">christian.casey@fu-berlin.de</a>. You are also welcome to <a href="https://zodiac.fly.dev/signup">signup as a contributor</a>. (NB all new users must be manually approved before gaining editor access.)</p>
 
       <h2>Some Important Notes</h2>
-      <ul className={styles.stars}>
+      <ul class="stars">
         <li>
           Ancient constellations may not (and probably don't) correspond to modern constellation names (e.g. as defined in the <a href="https://en.wikipedia.org/wiki/IAU_designated_constellations" target="_blank" rel="noopener noreferrer">IAU list of designated constellations</a>).
           Where constellation names are included in the lemmata, this is done to aid discovery.
@@ -72,7 +70,7 @@ function HelpCopy(props) {
       <p>A place to find guidance on entering data for members of the <a href="https://www.geschkult.fu-berlin.de/en/e/zodiac/index.html" target="_blank" rel="noopener noreferrer">Zodiac Project</a>.</p>
 
       <h2>General Notes</h2>
-      <ul className={styles.stars}>
+      <ul className="stars">
         <li>
           Prefer British English spellings.
         </li>

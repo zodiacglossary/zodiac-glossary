@@ -18,9 +18,7 @@
   padding: 0.5vw;
   
   background-color: #0000;
-  color: #FFD;
   
-  font: 1.4vw symbola, symbola, book-antiqua, 'Book Antiqua', serif;
   text-shadow: 0 0 3px #FFD2;
   
   opacity: 0;
@@ -45,7 +43,6 @@
 }
 
 h1, h2, h3, h4 {
-  font-family: dual, 'Dual', 'Futura', sans-serif;
   /* text-shadow: 0 0 3px #2D3B62FF; */
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -53,21 +50,16 @@ h1, h2, h3, h4 {
   margin: 10px 0 10px 0;
 }
 h1, .lemmaTitle {
-  font-size: 2vw;
+  font-size: 2em;
 }
 h2 {
-  font-size: 1.8vw;
+  font-size: 1.8em;
 }
 h3 {
-  font-size: 1.6vw;
+  font-size: 1.6em;
 }
 h3 {
-  font-size: 1.4vw;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-size: 1.4em;
 }
 
 a {
@@ -122,7 +114,6 @@ ol {
   vertical-align: top;
 }
 .input {
-  font: 1.2vw symbola, book-antiqua, 'Book Antiqua', serif;
   display: table-cell;
   width: 80vw;
   background-color: #2D3B6288;
@@ -151,7 +142,6 @@ ol {
   outline: none;
   margin-top: 1vw;
   padding: 0.5vw;
-  font: 1.2vw symbola, book-antiqua, 'Book Antiqua', serif;
   text-shadow: 0 0 3px #FFD2;
 }
 .signUp:hover {
