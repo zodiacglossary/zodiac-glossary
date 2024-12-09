@@ -45,7 +45,7 @@ const CrossReferences = (props) => {
   return (
     <div className={styles.content}>
       <div className={styles.container}>
-        <h1>Cross References</h1>
+        <h1>Cross links</h1>
       </div>
     </div>
   );
