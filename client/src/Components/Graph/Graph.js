@@ -85,7 +85,7 @@ export function createGraph(nodes, links) {
     }[c.language]))
     .call(drag(simulation))
     .on("click", (event, d) => {
-      window.open("https://zodiac.fly.dev/" + d.id, "_blank");
+      window.open("/" + d.id, "_blank");
     });
 
   node.append("title").text((d) => [d.original, d.transliteration, d.id].filter(Boolean).join(" | "));
