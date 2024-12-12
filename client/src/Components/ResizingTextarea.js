@@ -1,12 +1,15 @@
 import React from "react";
 
+// The following derives the number of lines in the text by
+// counting both newlines and lines that are longer than a given line width.
+// CDC 09.12.2024
+function getNumLines(text, lineWidth) {
+	return text.split('\n').reduce((total, line) => total + Math.floor(line.length / lineWidth) + 1, 0);
+}
+
 function ResizingTextarea(props) {
 
-	// The following derives the number of lines in the text by
-	// counting both newlines and lines that are longer than a given line width.
-	// Ends up counting 1 extra line, so subtract 1 from total.
-	// CDC 09.12.2024
-	let numLines = props.value.split('\n').reduce((total, line) => total + Math.floor(line.length / props.characterWidth) + 1, 0);
+	let numLines = getNumLines(props.value, props.characterWidth);	
 	let height = Math.max(numLines, 4) * 1.3; // constant that approximates the text height
 
 	return <textarea 

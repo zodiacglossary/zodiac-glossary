@@ -63,7 +63,7 @@ const AdvancedSearch = props => {
         <h1>Advanced Search</h1>
         <AdvancedSearchBuilder runAdvancedSearch={runAdvancedSearch} resetSearchResults={resetSearchResults} />
 
-        <PdfViewer searchResults={searchResults} />
+        {/* <PdfViewer searchResults={searchResults} /> */}
         <AdvancedSearchResults searchResults={searchResults} />
       </div>
     </div>
