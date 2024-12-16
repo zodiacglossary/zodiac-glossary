@@ -4,8 +4,6 @@ import { IoIosAddCircle, IoIosDownload } from "react-icons/io";
 import Meaning from './Meaning';
 import UserContext from '../../Contexts/UserContext';
 
-import styles from '../Lemma.module.css';
-
 const Meanings = props => {
   const {user} = React.useContext(UserContext);
   const [importable, setImportable] = React.useState(decideImportable());
@@ -32,7 +30,7 @@ const Meanings = props => {
   }, [props.lemma]);
 
   return (
-    <div className={user.token ? styles.meanings : styles.meaningsPublic}>
+    <div>
       <h3>Meanings</h3>
       {props.lemma.meanings.map((meaning, i) => {
         return (
@@ -50,8 +48,8 @@ const Meanings = props => {
         )
       })}
       <div style={{display: (user.token ? 'block' : 'none')}}>
-      {importable && (<button className={styles.add} onClick={e => props.addNewMeaning(e, {value: props.lemma.primary_meaning})}><IoIosDownload /></button>)}
-        <button className={styles.add} onClick={props.addNewMeaning}><IoIosAddCircle /></button>
+      {importable && (<button onClick={e => props.addNewMeaning(e, {value: props.lemma.primary_meaning})}><IoIosDownload /></button>)}
+        <button onClick={props.addNewMeaning}><IoIosAddCircle /></button>
       </div>
     </div>
   );

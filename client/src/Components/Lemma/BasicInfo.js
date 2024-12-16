@@ -7,8 +7,6 @@ import UserContext from '../../Contexts/UserContext';
 
 import { languageOptions, partOfSpeechOptions, loanTypes } from '../../Data/options';
 
-import styles from '../Lemma.module.css';
-
 const BasicInfo = props => {
   let lemma = props.lemma;
   let onChange = props.onChange;
@@ -17,7 +15,7 @@ const BasicInfo = props => {
   // Public view
   if (!user.token) {
     return (
-      <div className={styles.basicPublic}>
+      <div>
         <h3>Basic</h3>
         <table><tbody>
           <Dropdown
@@ -37,7 +35,7 @@ const BasicInfo = props => {
           <PublicLabelledText
             label={lemma.language === "akkadian" ? 'Normalized' : 'Transliteration'}
             content={lemma.transliteration}
-            style={{fontStyle: 'italic'}}
+            style="font-style: italic"
           />
           {lemma.language === "akkadian" && (
             <PublicLabelledText label={'Literal Translation'} content={lemma.literal_translation2} />
@@ -74,13 +72,12 @@ const BasicInfo = props => {
 
   // Editor view
   return (
-    <div className={styles.basic}>
+    <div>
       <h3>Basic</h3>
       <table><tbody>
         <tr>
           <td>
             <label
-              className={styles.label}
               htmlFor="editor"
               data-tip="Put your name here<br />any time you edit a lemma."
               data-for="editor-tooltip"
@@ -91,7 +88,6 @@ const BasicInfo = props => {
           </td>
           <td>
             <input
-              className={styles.input}
               type="text"
               id="editor"
               name="editor"
@@ -105,7 +101,6 @@ const BasicInfo = props => {
         <tr>
           <td>
             <label
-              className={styles.label}
               htmlFor="published"
               data-tip="If checked, this lemma will be visible to all site visitors."
               data-for="published-tooltip"
@@ -127,7 +122,6 @@ const BasicInfo = props => {
         <tr>
           <td>
             <label
-              className={styles.label}
               htmlFor="attention"
               data-tip="Lemma contains errors."
               data-for="attention-tooltip"
@@ -149,7 +143,6 @@ const BasicInfo = props => {
         <tr>
           <td>
             <label
-              className={styles.label}
               htmlFor="checked"
               data-tip="Lemma has been checked by a 2nd editor."
               data-for="checked-tooltip"
@@ -185,7 +178,6 @@ const BasicInfo = props => {
         <tr>
           <td>
             <label
-              className={styles.label}
               htmlFor="transliteration"
               data-tip="Akkadian: (normalized) transcription<br />Egyptian: Egyptological transliteration<br />Other: Roman transliteration"
               data-for="phonetic-tooltip"
@@ -196,7 +188,6 @@ const BasicInfo = props => {
           </td>
           <td>
             <input
-              className={styles.input}
               style={{fontStyle: (lemma.language === "akkadian" || 'italic')}}
               type="text"
               name="transliteration"
@@ -209,13 +200,12 @@ const BasicInfo = props => {
         </tr>
         {lemma.language === "akkadian" && (<tr>
           <td>
-            <label className={styles.label} htmlFor="literal_translation2">
+            <label htmlFor="literal_translation2">
               Literal Translation
             </label>
           </td>
           <td>
             <input
-              className={styles.input}
               type="text"
               name="literal_translation2"
               id="literal_translation2"
@@ -228,7 +218,6 @@ const BasicInfo = props => {
         <tr>
           <td>
             <label
-              className={styles.label}
               htmlFor="original"
               data-tip="Akkadian: transliteration<br />Egyptian: hieroglyphic<br />Other: original text (Unicode)"
               data-for="original-tooltip"
@@ -239,7 +228,6 @@ const BasicInfo = props => {
           </td>
           <td>
             <input
-              className={styles.input}
               type="text"
               name="original"
               id="original"
@@ -251,13 +239,12 @@ const BasicInfo = props => {
         </tr>
         <tr>
           <td>
-            <label className={styles.label} htmlFor="translation">
+            <label htmlFor="translation">
               Literal Translation
             </label>
           </td>
           <td>
             <input
-              className={styles.input}
               type="text"
               name="translation"
               id="translation"
@@ -269,13 +256,12 @@ const BasicInfo = props => {
         </tr>
         <tr>
           <td>
-            <label className={styles.label} htmlFor="primary_meaning">
+            <label htmlFor="primary_meaning">
               Primary Meaning
             </label>
           </td>
           <td>
             {user.token && (<input
-              className={styles.input}
               type="text"
               name="primary_meaning"
               id="primary_meaning"
@@ -303,7 +289,6 @@ const BasicInfo = props => {
         {/* <tr>
           <td>
             <label
-              className={styles.label}
               htmlFor="dropdown_loan_type"
               data-tip="What sort of loan? Normal"
               data-for="type-of-loan-tooltip"
@@ -313,7 +298,7 @@ const BasicInfo = props => {
             <ReactTooltip id="type-of-loan-tooltip" type="light" html={true} />
           </td>
           <td>
-            <select className={styles.input} name="loan_type" id={"dropdown_loan_type"} value={lemma.loan_type} onChange={onChange}>
+            <select name="loan_type" id={"dropdown_loan_type"} value={lemma.loan_type} onChange={onChange}>
               {loanTypes.map(option => {
                 // Create an empty default for new data
                 if (!option.value)
@@ -329,13 +314,12 @@ const BasicInfo = props => {
         </tr> */}
         <tr>
           <td>
-            <label className={styles.label} htmlFor="comment">
+            <label htmlFor="comment">
               Internal Comment
             </label>
           </td>
           <td>
             <textarea
-              className={styles.inputComment}
               type="text"
               name="comment"
               id="comment"

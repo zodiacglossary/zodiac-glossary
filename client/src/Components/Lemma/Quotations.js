@@ -4,13 +4,11 @@ import { IoIosAddCircle } from "react-icons/io";
 import Quotation from './Quotation';
 import UserContext from '../../Contexts/UserContext';
 
-import styles from '../Lemma.module.css';
-
 const Quotations = props => {
   const {user} = React.useContext(UserContext);
 
   return (
-    <div className={styles.quotations}>
+    <div>
       <h3>Quotations</h3>
       {props.quotations.map((quotation, quotationIndex) => {
         return (
@@ -27,7 +25,7 @@ const Quotations = props => {
       })}
 
       <div style={{display: (user.token ? 'block' : 'none')}}>
-        <button className={styles.add} onClick={props.addNewQuotation}><IoIosAddCircle /></button>
+        <button onClick={props.addNewQuotation}><IoIosAddCircle /></button>
       </div>
 
     </div>

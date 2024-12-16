@@ -11,8 +11,6 @@ import { getLemmataList } from "../../Data/api";
 import { addNewLemma } from "../../Data/api";
 import { searchLemma } from "../../Functions/searchLemmata";
 
-import styles from "./LemmataList.module.css";
-
 const LemmataList = (props) => {
   const { user } = React.useContext(UserContext);
   const [lemmataFiltered, setLemmataFiltered] = React.useState([]);
@@ -135,31 +133,27 @@ const LemmataList = (props) => {
 
       <div style={{ display: user.token ? "block" : "none" }}>
         <button
-          className={styles.addNewLemma}
           onClick={(e) => addNewLemmaButton()}
         >
           <IoIosAddCircle /> Add new lemma...
         </button>
       </div>
 
-      <div className={styles.sortButtons}>
+      <div>
         Sort by:
         <button
-          className={styles.sortButtons}
           onClick={(e) => setLemmataSortField("transliteration")}
         >
           Transliteration
         </button>{" "}
         |
         <button
-          className={styles.sortButtons}
           onClick={(e) => setLemmataSortField("original")}
         >
           Original
         </button>{" "}
         |
         <button
-          className={styles.sortButtons}
           onClick={(e) => setLemmataSortField("primary_meaning")}
         >
           Meaning
@@ -171,9 +165,6 @@ const LemmataList = (props) => {
       <ul>
         {lemmataFiltered.map((lemma) => (
           <li><QueryNavLink
-            className={({ isActive }) =>
-              isActive ? styles.lemmaListEntryActive : styles.lemmaListEntry
-            }
             key={lemma.lemmaId}
             to={lemma.lemmaId}
             onClick={(e) => navigateToLemma(e, lemma.lemmaId)}
@@ -189,7 +180,7 @@ const LemmataList = (props) => {
 const LemmataListItem = (props) => {
   const lemma = props.lemma;
   return (
-    <div className={styles.lemmataListItem}>
+    <div>
       {!lemma.published && (
         <span style={{ fontStyle: "italic" }}>
           {" "}

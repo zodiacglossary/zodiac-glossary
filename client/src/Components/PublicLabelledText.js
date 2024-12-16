@@ -1,7 +1,5 @@
 import React from "react";
 
-import styles from './Lemma.module.css';
-
 function PublicLabelledText(props) {
   if (!props.content) {
 		return null;
@@ -15,10 +13,10 @@ function PublicLabelledText(props) {
 	return (
 		<tr>
 			<td>
-				<div className={styles.label}>{props.label}</div>
+				<div>{props.label}</div>
 			</td>
 			<td>
-				<div className={styles.label} style={props.style}>{props.content}</div>
+				<div style={props.style}>{props.content}</div>
 			</td>
 		</tr>
 	);

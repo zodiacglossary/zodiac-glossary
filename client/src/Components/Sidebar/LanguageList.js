@@ -1,7 +1,5 @@
 import React from "react";
 
-import styles from './LemmataList.module.css';
-
 import LanguageItem from "./LanguageItem";
 
 const LanguageList = props => {
@@ -14,11 +12,11 @@ const LanguageList = props => {
     <>
       <h2>Languages</h2>
       <ol className="language-list">
-        <button className={styles.selectLanguages} onClick={e => props.selectAllLanguages(false)}>Deselect All</button>
-        <button className={styles.selectLanguages} onClick={e => props.selectAllLanguages(true)}>Select All</button>
+        <button onClick={e => props.selectAllLanguages(false)}>Deselect All</button>
+        <button onClick={e => props.selectAllLanguages(true)}>Select All</button>
         {languages.map(language => {
           return (
-            <LanguageItem 
+            <LanguageItem
               key={language.id}
               language={language}
               selectLanguage={props.selectLanguage}

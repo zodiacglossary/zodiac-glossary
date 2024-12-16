@@ -6,8 +6,6 @@ import PublicLabelledText from "../PublicLabelledText";
 
 import UserContext from '../../Contexts/UserContext';
 
-import styles from '../Lemma.module.css';
-
 const Meaning = props => {
   const {user} = React.useContext(UserContext);
   const meaning = props.meaning;
@@ -17,7 +15,7 @@ const Meaning = props => {
 
   if (user && !user.token) {
     return (
-      <div className={styles.row}>
+      <div>
         <h4>{i+1}</h4>
 
         <PublicLabelledText label={'Meaning'} content={meaning.value} />
@@ -38,11 +36,10 @@ const Meaning = props => {
         setStyle({display: 'none'});
       }}
     >
-      <div className={styles.row}>
-        <label className={styles.label} htmlFor={"meaning_"+meaning.id}>{i+1}</label>
+      <div>
+        <label htmlFor={"meaning_"+meaning.id}>{i+1}</label>
         <input
           style={{display: (user.token || meaning.value ? 'inline' : 'none')}}
-          className={styles.inputMeaning}
           type="text"
           name={"meaning_"+meaning.id}
           id={"meaning_"+meaning.id}
@@ -53,7 +50,6 @@ const Meaning = props => {
         {/* Commented out because of the new categories 1->n setup – CDC 2023-09-11 */}
         {/* <input
           style={{display: (user.token || meaning.category ? 'inline' : 'none')}}
-          className={styles.inputMeaning}
           type="text"
           name={"category_"+meaning.id}
           id={"category_"+meaning.id}
@@ -72,7 +68,6 @@ const Meaning = props => {
         </datalist> */}
         <input
           style={{display: (user.token || meaning.comment ? 'inline' : 'none')}}
-          className={styles.inputMeaning}
           type="text"
           name={"comment_"+meaning.id}
           id={"comment_"+meaning.id}
@@ -89,8 +84,8 @@ const Meaning = props => {
           meaningsCategories={props.meaningsCategories}
         />
       </div>
-      <div className={styles.row}>
-        <button className={styles.delete} style={style} onClick={() => props.deleteMeaning(meaning.id)}><IoIosTrash /></button>
+      <div>
+        <button style={style} onClick={() => props.deleteMeaning(meaning.id)}><IoIosTrash /></button>
       </div>
     </div>
     </>

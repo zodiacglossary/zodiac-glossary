@@ -4,8 +4,6 @@ import { useSearchParams } from "react-router-dom";
 
 import Keyboards from './Keyboards';
 
-import styles from '../Lemma.module.css';
-
 const Search = props => {
   let [searchParams, setSearchParams] = useSearchParams();
   let [keyboardVisible, setKeyboardVisible] = React.useState(false);
@@ -40,19 +38,17 @@ const Search = props => {
       <h2>Search</h2>
       <input
         id="search"
-        className={styles.inputSearch}
         type="text"
         placeholder="lemma..."
         value={search}
         onChange={event => addSearchParam(event.target.value)}
       />
       <button
-        className={styles.searchKeyboard}
         onClick={() => keyboardClick()}
       >
         <BsKeyboardFill />
       </button>
-      <div className={keyboardVisible ? styles.fadeIn : styles.fadeOut }>
+      <div>
         <Keyboards visible={keyboardVisible} keyboardClick={keyboardClick} keyClick={keyClick} />
       </div>
     </>

@@ -2,8 +2,6 @@ import React from "react";
 
 import UserContext from '../../Contexts/UserContext';
 
-import styles from '../Lemma.module.css';
-
 const DeleteLemma = props => {
   const [style, setStyle] = React.useState({display: 'none'});
   const [deleteInput, setDeleteInput] = React.useState('');
@@ -23,7 +21,6 @@ const DeleteLemma = props => {
 
   return (
     <div
-      className={styles.deleteLemma}
       onClick={e => {
         setStyle({display: 'block'});
       }}
@@ -45,7 +42,6 @@ const DeleteLemma = props => {
           <input
             type="text"
             id="delete-confirm"
-            className={styles.inputDelete}
             value={deleteInput}
             onChange={onChange}
           />

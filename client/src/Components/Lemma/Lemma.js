@@ -16,8 +16,6 @@ import EditHistory from './EditHistory';
 
 import UserContext from '../../Contexts/UserContext';
 
-import styles from '../Lemma.module.css';
-
 const Lemma = props => {
   let navigate = useNavigate();
   let location = useLocation();
@@ -490,7 +488,7 @@ const Lemma = props => {
   // Default display when an invalid lemma id is in the URL params
   if (params.lemmaId && !lemma) {
     return (
-      <main className={styles.lemma}>
+      <main>
         <h2>Lemma</h2>
         <div style={{opacity: 0.5}}>
           <p>The lemma ID in the URL does not correspond to a valid lemma.</p>
@@ -505,7 +503,7 @@ const Lemma = props => {
   // Properly, this should be fixed with React Router –CDC 2022-11-29
   if (!params.lemmaId || params.lemmaId === "null") {
     return (
-      <main className={styles.lemma}>
+      <main>
         <h2>Lemma</h2>
         <div style={{opacity: 0.5}}>
           <p>No lemma selected.</p>
@@ -517,11 +515,11 @@ const Lemma = props => {
 
   // Full lemma display
   return (
-    <main className={styles.lemma} id="lemma-component">
+    <main id="lemma-component">
       <h1>
         {changed ? <i>Lemma (unsaved)</i> : 'Lemma'}
         {(user && user.token) ? (
-          <button className={styles.delete} onClick={() => saveLemma()}>SAVE</button>
+          <button onClick={() => saveLemma()}>SAVE</button>
         ) : null}
       </h1>
 

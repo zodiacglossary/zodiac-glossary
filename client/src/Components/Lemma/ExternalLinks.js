@@ -6,8 +6,6 @@ import UserContext from '../../Contexts/UserContext';
 
 import { unicodeGreek2BetaCode } from "../../Functions/unicodeGreek2BetaCode";
 
-import styles from '../Lemma.module.css';
-
 const ExternalLinks = props => {
   const {user} = React.useContext(UserContext);
 
@@ -16,7 +14,7 @@ const ExternalLinks = props => {
   unicodeGreek2BetaCode(original)
 
   return (
-    <div className={styles.crossLinks}>
+    <div>
       <h3>External Links</h3>
       {props.externalLinks.map((externalLink, i) => {
         return (
@@ -31,7 +29,7 @@ const ExternalLinks = props => {
         )
       })}
       <div style={{display: (user.token ? 'block' : 'none')}}>
-        <button className={styles.add} onClick={props.addNewExternalLink}><IoIosAddCircle /></button>
+        <button onClick={props.addNewExternalLink}><IoIosAddCircle /></button>
       </div>
       {user.token && (
       <>

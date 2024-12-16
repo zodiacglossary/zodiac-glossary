@@ -4,8 +4,6 @@ import { getEditHistory } from "../../Data/api";
 
 import UserContext from '../../Contexts/UserContext';
 
-import styles from '../Lemma.module.css';
-
 const EditHistory = props => {
   const lemma = props.lemma;
   const [edits, setEdits] = React.useState([]);
@@ -28,7 +26,7 @@ const EditHistory = props => {
   const dateFormat = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
   // .toLocaleDateString("en-US", dateFormat)
   return (
-    <div className={styles.crossLinks}>
+    <div>
       <h3>Edit History</h3>
       <table><tbody>
       {edits.map((edit, i) => {
@@ -51,7 +49,7 @@ const EditHistory = props => {
         )
       })}
       </tbody></table>
-      {showAll || edits.length <= 5 || <button className={styles.sortButtons} onClick={e => setShowAll(true)}>Show all...</button>}
+      {showAll || edits.length <= 5 || <button onClick={e => setShowAll(true)}>Show all...</button>}
     </div>
   );
 };

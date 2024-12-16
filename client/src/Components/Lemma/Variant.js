@@ -5,8 +5,6 @@ import UserContext from '../../Contexts/UserContext';
 
 import PublicLabelledText from "../PublicLabelledText";
 
-import styles from '../Lemma.module.css';
-
 const Variant = props => {
   const variant = props.variant;
   const i = props.i;
@@ -16,9 +14,7 @@ const Variant = props => {
 
   if (user && !user.token) {
     return (
-      <div
-        className={styles.row}
-      >
+      <div>
         <h4>{i+1}</h4>
 
         <PublicLabelledText
@@ -34,7 +30,6 @@ const Variant = props => {
 
   return (
     <div
-      className={styles.row}
       onMouseEnter={e => {
         setStyle({display: 'block'});
       }}
@@ -42,13 +37,12 @@ const Variant = props => {
         setStyle({display: 'none'});
       }}
     >
-      <label className={styles.label} htmlFor={"original_"+variant.id}>{i+1}</label>
+      <label htmlFor={"original_"+variant.id}>{i+1}</label>
       <input
         style={{
           display: (user.token || variant.transliteration ? 'inline' : 'none'),
           fontStyle: (props.language === "akkadian" || 'italic')
         }}
-        className={styles.input}
         type="text"
         name={"transliteration_"+variant.id}
         id={"transliteration_"+variant.id}
@@ -58,7 +52,6 @@ const Variant = props => {
       />
       <input
         style={{display: (user.token || variant.original ? 'inline' : 'none')}}
-        className={styles.input}
         type="text"
         name={"original_"+variant.id}
         id={"original_"+variant.id}
@@ -68,7 +61,6 @@ const Variant = props => {
       />
       <input
         style={{display: (user.token || variant.comment ? 'inline' : 'none')}}
-        className={styles.inputMeaning}
         type="text"
         name={"comment_"+variant.id}
         id={"comment_"+variant.id}
@@ -77,7 +69,7 @@ const Variant = props => {
         onChange={e => props.updateVariant("comment", e.target.value, variant.id)}
       />
       <div style={{display: (user.token ? 'inline' : 'none')}}>
-        <button className={styles.delete} style={style} onClick={() => props.deleteVariant(variant.id)}><IoIosTrash /></button>
+        <button style={style} onClick={() => props.deleteVariant(variant.id)}><IoIosTrash /></button>
       </div>
     </div>
   );

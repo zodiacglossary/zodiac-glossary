@@ -7,15 +7,13 @@ import LemmataList from './LemmataList';
 
 import { languageOptions } from '../../Data/options';
 
-import styles from '../Lemma.module.css';
-
 const Sidebar = props => {
   let [searchParams, setSearchParams] = useSearchParams();
   let navigate = useNavigate();
   let location = useLocation();
   const [languages, setLanguages] = React.useState(getLanguageList(languageOptions));
   const [selectedLemmaId, setSelectedLemmaId] = React.useState(null);
-  
+
   // // Force language list to update on location change
   // // Needed to keep the values current when some action strips away the query string
   React.useEffect(() => {
@@ -28,7 +26,7 @@ const Sidebar = props => {
   React.useEffect(() => {
     navigate(selectedLemmaId + location.search, { replace: true });
   }, [selectedLemmaId]);
-  
+
   // Get language list from search params
   // Language is active by default if the language is not yet defined in the query string
   // because new visitors will begin with an empty query string but should start with all languages active
@@ -49,7 +47,7 @@ const Sidebar = props => {
     });
     return languages;
   };
-  
+
   function selectAllLanguages(selectAll) {
     let newLanguages = languages.map(language => {
       language.active = selectAll;
@@ -77,7 +75,7 @@ const Sidebar = props => {
       return language;
     });
     setLanguages(newLanguages);
-    
+
     // Add language values to search params while keeping existing search value
     let newSearchParams = Object.fromEntries([...searchParams]);
     for (const language of newLanguages) {
@@ -86,11 +84,11 @@ const Sidebar = props => {
       }
     }
     setSearchParams(newSearchParams);
-    
+
   }
-  
+
   return (
-    <nav className={styles.sidebar}>
+    <nav>
       <Search />
       <LanguageList languages={languages} selectLanguage={selectLanguage} selectAllLanguages={selectAllLanguages} />
       <LemmataList languages={languages} setSelectedLemmaId={setSelectedLemmaId} contentLemma={props.contentLemma} lemmataList={props.lemmataList} setLemmataList={props.setLemmataList} changed={props.changed} setChanged={props.setChanged} />

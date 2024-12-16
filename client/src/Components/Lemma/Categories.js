@@ -6,17 +6,15 @@ import UserContext from '../../Contexts/UserContext';
 
 import { getMeaningCategories } from "../../Data/autocomplete";
 
-import styles from '../Lemma.module.css';
-
 const Categories = props => {
   const {user} = React.useContext(UserContext);
 
   if (user && !user.token) {
 		let categoryList = ((props.categories && props.categories.length) ? props.categories.map(category => category.category).join(', ') : null);
     return (
-			<div className={styles.row}>
-				<div className={styles.label}>Categories</div>
-				<div className={styles.label}>
+			<div>
+				<div>Categories</div>
+				<div>
 					{typeof categoryList === 'string' ? categoryList : null}
 				</div>
 			</div>
@@ -24,7 +22,7 @@ const Categories = props => {
   }
 
   return (
-		<div className={styles.row}>
+		<div>
 			<div>
 				<h3>Categories</h3>
 
@@ -40,7 +38,7 @@ const Categories = props => {
 					deleteCategory={props.deleteCategory}
 				/>
 			))}
-			<button className={styles.button} onClick={e => props.addNewCategory(props.meaning.id)}><IoIosAddCircle /></button>
+			<button onClick={e => props.addNewCategory(props.meaning.id)}><IoIosAddCircle /></button>
 		</div>
   );
 };
@@ -80,12 +78,11 @@ const Category = props => {
 			}}
 			key={category.category_id}
 		>
-			{/* <label className={styles.label} htmlFor={"meaning_category_" + category.category_id}>{i+1}</label> */}
+			{/* <label htmlFor={"meaning_category_" + category.category_id}>{i+1}</label> */}
 			<input
 				type="text"
 				name={"category_" + category.category_id}
 				id={"category_" + category.category_id}
-				className={styles.inputCategory}
 				placeholder="new category"
 				value={category.category}
 				list={"meaning_categories" + category.category_id}
@@ -99,7 +96,7 @@ const Category = props => {
 					/>)
 				})}
 			</datalist>
-			<button className={styles.delete} style={style} onClick={e => props.deleteCategory(props.meaning.id, category.category_id)}><IoIosTrash /></button>
+			<button style={style} onClick={e => props.deleteCategory(props.meaning.id, category.category_id)}><IoIosTrash /></button>
 		</div>
 	)
 };

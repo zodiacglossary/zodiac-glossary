@@ -8,8 +8,6 @@ import { IoIosHome, IoIosHelpCircle, IoIosClock, IoIosLogIn, IoIosLogOut, IoIosL
 import UserContext from '../../Contexts/UserContext';
 import LogIn from './LogIn.js';
 
-import styles from './StarHeader.module.css';
-
 import zodiacConstellations from '../../Graphics/zodiac_constellations.svg';
 // import zodiacLogo from '../Graphics/zodiac_logo.svg';
 
@@ -27,18 +25,18 @@ const StarHeader = () => {
   }
   startStyle = {animationPlayState: 'paused'};
   const [style, setStyle] = React.useState(startStyle);
-  
+
   function logout() {
     const emptyUser = {user: {}, token: null};
     setUser(emptyUser);
     localStorage.setItem('user', JSON.stringify(emptyUser));
     setLoginVisible(false);
   }
-  
+
   function login() {
     setLoginVisible(true);
   }
-  
+
   const playPause = () => {
     setStyle(prevStyle => {
       if (prevStyle.animationPlayState === 'running') {
@@ -49,44 +47,44 @@ const StarHeader = () => {
       return {animationPlayState: 'running'};
     });
   };
-  
+
   const goHome = () => {
     navigate('/');
   }
 
   return (
     <>
-      <button className={styles.home} onClick={goHome}>
+      <button onClick={goHome}>
         <IoIosHome />
       </button>
-      <a className={styles.home} href="/help" target={location.pathname === '/help' ? '' : "_blank"} rel="noopener noreferrer">
+      <a href="/help" target={location.pathname === '/help' ? '' : "_blank"} rel="noopener noreferrer">
         <IoIosHelpCircle />
       </a>
-      <a className={styles.home} href="/people" target={location.pathname === '/people' ? '' : "_blank"} rel="noopener noreferrer">
+      <a href="/people" target={location.pathname === '/people' ? '' : "_blank"} rel="noopener noreferrer">
         <IoIosPeople />
       </a>
       {(user && user.token) ? (
-        <a className={styles.home} href="/recents" target={location.pathname === '/recents' ? '' : "_blank"} rel="noopener noreferrer">
+        <a href="/recents" target={location.pathname === '/recents' ? '' : "_blank"} rel="noopener noreferrer">
           <IoIosClock />
         </a>
       ) : null}
       {(user && user.token) ? (
-        <a className={styles.home} href="/todo" target={location.pathname === '/todo' ? '' : "_blank"} rel="noopener noreferrer">
+        <a href="/todo" target={location.pathname === '/todo' ? '' : "_blank"} rel="noopener noreferrer">
           <IoIosList />
         </a>
       ) : null}
       {(user && user.token) ? null : (
-        <button className={styles.home} onClick={login}>
+        <button onClick={login}>
           <IoIosLogIn />
         </button>
       )}
       {(user && user.token) ? (
-        <button className={styles.home} onClick={logout}>
+        <button onClick={logout}>
           <IoIosLogOut />
         </button>
       ) : null}
       {(user.user.username) ? (
-        <div className={styles.username}> &nbsp;{user.user.username}</div>
+        <div> &nbsp;{user.user.username}</div>
       ) : null}
       {/* <button className={styles.playPause} onClick={playPause}>
         {(style.animationPlayState === 'running') ? (<IoIosPause />) : <IoIosPlay />}
@@ -95,22 +93,21 @@ const StarHeader = () => {
         visible={loginVisible}
         setLoginVisible={setLoginVisible}
       />
-      <header className={styles.header} onClick={() => playPause()}>
+      <header onClick={() => playPause()}>
         <img
           style={style}
-          className={styles.starChart}
           src={zodiacConstellations}
           alt="Star chart with zodiac constellations"
           onClick={playPause}
         />
-        <div className={styles.titleThe}>The</div>
-        <h1 className={styles.zodiacLogotype}>
+        <div >The</div>
+        <h1 >
           Zodiac
         </h1>
-        <div className={styles.titleGlossary}>
+        <div >
           Glossary
         </div>
-        <div className={styles.subtitle}>
+        <div >
           A cross-cultural glossary of ancient astral science
           <sub
             data-tip='This project is currently in a beta stage. Please forgive any errors.'
@@ -121,8 +118,8 @@ const StarHeader = () => {
           <ReactTooltip id="beta" type="light" html={true} />
         </div>
       </header>
-      <div className={styles.headerBodyGradient}></div>
-      <div className={styles.bodyBackground}></div>
+      <div ></div>
+      <div ></div>
     </>
   );
 };
