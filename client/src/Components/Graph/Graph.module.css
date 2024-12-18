@@ -14,10 +14,10 @@
   left: 0;
 }
 
-body{
+:local(.graphBodyStyle) {
+  /* Needed to prevent global scoping to all <body> tags: "If your styles are altering the <body> tag, they will have a global impact. Ensure that styles targeting the body are either modularized or explicitly scoped." – CDC 2024-12-18 */
   background-color: #2d3b62;
-  /* overflow: hidden; */
-  /* Breaks scrolling on the entire site. Don't know why yet. Will work on it. – CDC 2024-12-18*/
+  overflow: hidden;
 }
 
 h1{

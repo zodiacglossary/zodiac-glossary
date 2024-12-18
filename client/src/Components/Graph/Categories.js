@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import styles from "./Graph.module.css";
 
@@ -9,6 +9,12 @@ import UserContext from "../../Contexts/UserContext";
 const Categories = (props) => {
   const { user } = React.useContext(UserContext);
   let [lemmataList, setLemmataList] = React.useState([]);
+
+  // Needed to apply style to <body> without affecting all other components – CDC 2024-12-18
+  React.useEffect(() => {
+    document.body.classList.add(styles.graphBodyStyle);
+    return () => document.body.classList.remove(styles.graphBodyStyle);
+  }, []);
 
   React.useEffect(() => {
     getLemmataList(setLemmataList, user.token);
