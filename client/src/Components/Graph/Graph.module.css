@@ -16,7 +16,8 @@
 
 body{
   background-color: #2d3b62;
-  overflow: hidden;
+  /* overflow: hidden; */
+  /* Breaks scrolling on the entire site. Don't know why yet. Will work on it. – CDC 2024-12-18*/
 }
 
 h1{
