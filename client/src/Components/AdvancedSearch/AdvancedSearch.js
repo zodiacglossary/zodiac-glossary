@@ -5,7 +5,7 @@ import styles from './AdvancedSearch.module.css';
 import AdvancedSearchResults from "./AdvancedSearchResults";
 import AdvancedSearchBuilder from "./AdvancedSearchBuilder";
 
-import PdfViewer from './PdfViewer';
+import PdfGlossary from './PdfGlossary/PdfGlossary';
 
 import UserContext from '../../Contexts/UserContext';
 
@@ -62,8 +62,7 @@ const AdvancedSearch = props => {
       <div className={styles.container}>
         <h1>Advanced Search</h1>
         <AdvancedSearchBuilder runAdvancedSearch={runAdvancedSearch} resetSearchResults={resetSearchResults} />
-
-        {/* <PdfViewer searchResults={searchResults} /> */}
+          <PdfGlossary searchResults={searchResults} />
         <AdvancedSearchResults searchResults={searchResults} />
       </div>
     </div>

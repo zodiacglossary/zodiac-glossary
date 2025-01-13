@@ -4,12 +4,16 @@
   "private": true,
   "dependencies": {
     "@pdf-lib/fontkit": "^1.1.1",
+    "@react-pdf/renderer": "^4.1.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "babel": "^5.8.38",
     "clipboard": "^2.0.11",
     "d3": "^7.9.0",
     "fontkit": "^2.0.4",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "pdf-lib": "^1.17.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -42,5 +46,10 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://127.0.0.1:3001"
+  "proxy": "http://127.0.0.1:3001",
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.20.7",
+    "@babel/preset-env": "^7.26.0"
+  }
 }
