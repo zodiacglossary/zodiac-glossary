@@ -2,9 +2,11 @@ import React from "react";
 
 import styles from "./Graph.module.css";
 
-import { createGraph } from "./Graph";
 import { getLemmataList } from "../../Data/api";
 import UserContext from "../../Contexts/UserContext";
+import { graphOptions, languageColor, lemmaExists, openLemma } from "./Graph";
+import { Network } from "vis-network";
+import { v4 } from "uuid";
 
 const Categories = (props) => {
   const { user } = React.useContext(UserContext);
@@ -21,40 +23,49 @@ const Categories = (props) => {
   }, [user.token]);
 
   React.useEffect(() => {
-    const lemmaExists = (id) => lemmataList.some((x) => x.lemmaId === id);
-
-    // console.log(lemmataList);
     if (lemmataList.length > 0) {
-      const links = lemmataList
+      const categories = [
+        ...new Set(
+          lemmataList.flatMap((lemma) =>
+            lemma.meanings.map((meaning) => meaning.category)
+          )
+        ),
+      ];
+
+      const lemmaExists = (id) => lemmataList.some((x) => x.lemmaId === id);
+
+      const nodes = lemmataList
+        .map((lemma) => ({
+          ...lemma,
+          label: lemma.transliteration || lemma.original,
+          id: lemma.lemmaId,
+          color: languageColor(lemma.language),
+        }))
+        .concat(
+          categories.map((x) => ({
+            id: "category:" + x,
+            color: "#fff",
+            label: x,
+            shape: "box",
+          }))
+        );
+
+      const edges = lemmataList
         .flatMap((lemma) =>
           lemma.meanings.map((meaning) => ({
-            source: lemma.lemmaId,
-            target: meaning.category,
-            id: `${lemma.original}: ${meaning.value} (${meaning.category})`,
+            from: lemma.lemmaId,
+            to: "category:" + meaning.category,
+            id: v4(),
           }))
         )
-        .filter((mapping) => lemmaExists(mapping.source) && mapping.target);
+        .filter((crossLink) => lemmaExists(crossLink.from));
 
-      createGraph(
-        lemmataList
-          .map((lemma) => ({
-            ...lemma,
-            id: lemma.lemmaId,
-          }))
-          .concat(
-            [
-              ...new Set(
-                lemmataList.flatMap((lemma) =>
-                  lemma.meanings.map((meaning) => meaning.category)
-                )
-              ),
-            ].map((c) => ({
-              id: c,
-              isCategory: true,
-            }))
-          ),
-        links
+      const network = new Network(
+        document.getElementById("crosslinks-graph"),
+        { nodes, edges },
+        graphOptions
       );
+      network.on("doubleClick", openLemma);
     }
   }, [lemmataList]);
 
@@ -62,6 +73,7 @@ const Categories = (props) => {
     <div className={styles.content}>
       <div className={styles.container}>
         <h1>Categories</h1>
+        <div style={{ height: 80 + "vh" }} id="crosslinks-graph"></div>
       </div>
     </div>
   );
