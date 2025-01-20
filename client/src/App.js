@@ -43,7 +43,6 @@ function App() {
           <Route path="/advanced-search" element={<AdvancedSearch />} />
           <Route path="/graph/crosslinks" element={<CrossReferences />} />
           <Route path="/graph/categories" element={<Categories />} />
-          {/* <Route path="*" element={<Lemma />} /> */}
         </Routes>
         <Footer />
       </div>

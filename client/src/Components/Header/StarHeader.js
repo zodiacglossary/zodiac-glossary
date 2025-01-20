@@ -77,7 +77,7 @@ const StarHeader = () => {
       >
         <IoIosSearch />
       </a>
-      <Tooltip id="advanced-search-tooltip" type="light" html={false} place="bottom-start" />
+      {/* <Tooltip id="advanced-search-tooltip" type="light" html={false} place="bottom-start" /> */}
 
       <a 
         className={styles.home} 

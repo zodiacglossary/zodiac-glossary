@@ -73,7 +73,6 @@ app.post('/api/advanced_search', auth, advancedSearch.runAdvancedSearch);
 
 
 app.get('*', (request, response) => {
-  // console.log(request)
   response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
 

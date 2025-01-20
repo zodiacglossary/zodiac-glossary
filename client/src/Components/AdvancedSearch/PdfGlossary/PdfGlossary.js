@@ -1,6 +1,6 @@
 import React from 'react';
 import { PDFViewer } from '@react-pdf/renderer';
-import PDFDocument from './PDFDocument'; // Your PDFDocument component
+import PDFDocument from './PDFDocument';
 
 const PdfGlossary = () => (
   <div style={{ height: '100vh' }}>

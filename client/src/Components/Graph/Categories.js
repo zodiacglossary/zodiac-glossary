@@ -23,7 +23,7 @@ const Categories = (props) => {
   React.useEffect(() => {
     const lemmaExists = (id) => lemmataList.some((x) => x.lemmaId === id);
 
-    console.log(lemmataList);
+    // console.log(lemmataList);
     if (lemmataList.length > 0) {
       const links = lemmataList
         .flatMap((lemma) =>
