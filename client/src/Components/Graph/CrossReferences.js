@@ -2,9 +2,10 @@ import React from "react";
 
 import styles from "./Graph.module.css";
 
-import { createGraph } from "./Graph";
 import { getCrosslinks, getLemmataList } from "../../Data/api";
 import UserContext from "../../Contexts/UserContext";
+import { Network } from "vis-network";
+import { graphOptions, languageColor, lemmaExists, openLemma } from "./Graph";
 
 const CrossReferences = (props) => {
   const { user } = React.useContext(UserContext);
@@ -25,26 +26,33 @@ const CrossReferences = (props) => {
   }, [user.token]);
 
   React.useEffect(() => {
-    const lemmaExists = (id) => lemmataList.some((x) => x.lemmaId === id);
-
-    console.log(lemmataList, crosslinks);
     if (lemmataList.length > 0 && crosslinks.length > 0) {
-      createGraph(
-        lemmataList.map((lemma) => ({
-          ...lemma,
-          id: lemma.lemmaId,
-        })),
-        crosslinks
-          .map((crossLink) => ({
-            source: crossLink.lemma_id,
-            target: crossLink.link,
-            id: `${crossLink.lemma_id}↔${crossLink.link}`,
-          }))
-          .filter(
-            (crossLink) =>
-              lemmaExists(crossLink.source) && lemmaExists(crossLink.target)
-          )
+      const lemmaExists = (id) => lemmataList.some((x) => x.lemmaId === id);
+
+      const nodes = lemmataList.map((lemma) => ({
+        ...lemma,
+        label: lemma.transliteration || lemma.original,
+        id: lemma.lemmaId,
+        color: languageColor(lemma.language),
+      }));
+
+      const edges = crosslinks
+        .map((crossLink) => ({
+          from: crossLink.lemma_id,
+          to: crossLink.link,
+          id: `${crossLink.lemma_id}↔${crossLink.link}`,
+        }))
+        .filter(
+          (crossLink) =>
+            lemmaExists(crossLink.to) && lemmaExists(crossLink.from)
+        );
+
+      const network = new Network(
+        document.getElementById("crosslinks-graph"),
+        { nodes, edges },
+        graphOptions
       );
+      network.on("doubleClick", openLemma);
     }
   }, [lemmataList, crosslinks]);
 
@@ -52,6 +60,7 @@ const CrossReferences = (props) => {
     <div className={styles.content}>
       <div className={styles.container}>
         <h1>Cross links</h1>
+        <div style={{ height: 80 + "vh" }} id="crosslinks-graph"></div>
       </div>
     </div>
   );
