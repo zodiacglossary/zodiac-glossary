@@ -12,14 +12,13 @@ import Todo from './Components/Help/Todo';
 import Contributors from './Components/Contributors/Contributors';
 import Recents from './Components/Recents/Recents';
 import AdvancedSearch from './Components/AdvancedSearch/AdvancedSearch';
-import PdfGlossary from "./Components/AdvancedSearch/PdfGlossary/PdfGlossary";
+import PdfGlossarySearch from "./Components/AdvancedSearch/PdfGlossarySearch";
 import CrossReferences from './Components/Graph/CrossReferences';
 import Categories from './Components/Graph/Categories';
 
 import Footer from './Components/Footer/Footer';
 
 import UserContext from './Contexts/UserContext';
-import PdfGlossary from "./Components/AdvancedSearch/PdfGlossary/PdfGlossary";
 
 
 function App() {
@@ -43,7 +42,7 @@ function App() {
           <Route path="/people" element={<Contributors />} />
           <Route path="/recents" element={<Recents />} />
           <Route path="/advanced-search" element={<AdvancedSearch />} />
-          <Route path="/pdf-glossary" element={<PdfGlossary />} />
+          <Route path="/pdf-glossary" element={<PdfGlossarySearch />} />
           <Route path="/graph/crosslinks" element={<CrossReferences />} />
           <Route path="/graph/categories" element={<Categories />} />
         </Routes>

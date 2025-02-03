@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "nodemon server/server.js",
-    "client": "BROWSER=chrome npm start --prefix client",
+    "client": "BROWSER=firefox npm start --prefix client",
     "server": "nodemon server/server.js",
     "db": "flyctl proxy 5432 -a zodiac-db",
     "dev": "concurrently \"flyctl proxy 5432 -a zodiac-db\" \"npm run client\" \"npm run server\""
