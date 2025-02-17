@@ -62,7 +62,7 @@ const AdvancedSearch = props => {
       <div className={styles.container}>
         <h1>Advanced Search</h1>
         <AdvancedSearchBuilder runAdvancedSearch={runAdvancedSearch} resetSearchResults={resetSearchResults} />
-          <PdfGlossary searchResults={searchResults} />
+          {/* <PdfGlossary searchResults={searchResults} /> */}
         <AdvancedSearchResults searchResults={searchResults} />
       </div>
     </div>
