@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "description": "The Zodiac Glossary of Ancient Terms",
   "main": "server/server.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "start": "nodemon server/server.js",
     "client": "BROWSER=chrome npm start --prefix client",
     "server": "nodemon server/server.js",
     "db": "flyctl proxy 5432 -a zodiac-db",
-    "dev": "concurrently \"flyctl proxy 5432 -a zodiac-db\" \"npm run client\" \"npm run server\""
+    "dev": "concurrently \"flyctl proxy 5432 -a zodiac-db\" \"npm run client\" \"npm run server\"",
+    "build": "cd client && npm run build && cd ..",
+    "deploy": "LOCAL_DEV=false cd client && npm run build && cd .. && fly deploy --depot"
   },
   "author": "Christian Casey",
   "license": "ISC",

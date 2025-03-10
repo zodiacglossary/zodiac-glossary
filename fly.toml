@@ -3,18 +3,18 @@
 app = "zodiac"
 kill_signal = "SIGINT"
 kill_timeout = 5
-processes = []
+# processes = []
+# primary_region = "ams"
+
+[build]
+  # image = "ubuntu:20.04"
+  builder = "paketobuildpacks/builder:base"
+  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
+  builtin = "nixpacks"
 
 # [build]
-#   builder = "paketobuildpacks/builder:base"
-#   buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
-[build]
-  builder = "heroku/builder:22"
-
-[build.args]
-  key = "NODE_VERSION"
-  value = "12.x"
-
+  # builder = "heroku/builder:22"
+  # buildpacks = ["heroku/nodejs"]
 
 [env]
   PORT = "8080"
