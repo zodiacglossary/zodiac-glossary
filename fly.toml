@@ -6,15 +6,27 @@ kill_timeout = 5
 # processes = []
 # primary_region = "ams"
 
-[build]
+# [build]
   # image = "ubuntu:20.04"
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
-  builtin = "nixpacks"
+  # builder = "paketobuildpacks/builder:base"
+  # buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
+  # builtin = "nixpacks"
 
 # [build]
   # builder = "heroku/builder:22"
   # buildpacks = ["heroku/nodejs"]
+
+[build]
+  builder = "heroku/builder:22"
+
+[build.args]
+  key = "NODE_VERSION"
+  value = "18.x"
+
+[deploy]
+  release_command = "npm install --omit=dev"
+
+
 
 [env]
   PORT = "8080"

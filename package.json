@@ -13,7 +13,8 @@
     "db": "flyctl proxy 5432 -a zodiac-db",
     "dev": "concurrently \"flyctl proxy 5432 -a zodiac-db\" \"npm run client\" \"npm run server\"",
     "build": "cd client && npm run build && cd ..",
-    "deploy": "LOCAL_DEV=false cd client && npm run build && cd .. && fly deploy --depot"
+    "deploy": "LOCAL_DEV=false cd client && npm run build && cd .. && fly deploy --depot",
+    "clean": "rm -rf package-lock.json node_modules/ && npm install"
   },
   "author": "Christian Casey",
   "license": "ISC",
@@ -46,6 +47,7 @@
     "@babel/core": "^7.26.0",
     "@babel/plugin-proposal-logical-assignment-operators": "^7.20.7",
     "@babel/preset-env": "^7.26.0",
+    "typescript": "^3.9.10",
     "webpack": "^5.97.1"
   }
 }
