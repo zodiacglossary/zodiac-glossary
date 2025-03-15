@@ -12,16 +12,13 @@ kill_timeout = 5
   # buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
   # builtin = "nixpacks"
 
-# [build]
-  # builder = "heroku/builder:22"
-  # buildpacks = ["heroku/nodejs"]
-
 [build]
   builder = "heroku/builder:22"
+  buildpacks = ["heroku/nodejs"]
 
-[build.args]
-  key = "NODE_VERSION"
-  value = "18.x"
+# [build.args]
+#   key = "NODE_VERSION"
+#   value = "18.x"
 
 [deploy]
   release_command = "npm install --omit=dev"
