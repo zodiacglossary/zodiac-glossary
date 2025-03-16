@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 import { IoIosTrash, IoIosOpen } from "react-icons/io";
 
 import QueryNavLink from '../QueryNavLink';
@@ -93,7 +93,7 @@ const CrossLink = props => {
         >
           Linked ID
         </label>
-        <ReactTooltip id={"crossLink_"+i+"-tooltip"} type="light" html={true} />
+        <Tooltip id={"crossLink_"+i+"-tooltip"} type="light" html={true} />
         <input 
           list={"lemmata_list" + i}
           className={styles.inputWide}

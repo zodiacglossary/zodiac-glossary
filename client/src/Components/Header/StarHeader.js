@@ -1,5 +1,5 @@
 import React from 'react';
-import Tooltip from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 
 import { useNavigate, useLocation } from "react-router-dom";
 // import { IoIosPlay, IoIosPause, } from 'react-icons/io';

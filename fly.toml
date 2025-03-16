@@ -3,30 +3,12 @@
 app = "zodiac"
 kill_signal = "SIGINT"
 kill_timeout = 5
-# processes = []
-# primary_region = "ams"
-
-# [build]
-  # image = "ubuntu:20.04"
-  # builder = "paketobuildpacks/builder:base"
-  # buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
-  # builtin = "nixpacks"
 
 [build]
-  builder = "heroku/builder:22"
-  buildpacks = ["heroku/nodejs"]
-
-# [build.args]
-#   key = "NODE_VERSION"
-#   value = "18.x"
-
-[deploy]
-  release_command = "npm install --omit=dev"
-
-
+  dockerfile = "Dockerfile"
 
 [env]
-  PORT = "8080"
+  PORT = "3000"
 
 [experimental]
   allowed_public_ports = []

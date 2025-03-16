@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 import { IoIosTrash, IoIosOpen } from "react-icons/io";
 
 import UserContext from '../../Contexts/UserContext';
@@ -44,7 +44,7 @@ const ExternalLink = props => {
         >
           URL
         </label>
-        <ReactTooltip id={"externalLink_URL_"+i+"-tooltip"} type="light" html={true} />
+        <Tooltip id={"externalLink_URL_"+i+"-tooltip"} type="light" html={true} />
         <input
           className={styles.inputWide}
           name={"externalLink_URL_"+i}
@@ -63,7 +63,7 @@ const ExternalLink = props => {
         >
           Display Text
         </label>
-        <ReactTooltip id={"externalLink_display_"+i+"-tooltip"} type="light" html={true} />
+        <Tooltip id={"externalLink_display_"+i+"-tooltip"} type="light" html={true} />
         <input
           className={styles.inputWide}
           name={"externalLink_display_"+i}

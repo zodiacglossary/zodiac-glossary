@@ -84,4 +84,4 @@ app.get('*', (request, response) => {
 
 
 
-app.listen(port, () => console.log(`Zodiac Glossary app listening on port ${port}.`));
+app.listen(port, "0.0.0.0", () => console.log(`Zodiac Glossary app listening on port ${port}.`));
