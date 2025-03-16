@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 
 import Dropdown from '../Dropdown';
 import PublicLabelledText from "../PublicLabelledText";
@@ -88,7 +88,7 @@ const BasicInfo = props => {
             >
               Editor
             </label>
-            <ReactTooltip id="editor-tooltip" type="light" html={true} />
+            <Tooltip id="editor-tooltip" type="light" html={true} />
           </td>
           <td>
             <input
@@ -113,7 +113,7 @@ const BasicInfo = props => {
             >
               Published
             </label>
-            <ReactTooltip id="published-tooltip" type="light" html={true} />
+            <Tooltip id="published-tooltip" type="light" html={true} />
           </td>
           <td>
             <input
@@ -135,7 +135,7 @@ const BasicInfo = props => {
             >
               Attention
             </label>
-            <ReactTooltip id="attention-tooltip" type="light" html={true} />
+            <Tooltip id="attention-tooltip" type="light" html={true} />
           </td>
           <td>
             <input
@@ -157,7 +157,7 @@ const BasicInfo = props => {
             >
               Checked
             </label>
-            <ReactTooltip id="checked-tooltip" type="light" html={true} />
+            <Tooltip id="checked-tooltip" type="light" html={true} />
           </td>
           <td>
             <input
@@ -193,7 +193,7 @@ const BasicInfo = props => {
             >
               {lemma.language === "akkadian" ? 'Normalized' : 'Transliteration'}
             </label>
-            <ReactTooltip id="phonetic-tooltip" type="light" html={true} />
+            <Tooltip id="phonetic-tooltip" type="light" html={true} />
           </td>
           <td>
             <input
@@ -236,7 +236,7 @@ const BasicInfo = props => {
             >
               {lemma.language === "akkadian" ? 'Transliteration' : 'Original'}
             </label>
-            <ReactTooltip id="original-tooltip" type="light" html={true} />
+            <Tooltip id="original-tooltip" type="light" html={true} />
           </td>
           <td>
             <input
@@ -311,7 +311,7 @@ const BasicInfo = props => {
             >
               Type of Loan
             </label>
-            <ReactTooltip id="type-of-loan-tooltip" type="light" html={true} />
+            <Tooltip id="type-of-loan-tooltip" type="light" html={true} />
           </td>
           <td>
             <select className={styles.input} name="loan_type" id={"dropdown_loan_type"} value={lemma.loan_type} onChange={onChange}>

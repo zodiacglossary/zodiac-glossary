@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 import { IoIosTrash, IoIosOpen } from "react-icons/io";
 
 import UserContext from '../../Contexts/UserContext';
@@ -126,7 +126,7 @@ const Quotation = props => {
         >
           {props.language === "akkadian" ? 'Normalized' : 'Transliteration'}
         </label>
-        <ReactTooltip id={"phonetic_"+quotation.id+"-tooltip"} type="light" html={true} />
+        <Tooltip id={"phonetic_"+quotation.id+"-tooltip"} type="light" html={true} />
         {/* <textarea
           style={{
             fontStyle: (props.language === "akkadian" || 'italic'),
@@ -161,7 +161,7 @@ const Quotation = props => {
         >
           {props.language === "akkadian" ? 'Transliteration' : 'Original'}
         </label>
-        <ReactTooltip id={"original_"+quotation.id+"-tooltip"} type="light" html={true} />
+        <Tooltip id={"original_"+quotation.id+"-tooltip"} type="light" html={true} />
         {/* <textarea
           style={{
             height: `${Math.max(Math.ceil(quotation.original.length / 80), 2) * 1.4}vw`,
@@ -255,7 +255,7 @@ const Quotation = props => {
         >
           Line/Column
         </label>
-        <ReactTooltip id={"line_"+quotation.id+"-tooltip"} type="light" html={true} />
+        <Tooltip id={"line_"+quotation.id+"-tooltip"} type="light" html={true} />
         <input
           type="text"
           className={styles.inputWide}
@@ -370,7 +370,7 @@ const Quotation = props => {
         >
           Comment
         </label>
-        <ReactTooltip id={"comment_"+quotation.id+"-tooltip"} type="light" html={true} />
+        <Tooltip id={"comment_"+quotation.id+"-tooltip"} type="light" html={true} />
         <textarea
           className={styles.textareaWide}
           name={"comment_"+quotation.id}
