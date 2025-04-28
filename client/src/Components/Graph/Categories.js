@@ -27,7 +27,7 @@ const Categories = (props) => {
       const categories = [
         ...new Set(
           lemmataList.flatMap((lemma) =>
-            lemma.meanings.map((meaning) => meaning.category)
+            lemma.meanings.map((meaning) => meaning.category).filter(Boolean) // remove null and empty-string categories
           )
         ),
       ];
@@ -52,7 +52,7 @@ const Categories = (props) => {
 
       const edges = lemmataList
         .flatMap((lemma) =>
-          lemma.meanings.map((meaning) => ({
+          lemma.meanings.filter(meaning => Boolean(meaning.category)).map((meaning) => ({
             from: lemma.lemmaId,
             to: "category:" + meaning.category,
             id: v4(),
