@@ -20,7 +20,9 @@ const CrossLink = props => {
   // const [lemma, setLemma] = React.useState(getLemmaById(lemmata, props.crossLink)); 
   //////////////
   // This did not fix it. Need to come back and try again after auth is done – CDC 2023-05-23
-  let lemma = getLemmaById(lemmata, props.crossLink);
+  // let lemma = getLemmaById(lemmata, props.crossLink);
+  // Came back again and tried to fix. – CDC 2025-04-09
+  const [lemma, setLemma] = React.useState(getLemmaById(lemmata, props.crossLink)); 
   
   const [style, setStyle] = React.useState({display: 'none'});
 
@@ -31,18 +33,23 @@ const CrossLink = props => {
   // Needed to make sure the crossLinks update when the user follows a crossLink to a new lemma
   React.useEffect(() => {
     setCrossLink(props.crossLink);
-    // setLemma(getLemmaById(lemmata, props.crossLink));
-    lemma = getLemmaById(lemmata, props.crossLink);
-  }, [props.crossLink, crossLink]);
+    setLemma(getLemmaById(lemmata, props.crossLink));
+    // lemma = getLemmaById(lemmata, props.crossLink);
+  }, [props.crossLink, lemmata]);
   
   function updateCrossLink(event, id) {
     const updatedCrossLink = parseInt(event.target.value);
     if (updatedCrossLink) {
       props.updateCrossLink(updatedCrossLink, id);
       setCrossLink(updatedCrossLink);
-      // setLemma(getLemmaById(lemmata, event.target.value));
-      lemma = getLemmaById(lemmata, props.crossLink);
+      setLemma(getLemmaById(lemmata, event.target.value));
+      // lemma = getLemmaById(lemmata, props.crossLink);
     }
+  }
+
+  if (!lemma) {
+    setLemma(getLemmaById(lemmata, props.crossLink));
+    return <div>Loading Cross Link data...</div>;
   }
 
   // Public view, placed before filter to shorten load time –CDC 2023-09-19

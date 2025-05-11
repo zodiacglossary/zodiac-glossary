@@ -2,6 +2,7 @@ import React from "react";
 import { IoIosTrash } from "react-icons/io";
 
 import Categories from "./Categories";
+import Quotations from "./Quotations";
 import PublicLabelledText from "../PublicLabelledText";
 import ResizingTextarea from "../ResizingTextarea";
 
@@ -24,6 +25,16 @@ const Meaning = props => {
         <PublicLabelledText label={'Meaning'} content={meaning.value} />
         <PublicLabelledText label={'Comment'} content={meaning.comment} />
         {(meaning.categories && meaning.categories.length) ? <Categories categories={meaning.categories} /> : null}
+        <Quotations
+          filterByMeaning={true}
+          meaning={meaning}
+          quotations={props.quotations}
+          language={props.language}
+          meanings={props.meanings}
+          updateQuotation={props.updateQuotation}
+          addNewQuotation={props.addNewQuotation}
+          deleteQuotation={props.deleteQuotation}
+        />
       </div>
     )
   }
@@ -67,7 +78,7 @@ const Meaning = props => {
           style={{
             display: (user.token || meaning.comment ? 'inline' : 'none'),
           }}
-          characterWidth={35}
+          characterWidth={80}
           className={styles.inputMeaning}
           name={"comment_"+meaning.id}
           id={"comment_"+meaning.id}
@@ -84,6 +95,16 @@ const Meaning = props => {
           meaningsCategories={props.meaningsCategories}
         />
       </div>
+      <Quotations
+          filterByMeaning={true}
+          meaning={meaning}
+          quotations={props.quotations}
+          language={props.language}
+          meanings={props.meanings}
+          updateQuotation={props.updateQuotation}
+          addNewQuotation={props.addNewQuotation}
+          deleteQuotation={props.deleteQuotation}
+        />
       <div className={styles.row}>
         <button className={styles.delete} style={style} onClick={() => props.deleteMeaning(meaning.id)}><IoIosTrash /></button>
       </div>

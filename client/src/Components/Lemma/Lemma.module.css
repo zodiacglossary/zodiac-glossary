@@ -22,7 +22,7 @@ h4 {
   padding: 0.5vw 1vw 0 0;
   vertical-align: top;
 }
-.input, .inputSearch, .inputMeaning, .inputTransliteration, .inputWide, .inputTransliterationWide, .inputKeyboard, .textareaWide, .inputComment, .inputCategory {
+.input, .inputSearch, .inputMeaning, .inputTransliteration, .inputWide, .inputQuotation, .inputTransliterationWide, .inputKeyboard, .textareaWide, .textareaQuotation, .inputComment, .inputCategory, .inputVariant {
   font: 1.2vw symbola, book-antiqua, 'Book Antiqua', serif;
   display: table-cell;
   width: 11vw;
@@ -74,17 +74,20 @@ h4 {
 .inputTransliteration, .inputTransliterationWide {
   font-style: italic;
 }
-.inputWide, .inputTransliterationWide, .inputDelete, .textareaWide {
+.inputWide, .inputTransliterationWide, .inputDelete, .textareaWide, .inputMeaning {
   width: 48vw;
 }
-.inputMeaning {
+.textareaQuotation, .inputQuotation {
+  width: 40vw;
+}
+.inputVariant {
   width: 22.5vw;
 }
 .inputComment {
   height: auto;
 }
 .inputCategory {
-  width: 20vw;
+  width: 48vw;
 }
 .textareaWide {
   height: 6vw;
@@ -134,20 +137,23 @@ h4 {
   box-shadow: 0 0 3px #2D3B62FF, 0 0 3px #2D3B62FF inset;
   border-radius: 10px;
 }
-.basic {
+.basic, .variants {
   height: 48vw;
 }
-.basicPublic {
+.basicPublic, .variantsPublic {
   height: 28vw;
 }
-.meanings, .variants {
-  height: 23vw;
+/* .meanings {
+  height: 48vw;
 }
-.meaningsPublic, .variantsPublic {
-  height: 13vw;
-}
-.quotations, .crossLinks, .deleteLemma {
+.meaningsPublic, {
+  height: 28vw;
+} */
+.meanings, .meaningsPublic, .quotations, .crossLinks, .deleteLemma {
   width: 60vw;
+}
+.quotations {
+  width: 55vw;
 }
 
 .crossLinks {

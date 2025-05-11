@@ -68,7 +68,7 @@ const Variant = props => {
       />
       <input
         style={{display: (user.token || variant.comment ? 'inline' : 'none')}}
-        className={styles.inputMeaning}
+        className={styles.inputVariant}
         type="text"
         name={"comment_"+variant.id}
         id={"comment_"+variant.id}

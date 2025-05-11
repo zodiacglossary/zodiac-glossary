@@ -371,8 +371,22 @@ const Lemma = props => {
     setChanged(true);
   };
 
-  const addNewQuotation = e => {
+  const addNewQuotation = (e, meaning_id) => {
     e.preventDefault();
+    console.log('addNewQuote():', meaning_id)
+
+    // What happens if someone somehow gets to the old Quotations from Lemma?
+    // Here's a temporary blocking method
+    // Delete when stable – CDC 2025.05.11
+    if (!meaning_id) {
+      console.error('Attempt to add quotation at lemma level.')
+      alert(`Adding quotations at the lemma level is no longer supported.
+You should not be seeing this.
+Something has gone terribly wrong.
+Please contact Christian and tell him: christiancasey86@gmail.com
+Lemma: ${lemma.lemmaId}`)
+      return;
+    }
     
     const newQuotation = {
       id: uuidv4(),
@@ -387,7 +401,7 @@ const Lemma = props => {
       link: '',
       line: '',
       page: '',
-      meaning_id: 0,
+      meaning_id: meaning_id,
     }
     
     setLemma(prevLemma => {
@@ -582,6 +596,14 @@ const Lemma = props => {
         {/* <Citations lemma={lemma} title={title} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} /> */}
 
         <BasicInfo lemma={lemma} onChange={onChange} />
+        
+        <Variants
+          lemma={lemma}
+          updateVariant={updateVariant}
+          addNewVariant={addNewVariant}
+          deleteVariant={deleteVariant}
+        />
+        
         <Meanings
           lemma={lemma}
           meaningsCategories={meaningsCategories}
@@ -591,16 +613,7 @@ const Lemma = props => {
           updateCategory={updateCategory}
           deleteCategory={deleteCategory}
           addNewCategory={addNewCategory}
-        />
-        
-        <Variants
-          lemma={lemma}
-          updateVariant={updateVariant}
-          addNewVariant={addNewVariant}
-          deleteVariant={deleteVariant}
-        />
-        
-        <Quotations
+
           quotations={lemma.quotations}
           language={lemma.language}
           meanings={lemma.meanings}
@@ -608,6 +621,17 @@ const Lemma = props => {
           addNewQuotation={addNewQuotation}
           deleteQuotation={deleteQuotation}
         />
+        
+        {/* Old way. Delete when new way is ready. – CDC 2025.05.05 */}
+        {/* <Quotations
+          filterByMeaning={false}
+          quotations={lemma.quotations}
+          language={lemma.language}
+          meanings={lemma.meanings}
+          updateQuotation={updateQuotation}
+          addNewQuotation={addNewQuotation}
+          deleteQuotation={deleteQuotation}
+        /> */}
         
         <CrossLinks
           crossLinks={lemma.crossLinks}

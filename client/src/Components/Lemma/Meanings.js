@@ -46,6 +46,13 @@ const Meanings = props => {
             deleteCategory={props.deleteCategory}
             addNewCategory={props.addNewCategory}
             meaningsCategories={props.meaningsCategories}
+
+            quotations={props.quotations}
+            language={props.language}
+            meanings={props.meanings}
+            updateQuotation={props.updateQuotation}
+            addNewQuotation={props.addNewQuotation}
+            deleteQuotation={props.deleteQuotation}
           />
         )
       })}

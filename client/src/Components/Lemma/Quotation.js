@@ -65,6 +65,10 @@ const Quotation = props => {
         if (!quotation[field])
           props.updateQuotation(field, quotationAutofill[field], quotation.id);
     }
+
+    // If other variables are included in the dependency array, they cause a bug where the lemma is marked as modified erroneously
+    // – CDC 2025-04-09
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quotationAutofill]);
   
   
@@ -132,7 +136,7 @@ const Quotation = props => {
             fontStyle: (props.language === "akkadian" || 'italic'),
             height: `${Math.max(Math.ceil(quotation.transliteration.length / 75), 2) * 1.4}vw`,
           }}
-          className={styles.textareaWide}
+          className={styles.textareaQuotation}
           name={"transliteration_"+quotation.id}
           id={"transliteration_"+quotation.id}
           placeholder={props.language === "akkadian" ? 'normalized' : 'transliteration'}
@@ -144,7 +148,7 @@ const Quotation = props => {
           style={{
             fontStyle: (props.language === "akkadian" || 'italic'),
           }}
-          className={styles.textareaWide}
+          className={styles.textareaQuotation}
           name={"transliteration_"+quotation.id}
           id={"transliteration_"+quotation.id}
           placeholder={props.language === "akkadian" ? 'normalized' : 'transliteration'}
@@ -166,7 +170,7 @@ const Quotation = props => {
           style={{
             height: `${Math.max(Math.ceil(quotation.original.length / 80), 2) * 1.4}vw`,
           }}
-          className={styles.textareaWide}
+          className={styles.textareaQuotation}
           name={"original_"+quotation.id}
           id={"original_"+quotation.id}
           placeholder={props.language === "akkadian" ? 'transliteration' : 'original'}
@@ -175,7 +179,7 @@ const Quotation = props => {
         /> */}
         <ResizingTextarea
           characterWidth={80}
-          className={styles.textareaWide}
+          className={styles.textareaQuotation}
           name={"original_"+quotation.id}
           id={"original_"+quotation.id}
           placeholder={props.language === "akkadian" ? 'transliteration' : 'original'}
@@ -189,7 +193,7 @@ const Quotation = props => {
           style={{
             height: `${Math.max(Math.ceil(quotation.translation.length / 75), 2) * 1.4}vw`,
           }}
-          className={styles.textareaWide}
+          className={styles.textareaQuotation}
           name={"translation_"+quotation.id}
           id={"translation_"+quotation.id}
           placeholder="translation"
@@ -197,8 +201,8 @@ const Quotation = props => {
           onChange={e => props.updateQuotation("translation", e.target.value, quotation.id)} 
         /> */}
         <ResizingTextarea
-          characterWidth={80}
-          className={styles.textareaWide}
+          characterWidth={60}
+          className={styles.textareaQuotation}
           name={"translation_"+quotation.id}
           id={"translation_"+quotation.id}
           placeholder="translation"
@@ -209,10 +213,10 @@ const Quotation = props => {
       <div className={styles.row}>
         <label className={styles.label} htmlFor={"meaning_"+quotation.id}>Meaning</label>
         <select
-          className={styles.inputWide}
+          className={styles.inputQuotation}
           name={"meaning_"+quotation.id}
           id={"meaning_"+quotation.id}
-          value={(quotation.meaning_id ? quotation.meaning_id : 0)}
+          value={(quotation.meaning_id ? quotation.meaning_id : (props.meaning.id ? props.meaning.id : 0))}
           onChange={e => props.updateQuotation("meaning_id", e.target.value, quotation.id)}
         >
           <option key={'empty'} value={0}></option>
@@ -231,7 +235,7 @@ const Quotation = props => {
       <div className={styles.row}>
         <label className={styles.label} htmlFor={"source_"+quotation.id}>Source</label>
         <input
-          className={styles.inputWide}
+          className={styles.inputQuotation}
           type="text"
           name={"source_"+quotation.id}
           id={"source_"+quotation.id}
@@ -258,7 +262,7 @@ const Quotation = props => {
         <Tooltip id={"line_"+quotation.id+"-tooltip"} type="light" html={true} />
         <input
           type="text"
-          className={styles.inputWide}
+          className={styles.inputQuotation}
           name={"line_"+quotation.id}
           id={"line_"+quotation.id}
           placeholder="line or column"
@@ -269,7 +273,7 @@ const Quotation = props => {
       <div className={styles.row}>
         <label className={styles.label} htmlFor={"genre_"+quotation.id}>Genre</label>
         <input
-          className={styles.inputWide}
+          className={styles.inputQuotation}
           type="text"
           name={"genre_"+quotation.id}
           id={"genre_"+quotation.id}
@@ -287,7 +291,7 @@ const Quotation = props => {
       <div className={styles.row}>
         <label className={styles.label} htmlFor={"provenance_"+quotation.id}>Provenance</label>
         <input
-          className={styles.inputWide}
+          className={styles.inputQuotation}
           type="text"
           name={"provenance_"+quotation.id}
           id={"provenance_"+quotation.id}
@@ -305,7 +309,7 @@ const Quotation = props => {
       <div className={styles.row}>
         <label className={styles.label} htmlFor={"date_"+quotation.id}>Date</label>
         <input
-          className={styles.inputWide}
+          className={styles.inputQuotation}
           type="text"
           name={"date_"+quotation.id}
           id={"date_"+quotation.id}
@@ -317,7 +321,7 @@ const Quotation = props => {
       <div className={styles.row}>
         <label className={styles.label} htmlFor={"publication_"+quotation.id}>Publication</label>
         <input
-          className={styles.inputWide}
+          className={styles.inputQuotation}
           type="text"
           name={"publication_"+quotation.id}
           id={"publication_"+quotation.id}
@@ -337,7 +341,7 @@ const Quotation = props => {
           Page Number
         </label>
         <input
-          className={styles.inputWide}
+          className={styles.inputQuotation}
           type="text"
           name={"page_"+quotation.id}
           id={"page_"+quotation.id}
@@ -352,7 +356,7 @@ const Quotation = props => {
           {(quotation.link ? (<a href={checkUrlForHttp(quotation.link)} target="_blank" rel="noopener noreferrer"><IoIosOpen /></a>) : '')}
         </label>
         <input
-          className={styles.inputWide}
+          className={styles.inputQuotation}
           type="text"
           name={"link_"+quotation.id}
           id={"link_"+quotation.id}
@@ -372,7 +376,7 @@ const Quotation = props => {
         </label>
         <Tooltip id={"comment_"+quotation.id+"-tooltip"} type="light" html={true} />
         <textarea
-          className={styles.textareaWide}
+          className={styles.textareaQuotation}
           name={"comment_"+quotation.id}
           id={"comment_"+quotation.id}
           value={quotation.comment}
