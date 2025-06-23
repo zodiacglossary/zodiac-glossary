@@ -136,10 +136,18 @@
   top: 18vw;
 }
 
+.topMenu {
+  /* display: flex; */
+  align-items: center; /* aligns vertically */
+  justify-content: space-between; /* or space-between */
+  padding: 0 2vw;
+  height: 4vw;
+}
+
 .playPause, .home {
   /* position: absolute; */
-  float: right;
-  width: 5vw;
+  /* float: right; */
+  /* width: 5vw; */
   z-index: 2;
   color: #ffef;
   background: #fff0;
@@ -150,12 +158,20 @@
 .playPause:hover, .home:hover {  
   filter: drop-shadow(0 0 3px #ffe8);
 }
+
 .home {
-  float: left;
-  margin-left: 10px;
-  text-align: center;
-  width: 25px;
+  margin: 0 1vw;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  line-height: 1.2;
+  vertical-align: middle;
 }
+
+.spacer {
+  flex-grow: 1;
+}
+
 
 .bodyBackground {
   position: fixed;

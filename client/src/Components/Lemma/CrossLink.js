@@ -25,6 +25,10 @@ const CrossLink = props => {
   const [lemma, setLemma] = React.useState(getLemmaById(lemmata, props.crossLink)); 
   
   const [style, setStyle] = React.useState({display: 'none'});
+  
+  // Track rerenders for debugging and optimization
+  // Still a work in progress right now – CDC 2025-05-22
+  console.count("Crosslink renders");
 
   function getLemmaById(lemmataList, id) {
     return lemmataList.find(lemma => lemma.lemmaId === parseInt(id));
@@ -47,9 +51,20 @@ const CrossLink = props => {
     }
   }
 
-  if (!lemma) {
-    setLemma(getLemmaById(lemmata, props.crossLink));
-    return <div>Loading Cross Link data...</div>;
+  // Fill in crosslink info and update if found
+  React.useEffect(() => {
+    if (!lemma && lemmata.length > 0) {
+      const match = getLemmaById(lemmata, props.crossLink);
+      if (match) {
+        setLemma(match);
+      }
+    }
+  }, [lemma, lemmata, props.crossLink]);
+
+  // Loading message, placed before everything else –CDC 2025-05-28
+  if (!lemma && !props.new) {
+    console.log(props)
+    return <div style={{opacity: 0.5}}>Loading crosslink…</div>;
   }
 
   // Public view, placed before filter to shorten load time –CDC 2023-09-19
@@ -140,4 +155,4 @@ const CrossLink = props => {
   );
 };
 
-export default CrossLink;
+export default React.memo(CrossLink);

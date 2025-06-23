@@ -16,7 +16,8 @@ const CrossLinks = props => {
         return (
           <CrossLink
             key={crossLink.id} 
-            crossLink={crossLink.link} 
+            crossLink={crossLink.link}
+            new={crossLink.new}
             i={crossLink.id}
             lemmataList={props.lemmataList}
             currentLemma={props.currentLemma}
@@ -33,4 +34,4 @@ const CrossLinks = props => {
   );
 };
 
-export default CrossLinks;
+export default React.memo(CrossLinks);

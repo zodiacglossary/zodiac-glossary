@@ -35,6 +35,16 @@ const Lemma = props => {
   // Really stupid cludge that forces the sidebar to update when the user saves a new lemma
   // It's either this or raise all of the lemma state and redo the routing just for that one edge case
   let [updateLemmataList, changed, setChanged, setContentLemma, lemmataList, meaningsCategories] = useOutletContext(); 
+
+  // Track rerenders for debugging and optimization
+  // Still a work in progress right now – CDC 2025-05-22
+  console.count("Lemma renders");
+  console.log("RENDER START", {
+    lemma,
+    title,
+    edits,
+    changed
+  });
   
   React.useEffect(() => {
     // Scroll lemma to top on load
@@ -49,9 +59,12 @@ const Lemma = props => {
     // On refresh or load from URL, lemmaId in the route gets changed to null by React Router
     // This fixes it by temporarily saving the most recent lemma id and using that when the route has null
     if (isNaN(lemmaId)) {
-      // navigate('/' + (location.search || ''));
-      lemmaId = localStorage.getItem('currentLemmaId');
-      navigate('/' + (lemmaId || '') + (location.search || ''));
+      const fallbackId = localStorage.getItem('currentLemmaId');
+
+      const currentPath = '/' + (fallbackId || '') + (location.search || '');
+      if (location.pathname !== currentPath) {
+        navigate(currentPath, { replace: true }); // <- avoid history stacking
+      }
     } else {
       getLemmaFromDB(setLemma, lemmaId);
       localStorage.setItem('currentLemmaId', lemmaId);
@@ -87,7 +100,7 @@ const Lemma = props => {
     }
 
 
-  }, [lemma]);
+  }, [lemma?.lemmaId]);
 
   // Warn if unsaved changes on refresh
   // This code doesn't actually launch a dialog but triggers the browser to do so
@@ -104,8 +117,21 @@ const Lemma = props => {
     };
   }, [changed]);
   
+  const saveLemma = React.useCallback(() => {
+    updateLemmataList();
+    setChanged(false);
+    saveLemmaToDB(setLemma, lemma, user.token);
+    setContentLemma(lemma);
+    
+    // Remind users to fill the editor field if it is blank
+    if (!lemma || !lemma.editor) {
+      alert('Please add your name to the editor field and save again.');
+      setChanged(true);
+    }
+  }, [lemma, user.token]);
+
   // Keyboard shortcuts
-  const handleKeyPress = e => {
+  const handleKeyPress = React.useCallback((e) => {
     // Meta keys
     if (e.ctrlKey || e.metaKey) {
       // Save shortcuts (ctrl+s and cmd+s)
@@ -128,7 +154,8 @@ const Lemma = props => {
       e.preventDefault();
       console.log('Browser nav with cmd left/right blocked')
     }
-  };
+  }, [saveLemma]);
+
   React.useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
     return () => {
@@ -155,19 +182,6 @@ const Lemma = props => {
     setChanged(true);
   };
   
-  const saveLemma = () => {
-    updateLemmataList();
-    setChanged(false);
-    saveLemmaToDB(setLemma, lemma, user.token);
-    setContentLemma(lemma);
-    
-    // Remind users to fill the editor field if it is blank
-    if (!lemma || !lemma.editor) {
-      alert('Please add your name to the editor field and save again.');
-      setChanged(true);
-    }
-  };
-  
   const deleteLemma = () => {
     deleteLemmaFromDB(lemma.lemmaId, user.token);
     navigate('/' + location.search);
@@ -186,7 +200,10 @@ const Lemma = props => {
         ...prevLemma,
         meanings: prevLemma.meanings.map(meaning => {
           if (meaning.id === id) {
-            meaning[field] = updatedMeaning;
+            return {
+              ...meaning,
+              [field]: updatedMeaning,
+            };
           }
           return meaning;
         })
@@ -238,12 +255,18 @@ const Lemma = props => {
         ...prevLemma,
         meanings: prevLemma.meanings.map(meaning => {
           if (meaning.id === meaningId) {
-            meaning.categories.map(category => {
-              if (category.category_id === categoryId) {
-                category.category = updatedCategory;
-              }
-              return category;
-            });
+            return {
+              ...meaning,
+              categories: meaning.categories.map(category => {
+                if (category.category_id === categoryId) {
+                  return {
+                    ...category,
+                    category: updatedCategory,
+                  };
+                }
+                return category;
+              }),
+            };
           }
           return meaning;
         }),
@@ -300,7 +323,10 @@ const Lemma = props => {
         ...prevLemma,
         variants: lemma.variants.map(variant => {
           if (variant.id === id) {
-            variant[key] = updatedVariant;
+            return {
+              ...variant,
+              [key]: updatedVariant,
+            };
           }
           return variant;
         })
@@ -473,7 +499,13 @@ Lemma: ${lemma.lemmaId}`)
         ...prevLemma,
         crossLinks: lemma.crossLinks.map(crossLink => {
           if (crossLink.id === id) {
-            crossLink.link = updatedCrossLink;
+            return {
+              ...crossLink,
+              link: updatedCrossLink,
+              new: false,
+            };
+            // crossLink.link = updatedCrossLink;
+            // crossLink.new = false; // 
           }
           return crossLink;
         }),
@@ -500,6 +532,7 @@ Lemma: ${lemma.lemmaId}`)
       id: uuidv4(),
       link: '',
       lemmaId: lemma.lemmaId,
+      new: true,
     }
     
     setLemma(prevLemma => {
@@ -593,8 +626,6 @@ Lemma: ${lemma.lemmaId}`)
       
       <fieldset style={{border: 'none', margin: 0, padding: 0}}>
 
-        {/* <Citations lemma={lemma} title={title} edits={edits} editorList={uniqueEditorList(edits)} mostRecentDate={getMostRecentEditDate(edits)} /> */}
-
         <BasicInfo lemma={lemma} onChange={onChange} />
         
         <Variants
@@ -621,17 +652,6 @@ Lemma: ${lemma.lemmaId}`)
           addNewQuotation={addNewQuotation}
           deleteQuotation={deleteQuotation}
         />
-        
-        {/* Old way. Delete when new way is ready. – CDC 2025.05.05 */}
-        {/* <Quotations
-          filterByMeaning={false}
-          quotations={lemma.quotations}
-          language={lemma.language}
-          meanings={lemma.meanings}
-          updateQuotation={updateQuotation}
-          addNewQuotation={addNewQuotation}
-          deleteQuotation={deleteQuotation}
-        /> */}
         
         <CrossLinks
           crossLinks={lemma.crossLinks}

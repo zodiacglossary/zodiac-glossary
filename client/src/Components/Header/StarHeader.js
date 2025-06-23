@@ -56,14 +56,15 @@ const StarHeader = () => {
   }
 
   return (
-    <>
+    <div className={styles.topMenu}>
       <button 
         className={styles.home} 
         onClick={goHome}
         data-tip="Home"
         data-for="home-tooltip"
       >
-        <IoIosHome />
+        {/* <IoIosHome /> */}
+        Home
       </button>
       <Tooltip id="home-tooltip" type="light" html={false} place="bottom-start" />
 
@@ -75,7 +76,8 @@ const StarHeader = () => {
         data-tip="Advanced Search"
         data-for="advanced-search-tooltip"
       >
-        <IoIosSearch />
+        {/* <IoIosSearch /> */}
+        Advanced Search
       </a>
       {/* <Tooltip id="advanced-search-tooltip" type="light" html={false} place="bottom-start" /> */}
 
@@ -87,7 +89,8 @@ const StarHeader = () => {
         data-tip="Cross links Graph"
         data-for="crosslinks-tooltip"
       >
-        <IoIosColorFilter />
+        {/* <IoIosColorFilter /> */}
+        Crosslink Graph
       </a>
       <Tooltip id="crosslinks-tooltip" type="light" html={false} place="bottom-start" />
       <a 
@@ -98,7 +101,8 @@ const StarHeader = () => {
         data-tip="Categories Graph"
         data-for="categories-tooltip"
       >
-        <IoIosColorFilter />
+        {/* <IoIosColorFilter /> */}
+        Categories Graph
       </a>
       <Tooltip id="categories-tooltip" type="light" html={false} place="bottom-start" />
 
@@ -110,7 +114,8 @@ const StarHeader = () => {
         data-tip="Help"
         data-for="help-tooltip"
       >
-        <IoIosHelpCircle />
+        {/* <IoIosHelpCircle /> */}
+        About
       </a>
       <Tooltip id="help-tooltip" type="light" html={false} place="bottom-start" />
 
@@ -122,7 +127,8 @@ const StarHeader = () => {
         data-tip="Contributors"
         data-for="people-tooltip"
       >
-        <IoIosPeople />
+        {/* <IoIosPeople /> */}
+        People
       </a>
       <Tooltip id="people-tooltip" type="light" html={false} place="bottom-start" />
 
@@ -130,7 +136,8 @@ const StarHeader = () => {
         <>
           <a className={styles.home} href="/recents" data-tip="Recent Changes" data-for="recents-tooltip">
           {/* <a className={styles.home} href="/recents" target={location.pathname === '/recents' ? '' : "_blank"} rel="noopener noreferrer" data-tip="Recent Changes" data-for="recents-tooltip"> */}
-            <GiAlarmClock />
+            {/* <GiAlarmClock /> */}
+            Recent Edits
           </a>
           <Tooltip id="recents-tooltip" type="light" html={false} place="bottom-start" />
         </>
@@ -138,7 +145,8 @@ const StarHeader = () => {
       {(user && user.token) ? (
         <>
           <a className={styles.home} href="/todo" target={location.pathname === '/todo' ? '' : "_blank"} rel="noopener noreferrer" data-tip="Todo List" data-for="todo-tooltip">
-            <IoIosList />
+            {/* <IoIosList /> */}
+            Todo
           </a>
           <Tooltip id="todo-tooltip" type="light" html={false} place="bottom-start" />
         </>
@@ -146,7 +154,8 @@ const StarHeader = () => {
       {(user && user.token) ? null : (
         <>
           <button className={styles.home} onClick={login} data-tip="Log In" data-for="login-tooltip">
-            <IoIosLogIn />
+            {/* <IoIosLogIn /> */}
+            Log in
           </button>
           <Tooltip id="login-tooltip" type="light" html={false} place="bottom-start" />
         </>
@@ -154,14 +163,16 @@ const StarHeader = () => {
       {(user && user.token) ? (
         <>
           <button className={styles.home} onClick={logout} data-tip="Log Out" data-for="logout-tooltip">
-            <IoIosLogOut />
+            {/* <IoIosLogOut /> */}
+            Log out
           </button>
           <Tooltip id="logout-tooltip" type="light" html={false} place="bottom-start" />
         </>
       ) : null}
       {(user.user.username) ? (
-        <div className={styles.username}> &nbsp;{user.user.username}</div>
+        <div className={styles.home}> &nbsp;User: {user.user.username}</div>
       ) : null}
+      {/* <div className={styles.spacer}></div>  */}
       {/* <button className={styles.playPause} onClick={playPause}>
         {(style.animationPlayState === 'running') ? (<IoIosPause />) : <IoIosPlay />}
       </button> */}
@@ -179,13 +190,13 @@ const StarHeader = () => {
         />
         <div className={styles.titleThe}>The</div>
         <h1 className={styles.zodiacLogotype}>
-          Zodiac
+         
         </h1>
         <div className={styles.titleGlossary}>
-          Glossary
+          
         </div>
         <div className={styles.subtitle}>
-          A cross-cultural glossary of ancient astral science
+          
           <sub
             data-tip='This project is currently in a beta stage. Please forgive any errors.'
             data-for="beta"
@@ -197,7 +208,7 @@ const StarHeader = () => {
       </header>
       <div className={styles.headerBodyGradient}></div>
       <div className={styles.bodyBackground}></div>
-    </>
+    </div>
   );
 };
 

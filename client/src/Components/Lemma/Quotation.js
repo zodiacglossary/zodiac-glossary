@@ -210,7 +210,8 @@ const Quotation = props => {
           onChange={e => props.updateQuotation("translation", e.target.value, quotation.id)} 
         />
       </div>
-      <div className={styles.row}>
+      {/* Removed as quotes are now directly attached to meanings already – CDC 2025-05-19 */}
+      {/* <div className={styles.row}>
         <label className={styles.label} htmlFor={"meaning_"+quotation.id}>Meaning</label>
         <select
           className={styles.inputQuotation}
@@ -221,7 +222,7 @@ const Quotation = props => {
         >
           <option key={'empty'} value={0}></option>
           {props.meanings.map((item, key) => {
-            let categoryList = (item.categories.length ? ' (' + item.categories.map(category => category.category).join(', ') + ')' : '');
+            let categoryList = (item?.categories?.length ? ' (' + item?.categories?.map(category => category.category).join(', ') + ')' : '');
             return (
             <option key={key} value={item.id}>
               {item.value + categoryList}
@@ -231,7 +232,7 @@ const Quotation = props => {
           // </option>
           )})}
         </select>
-      </div>
+      </div> */}
       <div className={styles.row}>
         <label className={styles.label} htmlFor={"source_"+quotation.id}>Source</label>
         <input
