@@ -64,7 +64,6 @@ const AdvancedSearch = props => {
    */
   function sortingKeyFromList(list) {
     return (a, b) => {
-      console.log("sorting on list", list);
       const indexA = list.indexOf(a.toLowerCase());
       const indexB = list.indexOf(b.toLowerCase());
 
@@ -95,14 +94,14 @@ const AdvancedSearch = props => {
     return (a, b) => {
       let result = 0;
       for (const key of sortingKeys) {
-        result ||= key(a, b);
+        result = result || key(a, b);
       }
       return result;
     };
   }
 
   const sortingFunctions = {
-    zodiac: sortingKeyFromList([
+    'Zodiac sign (Aries, ...)': sortingKeyFromList([
         "aries",
         "taurus",
         "gemini",
@@ -116,7 +115,7 @@ const AdvancedSearch = props => {
         "aquarius",
         "pisces",
     ]),
-    planets_babylonian: sortingKeyFromList([
+    'Babylonian planetary order': sortingKeyFromList([
         "moon",
         "sun",
         "jupiter",
@@ -125,7 +124,7 @@ const AdvancedSearch = props => {
         "mercury",
         "mars",
     ]),
-    planets_weekday: sortingKeyFromList([
+    'Weekday order of planets': sortingKeyFromList([
         "sun",
         "moon",
         "mars",
@@ -134,7 +133,7 @@ const AdvancedSearch = props => {
         "venus",
         "saturn",
     ]),
-    planets_heliocentric: sortingKeyFromList([
+    'Heliocentric order of planets': sortingKeyFromList([
         "mercury",
         "venus",
         "earth",
@@ -144,7 +143,7 @@ const AdvancedSearch = props => {
         "uranus",
         "neptune",
     ]),
-    planets_geocentric: sortingKeyFromList([
+    'Geocentric order of planets': sortingKeyFromList([
         "moon",
         "mercury",
         "venus",
@@ -153,15 +152,20 @@ const AdvancedSearch = props => {
         "jupiter",
         "saturn",
     ]),
-    decans: sortingKeyFromList(
+    'Decans numerically ordered': sortingKeyFromList(
         // generate list of: decan 1, decan 2, decan 3, ...
         Array.from({ length: 36 }, (_, index) => `decan ${index + 1}`)
     ),
-    alphabetical: (a, b) => a.localeCompare(b),
+    'Alphabetical': (a, b) => a.localeCompare(b),
 };
 
   const applySortingCriteria = (sortingCriteria, data) => {
-    const key = collateSortingKeys(sortingCriteria.map(criterionName => sortingFunctions[criterionName]));
+    // Filter out invalid criteria and provide a default if none are valid
+    const validCriteria = sortingCriteria.filter(criterionName => sortingFunctions.hasOwnProperty(criterionName));
+    const sortingFns = validCriteria.length > 0
+      ? validCriteria.map(criterionName => sortingFunctions[criterionName])
+      : [sortingFunctions['Alphabetical']];
+    const key = collateSortingKeys(sortingFns);
     return data.sort((a, b) => key(a.disp_meaning, b.disp_meaning));
   };
 
@@ -169,7 +173,6 @@ const AdvancedSearch = props => {
     runAdvancedSearchDB(
       organizeSearchTerms(searchTerms),
       (data) => {
-        console.log(data);
         setSearchResults(applySortingCriteria(sortingCriteria, data));
       },
       user.token
@@ -188,6 +191,7 @@ const AdvancedSearch = props => {
         <AdvancedSearchBuilder
           runAdvancedSearch={runAdvancedSearch}
           resetSearchResults={resetSearchResults}
+          possibleSortingCriteria={Object.keys(sortingFunctions)}
         />
         {/* <PdfGlossary searchResults={searchResults} /> */}
         <AdvancedSearchResults searchResults={searchResults} />

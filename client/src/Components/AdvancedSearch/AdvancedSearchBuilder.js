@@ -7,7 +7,7 @@ import AdvancedSearchEntry from "./AdvancedSearchEntry";
 import { IoIosAddCircle } from "react-icons/io";
 
 import { searchFieldTypes } from '../../Data/options';
-import CommaSeparatedInput from './CommaSeparatedInput';
+import DropdownList from './DropdownList';
 
 const searchTermsInitial = [
   { termNumber: 1, table: 'lemmata',  field: 'l.language_id',  term: '', inputType: 'dropdown', },
@@ -15,9 +15,7 @@ const searchTermsInitial = [
   { termNumber: 3, table: 'meanings', field: 'm.category',     term: '', inputType: 'text', },
 ];
 
-const sortingCriteriaInitial = ['planets_babylonian'];
-
-const AdvancedSearchBuilder = props => {
+const AdvancedSearchBuilder = ({runAdvancedSearch, resetSearchResults, possibleSortingCriteria}) => {
 
   let [searchTerms, setSearchTerms] = React.useState(JSON.parse(JSON.stringify(searchTermsInitial)));
   let [sortingCriteria, setSortingCriteria] = React.useState([]);
@@ -81,21 +79,16 @@ const AdvancedSearchBuilder = props => {
     });
   };
 
-  const runAdvancedSearch = e => {
-    props.runAdvancedSearch(searchTerms, sortingCriteria);
-  };
-
   const resetSearch = e => {
     setSearchTerms(JSON.parse(JSON.stringify(searchTermsInitial)));
-    props.resetSearchResults();
+    resetSearchResults();
   };
 
   // Keyboard shortcuts
   const handleKeyPress = e => {
     if (e.key === 'Enter' || e.key === 'Return') {
       e.preventDefault();
-      runAdvancedSearch(e);
-
+      runAdvancedSearch(searchTerms, sortingCriteria)
     }
   };
   React.useEffect(() => {
@@ -128,30 +121,11 @@ const AdvancedSearchBuilder = props => {
         </td></tr>
       </tbody></table>
 
-      <CommaSeparatedInput onUpdateList={setSortingCriteria} label={"Enter sorting criteria (comma-separated): "} />
-
-      {/* <table><tbody>
-        { searchTerms.map((term, termIndex) => {
-          return (
-            <AdvancedSearchSortingCriterion
-              // key={term.termNumber}
-              //termNumber={term.termNumber}
-              //table={term.table}
-              //field={term.field}
-              //term={term.term}
-              //onFieldChange={onFieldChange}
-              //onTermChange={onTermChange}
-              //deleteSearchTerm={deleteSearchTerm}
-            />
-          );
-        })}
-        <tr><td>
-        <button className={styles.add} onClick={addNewSortingCriterion}><IoIosAddCircle /></button>
-        </td></tr>
-      </tbody></table> */}
+      <h2>Set sorting criteria</h2>
+      <DropdownList onChange={setSortingCriteria} options={possibleSortingCriteria}/>
 
       <div className={styles.searchButtonContainer}>
-        <button className={styles.search} onClick={e => runAdvancedSearch(e)}>Search</button>
+        <button className={styles.search} onClick={e => runAdvancedSearch(searchTerms, sortingCriteria)}>Search</button>
         <button className={styles.search} onClick={e => resetSearch(e)}>Reset</button>
       </div>
       <br />
