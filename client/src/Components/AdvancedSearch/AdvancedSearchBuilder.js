@@ -7,6 +7,7 @@ import AdvancedSearchEntry from "./AdvancedSearchEntry";
 import { IoIosAddCircle } from "react-icons/io";
 
 import { searchFieldTypes } from '../../Data/options';
+import CommaSeparatedInput from './CommaSeparatedInput';
 
 const searchTermsInitial = [
   { termNumber: 1, table: 'lemmata',  field: 'l.language_id',  term: '', inputType: 'dropdown', },
@@ -14,9 +15,12 @@ const searchTermsInitial = [
   { termNumber: 3, table: 'meanings', field: 'm.category',     term: '', inputType: 'text', },
 ];
 
+const sortingCriteriaInitial = ['planets_babylonian'];
+
 const AdvancedSearchBuilder = props => {
 
   let [searchTerms, setSearchTerms] = React.useState(JSON.parse(JSON.stringify(searchTermsInitial)));
+  let [sortingCriteria, setSortingCriteria] = React.useState([]);
 
   // Figure out what sort of input is needed based on the chosen search field
   // Some fields have text inputs, some dropdowns
@@ -78,7 +82,7 @@ const AdvancedSearchBuilder = props => {
   };
 
   const runAdvancedSearch = e => {
-    props.runAdvancedSearch(searchTerms);
+    props.runAdvancedSearch(searchTerms, sortingCriteria);
   };
 
   const resetSearch = e => {
@@ -123,6 +127,28 @@ const AdvancedSearchBuilder = props => {
         <button className={styles.add} onClick={addNewSearchTerm}><IoIosAddCircle /></button>
         </td></tr>
       </tbody></table>
+
+      <CommaSeparatedInput onUpdateList={setSortingCriteria} label={"Enter sorting criteria (comma-separated): "} />
+
+      {/* <table><tbody>
+        { searchTerms.map((term, termIndex) => {
+          return (
+            <AdvancedSearchSortingCriterion
+              // key={term.termNumber}
+              //termNumber={term.termNumber}
+              //table={term.table}
+              //field={term.field}
+              //term={term.term}
+              //onFieldChange={onFieldChange}
+              //onTermChange={onTermChange}
+              //deleteSearchTerm={deleteSearchTerm}
+            />
+          );
+        })}
+        <tr><td>
+        <button className={styles.add} onClick={addNewSortingCriterion}><IoIosAddCircle /></button>
+        </td></tr>
+      </tbody></table> */}
 
       <div className={styles.searchButtonContainer}>
         <button className={styles.search} onClick={e => runAdvancedSearch(e)}>Search</button>
