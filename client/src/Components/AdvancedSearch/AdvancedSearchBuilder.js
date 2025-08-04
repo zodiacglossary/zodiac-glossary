@@ -7,6 +7,7 @@ import AdvancedSearchEntry from "./AdvancedSearchEntry";
 import { IoIosAddCircle } from "react-icons/io";
 
 import { searchFieldTypes } from '../../Data/options';
+import DropdownList from './DropdownList';
 
 const searchTermsInitial = [
   { termNumber: 1, table: 'lemmata',  field: 'l.language_id',  term: '', inputType: 'dropdown', },
@@ -14,9 +15,10 @@ const searchTermsInitial = [
   { termNumber: 3, table: 'meanings', field: 'm.category',     term: '', inputType: 'text', },
 ];
 
-const AdvancedSearchBuilder = props => {
+const AdvancedSearchBuilder = ({runAdvancedSearch, resetSearchResults, possibleSortingCriteria}) => {
 
   let [searchTerms, setSearchTerms] = React.useState(JSON.parse(JSON.stringify(searchTermsInitial)));
+  let [sortingCriteria, setSortingCriteria] = React.useState([]);
 
   // Figure out what sort of input is needed based on the chosen search field
   // Some fields have text inputs, some dropdowns
@@ -77,21 +79,16 @@ const AdvancedSearchBuilder = props => {
     });
   };
 
-  const runAdvancedSearch = e => {
-    props.runAdvancedSearch(searchTerms);
-  };
-
   const resetSearch = e => {
     setSearchTerms(JSON.parse(JSON.stringify(searchTermsInitial)));
-    props.resetSearchResults();
+    resetSearchResults();
   };
 
   // Keyboard shortcuts
   const handleKeyPress = e => {
     if (e.key === 'Enter' || e.key === 'Return') {
       e.preventDefault();
-      runAdvancedSearch(e);
-
+      runAdvancedSearch(searchTerms, sortingCriteria)
     }
   };
   React.useEffect(() => {
@@ -124,8 +121,11 @@ const AdvancedSearchBuilder = props => {
         </td></tr>
       </tbody></table>
 
+      <h2>Set sorting criteria</h2>
+      <DropdownList onChange={setSortingCriteria} options={possibleSortingCriteria}/>
+
       <div className={styles.searchButtonContainer}>
-        <button className={styles.search} onClick={e => runAdvancedSearch(e)}>Search</button>
+        <button className={styles.search} onClick={e => runAdvancedSearch(searchTerms, sortingCriteria)}>Search</button>
         <button className={styles.search} onClick={e => resetSearch(e)}>Reset</button>
       </div>
       <br />
