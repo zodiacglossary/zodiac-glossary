@@ -9,7 +9,6 @@ const AdvancedSearchResults = props => {
     return <><br /><br /><br /><br /></>;
   }
 
-  console.log(props.searchResults)
 
   return (
     <>
