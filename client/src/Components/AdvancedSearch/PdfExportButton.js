@@ -3,16 +3,25 @@ import styles from './AdvancedSearch.module.css';
 
 const PdfExportButton = ({ lemmaIds }) => {
   const [loading, setLoading] = useState(false);
+  const [includeSpellingVariants, setIncludeSpellingVariants] = useState(true);
+  const [includeQuotations, setIncludeQuotations] = useState(true);
+
   const handleDownload = async () => {
     setLoading(true);
     try {
-      const response = await fetch('https://zodiac-glossary-pdf.fly.dev/', {
+        const requestBody = {
+            lemmaIds,
+            includeSpellingVariants,
+            includeQuotations,
+        };
+
+      const response = await fetch('http://localhost:8000/', {
         method: 'POST',
         headers: {
           'Accept': '*/*',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(lemmaIds),
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {
@@ -37,6 +46,26 @@ const PdfExportButton = ({ lemmaIds }) => {
 
   return (
     <div>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={includeSpellingVariants}
+            onChange={() => setIncludeSpellingVariants(!includeSpellingVariants)}
+          />
+          Include spelling variants
+        </label>
+      </div>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={includeQuotations}
+            onChange={() => setIncludeQuotations(!includeQuotations)}
+          />
+          Include quotations
+        </label>
+      </div>
       <button onClick={handleDownload} disabled={loading}>
         {loading ? 'Downloading...' : 'Download PDF'}
       </button>
