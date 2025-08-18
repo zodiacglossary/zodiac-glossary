@@ -17,7 +17,7 @@ const PdfExportButton = ({ lemmaIds, searchTerms, sortingCriteria }) => {
             sortingCriteria,
         };
 
-      const response = await fetch('http://localhost:8000/', {
+      const response = await fetch('https://zodiac-glossary-pdf.fly.dev/', {
         method: 'POST',
         headers: {
           'Accept': '*/*',
