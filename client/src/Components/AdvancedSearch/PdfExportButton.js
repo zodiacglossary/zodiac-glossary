@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from './AdvancedSearch.module.css';
 
-const PdfExportButton = ({ lemmaIds }) => {
+const PdfExportButton = ({ lemmaIds, searchTerms, sortingCriteria }) => {
   const [loading, setLoading] = useState(false);
   const [includeSpellingVariants, setIncludeSpellingVariants] = useState(true);
   const [includeQuotations, setIncludeQuotations] = useState(true);
@@ -13,6 +13,8 @@ const PdfExportButton = ({ lemmaIds }) => {
             lemmaIds,
             includeSpellingVariants,
             includeQuotations,
+            searchTerms,
+            sortingCriteria,
         };
 
       const response = await fetch('http://localhost:8000/', {

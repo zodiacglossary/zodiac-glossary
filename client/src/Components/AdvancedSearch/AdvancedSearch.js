@@ -15,6 +15,9 @@ const AdvancedSearch = props => {
   const { user } = React.useContext(UserContext);
 
   let [searchResults, setSearchResults] = React.useState([]);
+  let [searchTerms, setSearchTerms] = React.useState([]);
+  let [sortingCriteria, setSortingCriteria] = React.useState([]);
+
 
   // This function takes the list of search terms and organizes it into an object that easily
   // becomes the WHERE clause of the SQL query
@@ -183,8 +186,14 @@ const AdvancedSearch = props => {
   };
 
   const runAdvancedSearch = (searchTerms, sortingCriteria) => {
+    const organizedSearchTerms = organizeSearchTerms(searchTerms);
+
+    // these will be passed on to the PDF generator so it knows by what criteria the lemmata have been selected
+    setSearchTerms(organizedSearchTerms);
+    setSortingCriteria(sortingCriteria);
+
     runAdvancedSearchDB(
-      organizeSearchTerms(searchTerms),
+      organizedSearchTerms,
       (data) => {
         setSearchResults(applySortingCriteria(sortingCriteria, data));
       },
@@ -206,8 +215,8 @@ const AdvancedSearch = props => {
           resetSearchResults={resetSearchResults}
           possibleSortingCriteria={Object.keys(sortingFunctions)}
         />
-        {/* <PdfGlossary searchResults={searchResults} /> */}
-        <AdvancedSearchResults searchResults={searchResults} />
+        {}
+        <AdvancedSearchResults sortingCriteria={sortingCriteria} searchResults={searchResults} searchTerms={searchTerms} />
       </div>
     </div>
   );
