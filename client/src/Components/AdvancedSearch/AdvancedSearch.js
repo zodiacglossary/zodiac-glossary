@@ -93,15 +93,17 @@ const AdvancedSearch = props => {
   function collateSortingKeys(sortingKeys) {
     return (a, b) => {
       let result = 0;
-      for (const key of sortingKeys) {
-        result = result || key(a, b);
+      for (const {sortingField, sortingKey} of sortingKeys) {
+        result = result || sortingKey(sortingField(a), sortingField(b));
       }
       return result;
     };
   }
 
   const sortingFunctions = {
-    'Zodiac sign (Aries, ...)': sortingKeyFromList([
+    'Zodiac sign (Aries, ...)': {
+      sortingField: x => x.disp_meaning,
+      sortingKey: sortingKeyFromList([
         "aries",
         "taurus",
         "gemini",
@@ -114,8 +116,10 @@ const AdvancedSearch = props => {
         "capricorn",
         "aquarius",
         "pisces",
-    ]),
-    'Babylonian planetary order': sortingKeyFromList([
+    ])},
+    'Babylonian planetary order': {
+      sortingField: x => x.disp_meaning, 
+      sortingKey: sortingKeyFromList([
         "moon",
         "sun",
         "jupiter",
@@ -123,8 +127,10 @@ const AdvancedSearch = props => {
         "saturn",
         "mercury",
         "mars",
-    ]),
-    'Weekday order of planets': sortingKeyFromList([
+    ])},
+    'Weekday order of planets': {
+      sortingField: x => x.disp_meaning,
+      sortingKey: sortingKeyFromList([
         "sun",
         "moon",
         "mars",
@@ -132,8 +138,10 @@ const AdvancedSearch = props => {
         "jupiter",
         "venus",
         "saturn",
-    ]),
-    'Heliocentric order of planets': sortingKeyFromList([
+    ])},
+    'Heliocentric order of planets': {
+      sortingField: x => x.disp_meaning,
+      sortingKey: sortingKeyFromList([
         "mercury",
         "venus",
         "earth",
@@ -142,8 +150,10 @@ const AdvancedSearch = props => {
         "saturn",
         "uranus",
         "neptune",
-    ]),
-    'Geocentric order of planets': sortingKeyFromList([
+    ])},
+    'Geocentric order of planets': {
+      sortingField: x => x.disp_meaning,
+      sortingKey: sortingKeyFromList([
         "moon",
         "mercury",
         "venus",
@@ -151,12 +161,15 @@ const AdvancedSearch = props => {
         "mars",
         "jupiter",
         "saturn",
-    ]),
-    'Decans numerically ordered': sortingKeyFromList(
+    ])},
+    'Decans numerically ordered': {
+      sortingField: x => x.disp_meaning, 
+      sortingKey: sortingKeyFromList(
         // generate list of: decan 1, decan 2, decan 3, ...
         Array.from({ length: 36 }, (_, index) => `decan ${index + 1}`)
-    ),
-    'Alphabetical': (a, b) => a.localeCompare(b),
+    )},
+    'Alphabetical (original)': {sortingField: x => x.disp_original, sortingKey: (a, b) => a.localeCompare(b)},
+    'Alphabetical (meaning)': {sortingField: x => x.disp_meaning, sortingKey: (a, b) => a.localeCompare(b)},
 };
 
   const applySortingCriteria = (sortingCriteria, data) => {
@@ -164,9 +177,9 @@ const AdvancedSearch = props => {
     const validCriteria = sortingCriteria.filter(criterionName => sortingFunctions.hasOwnProperty(criterionName));
     const sortingFns = validCriteria.length > 0
       ? validCriteria.map(criterionName => sortingFunctions[criterionName])
-      : [sortingFunctions['Alphabetical']];
+      : [sortingFunctions['Alphabetical (original)']];
     const key = collateSortingKeys(sortingFns);
-    return data.sort((a, b) => key(a.disp_meaning, b.disp_meaning));
+    return data.sort((a, b) => key(a, b));
   };
 
   const runAdvancedSearch = (searchTerms, sortingCriteria) => {
