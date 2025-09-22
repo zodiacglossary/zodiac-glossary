@@ -154,6 +154,27 @@ const AdvancedSearch = props => {
         "uranus",
         "neptune",
     ])},
+    'Synodic phenomena (Mercury, Venus)': {
+      sortingField: x => x.disp_meaning,
+      sortingKey: sortingKeyFromList([
+        'morning first',
+        'morning station',
+        'morning last',
+        'evening first',
+        'evening station',
+        'evening last'
+      ])
+    },
+    'Synodic phenomena (Mars, Jupiter, Saturn)': {
+      sortingField: x => x.disp_meaning,
+      sortingKey: sortingKeyFromList([
+        'first appearance',
+        'first station',
+        'acronychal rising',
+        'second station',
+        'last appearance',
+      ])
+    },
     'Geocentric order of planets': {
       sortingField: x => x.disp_meaning,
       sortingKey: sortingKeyFromList([
