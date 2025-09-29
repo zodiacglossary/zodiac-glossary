@@ -3,8 +3,8 @@ import { Tooltip } from 'react-tooltip';
 
 import { useNavigate, useLocation } from "react-router-dom";
 // import { IoIosPlay, IoIosPause, } from 'react-icons/io';
-import { IoIosColorFilter, IoIosHome, IoIosHelpCircle, IoIosLogIn, IoIosLogOut, IoIosList, IoIosPeople, IoIosSearch } from 'react-icons/io';
-import { GiAlarmClock, } from 'react-icons/gi';
+// import { IoIosColorFilter, IoIosHome, IoIosHelpCircle, IoIosLogIn, IoIosLogOut, IoIosList, IoIosPeople, IoIosSearch } from 'react-icons/io';
+// import { GiAlarmClock, } from 'react-icons/gi';
 
 import UserContext from '../../Contexts/UserContext';
 import LogIn from './LogIn.js';
