@@ -76,6 +76,9 @@ const ExternalLinks = props => {
           <li><a target="_blank" rel="noopener noreferrer" href={"https://coptic-dictionary.org/results.cgi?coptic=" + original + "&dialect=any&pos=any&definition=&def_search_type=exact+sequence&lang=any"}>
             Coptic Dictionary Online
           </a></li>
+          <li><a target="_blank" rel="noopener noreferrer" href={"https://sanskrit-lexicon.uni-koeln.de/scans/MWScan/2020/web/webtc/getword.php?key=" + original + "&filter=deva&accent=no&transLit=deva"}>
+            Monier-Williams Sanskrit-English Dictionary
+          </a></li>
         </ul>
       </>
       )}
