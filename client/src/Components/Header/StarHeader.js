@@ -188,14 +188,14 @@ const StarHeader = () => {
           alt="Star chart with zodiac constellations"
           onClick={playPause}
         />
-        <div className={styles.titleThe}>The</div>
-        <h1 className={styles.zodiacLogotype}>
+        {/* <div className={styles.titleThe}>The</div> */}
+        {/* <h1 className={styles.zodiacLogotype}>
          
-        </h1>
-        <div className={styles.titleGlossary}>
+        </h1> */}
+        {/* <div className={styles.titleGlossary}>
           
-        </div>
-        <div className={styles.subtitle}>
+        </div> */}
+        {/* <div className={styles.subtitle}>
           
           <sub
             data-tip='This project is currently in a beta stage. Please forgive any errors.'
@@ -204,7 +204,7 @@ const StarHeader = () => {
             β
           </sub>
           <Tooltip id="beta" type="light" html={true} />
-        </div>
+        </div> */}
       </header>
       <div className={styles.headerBodyGradient}></div>
       <div className={styles.bodyBackground}></div>
