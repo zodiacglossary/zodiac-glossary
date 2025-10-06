@@ -4,7 +4,10 @@ import React from "react";
 // counting both newlines and lines that are longer than a given line width.
 // CDC 09.12.2024
 function getNumLines(text, lineWidth) {
-	return text.split('\n').reduce((total, line) => total + Math.floor(line.length / lineWidth) + 1, 0);
+	if (text && text.length > 0) {
+		return text.split('\n').reduce((total, line) => total + Math.floor(line.length / lineWidth) + 1, 0);
+	}
+	return 0;
 }
 
 function ResizingTextarea(props) {

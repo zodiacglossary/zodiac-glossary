@@ -376,8 +376,17 @@ const Quotation = props => {
           Comment
         </label>
         <Tooltip id={"comment_"+quotation.id+"-tooltip"} type="light" html={true} />
-        <textarea
+        {/* <textarea
           className={styles.textareaQuotation}
+          name={"comment_"+quotation.id}
+          id={"comment_"+quotation.id}
+          value={quotation.comment}
+          onChange={e => props.updateQuotation("comment", e.target.value, quotation.id)} 
+        /> */}
+        <ResizingTextarea
+          characterWidth={60}
+          className={styles.textareaQuotation}
+          placeholder="comments"
           name={"comment_"+quotation.id}
           id={"comment_"+quotation.id}
           value={quotation.comment}

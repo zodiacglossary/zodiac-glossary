@@ -122,6 +122,14 @@ const Lemma = props => {
     setChanged(false);
     saveLemmaToDB(setLemma, lemma, user.token);
     setContentLemma(lemma);
+
+
+    getEditHistory(lemma.lemmaId, user.token)
+    .then(edits => {
+      setEdits(edits);
+      // console.log(edits);
+    })
+    .catch(error => console.error(error));
     
     // Remind users to fill the editor field if it is blank
     if (!lemma || !lemma.editor) {
