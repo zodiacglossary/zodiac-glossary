@@ -1,6 +1,6 @@
 # fly.toml file generated for zodiac on 2022-10-15T14:36:05+02:00
 
-app = "zodiac"
+app = "zodiac-edit"
 kill_signal = "SIGINT"
 kill_timeout = 5
 
@@ -16,7 +16,7 @@ kill_timeout = 5
 
 [[services]]
   http_checks = []
-  internal_port = 8080
+  internal_port = 3000
   processes = ["app"]
   protocol = "tcp"
   script_checks = []

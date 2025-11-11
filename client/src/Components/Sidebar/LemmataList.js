@@ -34,7 +34,7 @@ const LemmataList = props => {
   // Plus location because that changes when a new lemma is added
   React.useEffect(() => {
     getLemmataList(setLemmataList, user && user.token);
-  }, [props.contentLemma, location, user]);
+  }, [user]);
 
   React.useEffect(() => {
 
@@ -152,8 +152,8 @@ const LemmataList = props => {
           {/* | <button className={styles.sortButtons} onClick={e => setLemmataSortField('language')}>Language</button> */}
       </div>
 
-      {lemmataFiltered
-        .map(lemma => (
+      {(lemmataFiltered.length ?
+        lemmataFiltered.map(lemma => (
           <QueryNavLink 
             className={({isActive}) => (isActive ? styles.lemmaListEntryActive : styles.lemmaListEntry)}
             key={lemma.lemmaId}
@@ -162,7 +162,8 @@ const LemmataList = props => {
           >
             <LemmataListItem lemma={lemma} />
           </QueryNavLink>
-      ))}
+      )) : <><br />loading lemmata list...</>
+      )}
     </>
   );
 };

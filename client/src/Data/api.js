@@ -7,19 +7,25 @@
 // LEMMATA LIST
 ////////////////////////////////////////////////////////////////////////////////
 
-// Change token default to null after adding authentication
+// Protection against duplicate api calls
+let inFlight_getLemmataList = null; 
+
 export function getLemmataList(setLemmataList, token = '') {
   let url = '/api/lemmata/list';
   const params = new URLSearchParams({token});
   url += '?' + params.toString();
   
-  fetch(url)
-  .then(response => response.json())
-  .then(data => data.map(lemma => {
-    lemma.last_edit = new Date(lemma.last_edit);
-    return lemma;
-  }))
-  .then(data => setLemmataList(data));
+  if (!inFlight_getLemmataList) {
+    inFlight_getLemmataList = fetch(url)
+    .then(response => response.json())
+    .then(data => data.map(lemma => {
+      lemma.last_edit = new Date(lemma.last_edit);
+      return lemma;
+    }))
+    .then(data => setLemmataList(data))
+    .finally(() => { inFlight_getLemmataList = null; });
+  }
+  return inFlight_getLemmataList;
 }
 
 // Streamlines the use of state functions in components
@@ -67,6 +73,9 @@ export function addNewLemma(setNewLemmaId, token = '') {
 // LEMMA
 ////////////////////////////////////////////////////////////////////////////////
 
+// Protection against duplicate api calls
+let inFlight_getLemmaFromDB = null; 
+
 export function getLemmaFromDB(setLemma, lemmaId) {
 
   // Skip the fetch process if the lemmaId is missing
@@ -79,21 +88,25 @@ export function getLemmaFromDB(setLemma, lemmaId) {
   const params = new URLSearchParams({lemmaId});
   url += '?' + params.toString();
   
-  fetch(url)
-  .then(response => {
-    // Make sure that the lemmaId is valid, or set lemma to undefined
-    // Needed to prevent panic in Lemma subparts when the id is invalid
-    if (response.ok) {
-      return response.json();
-    } else {
+  if (!inFlight_getLemmaFromDB) {
+    inFlight_getLemmaFromDB = fetch(url)
+    .then(response => {
+      // Make sure that the lemmaId is valid, or set lemma to undefined
+      // Needed to prevent panic in Lemma subparts when the id is invalid
+      if (response.ok) {
+        return response.json();
+      } else {
+        setLemma();
+      }
+    })
+    .then(data => setLemma(data))
+    .catch(error => {
       setLemma();
-    }
-  })
-  .then(data => setLemma(data))
-  .catch(error => {
-    setLemma();
-    console.error(error);
-  });
+      console.error(error);
+    })
+    .finally(() => { inFlight_getLemmaFromDB = null; });
+  }
+  return inFlight_getLemmaFromDB;
 }
 
 export function saveLemmaToDB(setLemma, lemma, token = '') {
